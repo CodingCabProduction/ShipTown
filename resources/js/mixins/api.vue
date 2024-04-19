@@ -416,6 +416,14 @@ export default {
             apiPostPdfDownload: function (data) {
                 return axios.post('/api/pdf/download', data, { responseType: 'blob' });
             },
+
+            apiGetTransactions: function (params) {
+                return axios.get('/api/transactions/', {params: params});
+            },
+
+            apiPostTransaction: function (transaction) {
+                return axios.post('/api/transactions/', transaction);
+            },
         }
     }
 </script>

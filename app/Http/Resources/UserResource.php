@@ -22,6 +22,7 @@ class UserResource extends JsonResource
             'printer_id'              => $this->printer_id,
             'address_label_template'  => $this->address_label_template,
             'ask_for_shipping_number' => $this->ask_for_shipping_number,
+            'active_transaction_id'   => $this->active_transaction_id,
 
             'roles'                   => RoleResource::collection($this->whenLoaded('roles')),
             'warehouse'               => WarehouseResource::make($this->whenLoaded('warehouse')),

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::name('api.')->group(function () {
+    Route::apiResource('transactions', Api\TransactionController::class)->only(['index', 'store']);
     Route::apiResource('jobs', Api\JobsController::class)->only(['store','index']);
     Route::apiResource('configurations', Api\ConfigurationController::class)->only(['index', 'store']);
     Route::apiResource('heartbeats', Api\HeartbeatsController::class)->only(['index']);

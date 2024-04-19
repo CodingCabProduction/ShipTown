@@ -50,7 +50,7 @@ class UserUpdateRequest extends FormRequest
             ],
 
             'role_id' => Rule::when($updatedUserId !== $this->user()->id, [
-                'required',
+                'sometimes',
                 'integer',
                 Rule::exists('roles', 'id'),
             ]),
@@ -63,6 +63,11 @@ class UserUpdateRequest extends FormRequest
             'warehouse_id' => [
                 'nullable',
                 'exists:warehouses,id'
+            ],
+
+            'active_transaction_id' => [
+                'nullable',
+                'exists:transactions,id'
             ],
         ];
     }
