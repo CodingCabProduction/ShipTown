@@ -1,22 +1,20 @@
 <?php
 
-namespace Tests\Feature\Api\Transactions;
+namespace Tests\Feature\Api\PrintJobs;
 
 use App\User;
 use Tests\TestCase;
 
 class StoreTest extends TestCase
 {
-    private string $uri = '/api/transactions';
+    private string $uri = '/api/print-jobs';
 
     /** @test */
     public function testIfCallReturnsOk()
     {
-        $user = User::factory()->create()->assignRole('user');
+        $user = User::factory()->create();
 
-        $response = $this->actingAs($user, 'api')->postJson($this->uri, [
-            'raw_data' => []
-        ]);
+        $response = $this->actingAs($user, 'api')->postJson($this->uri, ['printer_id' => 1, 'content' => 'test content']);
 
         ray($response->json());
 

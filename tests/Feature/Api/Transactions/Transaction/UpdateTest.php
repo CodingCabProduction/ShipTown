@@ -25,7 +25,9 @@ class UpdateTest extends TestCase
         $response->assertSuccessful();
 
         $response->assertJsonStructure([
-            'id'
+            'data' => [
+                'id'
+            ],
         ]);
     }
 }

@@ -280,6 +280,10 @@ export default {
                 return axios.post('/api/jobs', data);
             },
 
+            apiPostPrintJob: function (data) {
+                return axios.post('/api/print-jobs', data);
+            },
+
             apiGetPrintNodePrinters: function () {
                 return axios.get('/api/modules/printnode/printers');
             },

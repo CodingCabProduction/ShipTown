@@ -25,7 +25,7 @@ class TransactionController extends Controller
 
         $transaction = Transaction::query()->create($attributes);
 
-        return response()->json($transaction, 201);
+        return JsonResource::make($transaction);
     }
 
     public function update(Request $request, int $transaction_id)
@@ -36,6 +36,6 @@ class TransactionController extends Controller
 
         $transaction->update($attributes);
 
-        return response()->json($transaction);
+        return JsonResource::make($transaction);
     }
 }

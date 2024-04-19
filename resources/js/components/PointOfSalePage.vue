@@ -1,60 +1,69 @@
 <template>
 <div>
-    <card>
-        <text-card label="transaction number" :text="transaction['transaction_number']"></text-card>
-        <number-card label="total_to_pay" :number="transaction['total_to_pay']"></number-card>
-        <number-card label="total paid" :number="transaction['total_paid']"></number-card>
-        <number-card label="total_outstanding" :number="transaction['total_outstanding']"></number-card>
-    </card>
-    <card>
-        <template v-for="payment in transaction['payments']">
-            {{ payment['name'] }} {{ payment['amount'] }} <br>
-        </template>
-        <input id="payment_amount" class="form-control"  placeholder="Payment amount">
-        <button type="button" class="btn btn-primary fa-pull-right m-1 btn-sm" @click="addPaymentCash">Add Payment Cash</button>
-        <button type="button" class="btn btn-primary fa-pull-right m-1 btn-sm" @click="addPaymentCard">Add Payment Clover</button>
-    </card>
-    <div class="row mb-2 pl-1 pr-1">
+    <div class="card my-1">
+        <div class="card-body m-auto p-0 row">
+<!--            <text-card label="transaction number" :text="transaction['transaction_number']"></text-card>-->
+            <div class="col-4"><number-card label="total_to_pay" :number="transaction['total_to_pay']"></number-card></div>
+            <div class="col-4"><number-card label="total paid" :number="transaction['total_paid']"></number-card></div>
+            <div class="col-4"><number-card label="total_outstanding" :number="transaction['total_outstanding']"></number-card></div>
+        </div>
+    </div>
+
+    <div class="row my-2">
         <div class="flex-fill">
             <barcode-input-field id="barcode_input" @barcodeScanned="addProductToTransaction" placeholder="Scan or type sku or product barcode" ref="barcode_input"/>
         </div>
 
         <button type="button" v-b-modal="'quick-actions-modal'" class="btn btn-primary ml-2"><font-awesome-icon icon="cog" class="fa-lg"></font-awesome-icon></button>
+        <button type="button" v-b-modal="'payments-modal'" class="btn btn-primary ml-2"><font-awesome-icon icon="credit-card" class="fa-lg"></font-awesome-icon></button>
     </div>
 
-    <table>
-        <tr>
-            <th>Barcode</th>
-            <th>Quantity</th>
-            <th>Full Price</th>
-            <th>Current Price</th>
-            <th>Total</th>
-        </tr>
-        <template v-for="transactionEntry in transaction['entries']" >
-            <tr>
-                <td>{{ transactionEntry['barcode'] }}</td>
-                <td>{{ transactionEntry['quantity'] }}</td>
-                <td>{{ transactionEntry['full_price'] }}</td>
-                <td>{{ transactionEntry['current_price'] }}</td>
-                <td>{{ transactionEntry['total'] }}</td>
-            </tr>
-        </template>
-    </table>
+    <div class="table-responsive">
+        <table class="table-hover w-100">
+            <thead>
+                <tr>
+                    <th>Barcode</th>
+                    <th>Quantity</th>
+                    <th>Full Price</th>
+                    <th>Current Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template v-for="transactionEntry in transaction['entries']" >
+                    <tr>
+                        <td>{{ transactionEntry['barcode'] }}</td>
+                        <td>{{ transactionEntry['quantity'] }}</td>
+                        <td>{{ transactionEntry['full_price'] }}</td>
+                        <td>{{ transactionEntry['current_price'] }}</td>
+                        <td>{{ transactionEntry['total'] }}</td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
 
+    <b-modal id="payments-modal" no-fade hide-header @hidden="setFocusElementById('barcode_input')">
+        <card>
+            <template v-for="payment in transaction['payments']">
+                {{ payment['name'] }} {{ payment['amount'] }} <br>
+            </template>
+            <input id="payment_amount" class="form-control"  placeholder="Payment amount">
+            <button type="button" class="btn btn-primary fa-pull-right m-1 btn-sm" @click="addPaymentCash">Add Payment Cash</button>
+            <button type="button" class="btn btn-primary fa-pull-right m-1 btn-sm" @click="addPaymentCard">Add Payment Clover</button>
+        </card>
+    </b-modal>
 
-    <b-modal id="quick-actions-modal" no-fade hide-header @hidden="setFocusElementById('barcode-input')">
+    <b-modal id="quick-actions-modal" no-fade hide-header @hidden="setFocusElementById('barcode_input')">
         <stocktake-input v-bind:auto-focus-after="100" ></stocktake-input>
         <hr>
-        <button type="button" class="btn btn-primary fa-pull-right m-1 btn-sm" @click="printReceipt">Print Receipt</button>
-        <button type="button" class="btn btn-primary fa-pull-right m-1 col" @click="saveTransaction">Save Transaction</button>
-        <button type="button" class="btn btn-primary fa-pull-right m-1 col" @click="clearTransaction">Clear Transaction</button>
+        <button type="button" class="btn btn-primary m-1 col" @click="printReceipt">Print Receipt</button>
+        <button type="button" class="btn btn-primary m-1 col" @click="saveTransaction">Save Transaction</button>
+        <button type="button" class="btn btn-primary m-1 col" @click="clearTransaction">Clear Transaction</button>
+        <button type="button" class="btn btn-primary m-1 col" @click="clearTransaction" disabled>Return</button>
         <template #modal-footer>
-            <b-button variant="secondary" class="float-right" @click="$bvModal.hide('quick-actions-modal');">
-                Cancel
-            </b-button>
-            <b-button variant="primary" class="float-right" @click="$bvModal.hide('quick-actions-modal');">
-                OK
-            </b-button>
+            <b-button variant="secondary" class="float-right" @click="$bvModal.hide('quick-actions-modal');">Cancel</b-button>
+            <b-button variant="primary" class="float-right" @click="$bvModal.hide('quick-actions-modal');">OK</b-button>
         </template>
     </b-modal>
 </div>
@@ -92,12 +101,12 @@ export default {
                 payments: [
                     {
                         'name': 'cash',
-                        'amount': 1251
+                        'amount': 100
                     }
                 ],
-                total_to_pay: 12.51,
-                total_paid: 12.51,
-                total_outstanding: 3.45
+                total_to_pay: 135,
+                total_paid: 100,
+                total_outstanding: 35
             }
         }
     },
@@ -108,12 +117,6 @@ export default {
             },
             deep: true
         },
-        // 'transaction.entries': {
-        //     handler: function (val, oldVal) {
-        //         this.notifyError('Implement update total functionality');
-        //     },
-        //     deep: true
-        // }
     },
     methods: {
         addProductToTransaction(barcode) {
@@ -124,8 +127,11 @@ export default {
                         return;
                     }
 
+                    this.beep();
+
                     const product = response.data.data[0];
-                    this.transaction['entries'].push({
+
+                    this.transaction['entries'].unshift({
                         barcode: product.sku,
                         quantity: 1,
                         full_price: 0,
@@ -137,6 +143,17 @@ export default {
         },
 
         printReceipt() {
+            this.apiPostPrintJob({
+                    'printer_id': this.currentUser().printer_id,
+                    'content_type': 'raw_base64',
+                    'content': JSON.stringify(this.transaction)
+                })
+                .then(response => {
+                    this.notifySuccess('Receipt printed', false);
+                })
+                .catch(error => {
+                    this.displayApiCallError(error);
+                })
             // Please use RAW PRINT from printnode for this functionality
             // this.notifyError('Implement print receipt functionality');
         },
@@ -199,7 +216,16 @@ export default {
                 return;
             }
 
-            this.apiPostTransaction(this.transaction)
+            this.apiPostTransaction({'raw_data': this.transaction})
+                .then(response => {
+                    console.log(response.data)
+                    this.currentUser().active_transaction_id = response.data.data.id;
+
+                    this.apiPostUserUpdate(this.currentUser().id, {'active_transaction_id': response.data.data.id})
+                        .catch(error => {
+                            this.displayApiCallError(error);
+                        });
+                })
                 .catch(error => {
                     this.displayApiCallError(error);
                 });
