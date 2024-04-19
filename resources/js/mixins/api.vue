@@ -421,8 +421,12 @@ export default {
                 return axios.get('/api/transactions/', {params: params});
             },
 
-            apiPostTransaction: function (transaction) {
-                return axios.post('/api/transactions/', transaction);
+            apiPostTransaction: function (data) {
+                return axios.post('/api/transactions/', data);
+            },
+
+            apiPutTransaction: function (id, data) {
+                return axios.put('/api/transactions/' + id, data);
             },
         }
     }

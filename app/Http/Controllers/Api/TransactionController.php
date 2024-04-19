@@ -7,23 +7,35 @@ use App\Models\Transaction;
 use App\Modules\Reports\src\Services\ReportService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Spatie\QueryBuilder\AllowedFilter;
 
 class TransactionController extends Controller
 {
     public function index()
     {
-        ReportService::fromQuery(Transaction::query());
+        $report = ReportService::fromQuery(Transaction::query())
+           ->addFilter(AllowedFilter::exact('id'));
 
-
-        return JsonResource::collection(Transaction::all());
+        return $report->toJsonResource();
     }
 
     public function store(Request $request)
     {
         $attributes = $request->all();
 
-        $transaction = Transaction::create($attributes);
+        $transaction = Transaction::query()->create($attributes);
 
         return response()->json($transaction, 201);
+    }
+
+    public function update(Request $request, int $transaction_id)
+    {
+        $transaction = Transaction::query()->findOrFail($transaction_id);
+
+        $attributes = $request->all();
+
+        $transaction->update($attributes);
+
+        return response()->json($transaction);
     }
 }

@@ -67,6 +67,10 @@ import api from "../mixins/api.vue";
 export default {
     mixins: [helpers, api],
 
+    mounted() {
+        this.loadTransaction();
+    },
+
     data() {
         return {
             transaction: {
@@ -104,25 +108,32 @@ export default {
             },
             deep: true
         },
-        'transaction.entries': {
-            handler: function (val, oldVal) {
-                // this.notifyError('Implement update total functionality');
-            },
-            deep: true
-        }
+        // 'transaction.entries': {
+        //     handler: function (val, oldVal) {
+        //         this.notifyError('Implement update total functionality');
+        //     },
+        //     deep: true
+        // }
     },
     methods: {
         addProductToTransaction(barcode) {
-            this.transaction['entries'].push({
-                barcode: barcode,
-                quantity: 2,
-                full_price: 100,
-                current_price: 90
-            });
+            this.apiGetProducts({'filter[sku_or_alias]' : barcode})
+                .then(response => {
+                    if (response.data.data.length === 0) {
+                        this.notifyError('Product "'+ barcode +'" not found');
+                        return;
+                    }
 
-            // this.notifyError('Implement add product to transaction functionality');
-
-            // this.notifyError('Implement update total functionality');
+                    const product = response.data.data[0];
+                    this.transaction['entries'].push({
+                        barcode: product.sku,
+                        quantity: 1,
+                        full_price: 0,
+                        current_price: 0
+                    });
+                }).catch(error => {
+                    this.displayApiCallError(error);
+                });
         },
 
         printReceipt() {
@@ -163,7 +174,35 @@ export default {
             this.$bvModal.hide('quick-actions-modal');
         },
 
+        loadTransaction() {
+            if (!this.currentUser().active_transaction_id) {
+                return;
+            }
+
+            this.apiGetTransactions({
+                    'filter[id]' : this.currentUser().active_transaction_id
+                })
+                .then(response => {
+                    this.transaction = response.data.data[0]['raw_data'];
+                })
+                .catch(error => {
+                    this.displayApiCallError(error);
+                });
+        },
+
         saveTransaction() {
+            if (this.currentUser().active_transaction_id) {
+                this.apiPutTransaction(this.currentUser().active_transaction_id, {'raw_data': this.transaction})
+                    .catch(error => {
+                        this.displayApiCallError(error);
+                    });
+                return;
+            }
+
+            this.apiPostTransaction(this.transaction)
+                .catch(error => {
+                    this.displayApiCallError(error);
+                });
             // we should post the transaction to the server for immediate save only
             // this should be best way to make a backup of the transaction in case of any failures
             // /api/transactions/in-progress ??
