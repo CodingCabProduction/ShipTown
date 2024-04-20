@@ -140,18 +140,19 @@ export default {
                     this.beep();
 
                     const product = response.data.data[0];
+                    const productPrices = product['prices'][this.currentUser().warehouse_code];
 
                     let quantity = 1;
 
                     this.transaction['entries'].unshift({
                         barcode: product.sku,
                         quantity: quantity,
-                        cost_price: product['prices'][this.currentUser().warehouse_code]['cost'],
-                        full_price: product['prices'][this.currentUser().warehouse_code]['price'],
-                        current_price: product['prices'][this.currentUser().warehouse_code]['current_price'],
-                        sold_price: product['prices'][this.currentUser().warehouse_code]['current_price'],
-                        total_cost_price: quantity * product['prices'][this.currentUser().warehouse_code]['current_price'],
-                        total_sold_price: quantity * product['prices'][this.currentUser().warehouse_code]['current_price'],
+                        cost_price: productPrices['cost'],
+                        full_price: productPrices['price'],
+                        current_price: productPrices['current_price'],
+                        sold_price: productPrices['current_price'],
+                        total_cost_price: quantity * productPrices['current_price'],
+                        total_sold_price: quantity * productPrices['current_price'],
                     });
                 }).catch(error => {
                     this.displayApiCallError(error);
@@ -164,7 +165,7 @@ export default {
                     'content_type': 'raw_base64',
                     'content': JSON.stringify(this.transaction)
                 })
-                .then(response => {
+                .then(() => {
                     this.notifySuccess('Receipt printed', false);
                 })
                 .catch(error => {
@@ -234,7 +235,6 @@ export default {
 
             this.apiPostTransaction({'raw_data': this.transaction})
                 .then(response => {
-                    console.log(response.data)
                     this.currentUser().active_transaction_id = response.data.data.id;
 
                     this.apiPostUserUpdate(this.currentUser().id, {'active_transaction_id': response.data.data.id})
@@ -246,14 +246,14 @@ export default {
                     this.displayApiCallError(error);
                 });
             // we should post the transaction to the server for immediate save only
-            // this should be best way to make a backup of the transaction in case of any failures
+            // this should be the best way to make a backup of the transaction in case of any failures
             // /api/transactions/in-progress ??
             // this.notifyError('Implement save transaction functionality');
 
             // we might develop a way to retrieve the transaction from the server later too
 
-           // $response =  this.apiPostTransaciotn(response->transaction_id, transaction);
-           // user->update(['active_transafgion_id' => response->transaction_id]);
+           // $response =  this.apiPostTransaction(response->transaction_id, transaction);
+           // user->update(['active_transaction_id' => response->transaction_id]);
         },
     }
 
