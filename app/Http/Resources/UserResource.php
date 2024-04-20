@@ -17,6 +17,7 @@ class UserResource extends JsonResource
             'name'                    => $this->name,
             'email'                   => $this->email,
             'warehouse_id'            => $this->warehouse_id,
+            'warehouse_code'          => $this->warehouse_code,
             'default_dashboard_uri'   => $this->default_dashboard_uri,
             'location_id'             => $this->location_id,
             'printer_id'              => $this->printer_id,

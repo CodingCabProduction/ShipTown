@@ -24,8 +24,11 @@
                 <tr>
                     <th>Barcode</th>
                     <th>Quantity</th>
+<!--                    <th>Cost Price</th>-->
                     <th>Full Price</th>
-                    <th>Current Price</th>
+<!--                    <th>Current Price</th>-->
+                    <th>Sold Price</th>
+<!--                    <th>Total Cost Price</th>-->
                     <th>Total</th>
                 </tr>
             </thead>
@@ -34,9 +37,12 @@
                     <tr>
                         <td>{{ transactionEntry['barcode'] }}</td>
                         <td>{{ transactionEntry['quantity'] }}</td>
+<!--                        <td>{{ transactionEntry['cost_price'] }}</td>-->
                         <td>{{ transactionEntry['full_price'] }}</td>
-                        <td>{{ transactionEntry['current_price'] }}</td>
-                        <td>{{ transactionEntry['total'] }}</td>
+<!--                        <td>{{ transactionEntry['current_price'] }}</td>-->
+                        <td>{{ transactionEntry['sold_price'] }}</td>
+<!--                        <td>{{ transactionEntry['total_cost_price'] }}</td>-->
+                        <td>{{ transactionEntry['total_sold_price'] }}</td>
                     </tr>
                 </template>
             </tbody>
@@ -88,14 +94,18 @@ export default {
                     {
                         barcode: '593775',
                         quantity: 2,
+                        cost_price: 50,
                         full_price: 100,
-                        current_price: 90
+                        current_price: 90,
+                        sold_price: 90,
                     },
                     {
                         barcode: '45',
                         quantity: 1,
+                        cost_price: 50,
                         full_price: 50,
-                        current_price: 45
+                        current_price: 45,
+                        sold_price: 45,
                     }
                 ],
                 payments: [
@@ -120,7 +130,7 @@ export default {
     },
     methods: {
         addProductToTransaction(barcode) {
-            this.apiGetProducts({'filter[sku_or_alias]' : barcode})
+            this.apiGetProducts({'filter[sku_or_alias]' : barcode, 'include': 'prices'})
                 .then(response => {
                     if (response.data.data.length === 0) {
                         this.notifyError('Product "'+ barcode +'" not found');
@@ -131,11 +141,17 @@ export default {
 
                     const product = response.data.data[0];
 
+                    let quantity = 1;
+
                     this.transaction['entries'].unshift({
                         barcode: product.sku,
-                        quantity: 1,
-                        full_price: 0,
-                        current_price: 0
+                        quantity: quantity,
+                        cost_price: product['prices'][this.currentUser().warehouse_code]['cost'],
+                        full_price: product['prices'][this.currentUser().warehouse_code]['price'],
+                        current_price: product['prices'][this.currentUser().warehouse_code]['current_price'],
+                        sold_price: product['prices'][this.currentUser().warehouse_code]['current_price'],
+                        total_cost_price: quantity * product['prices'][this.currentUser().warehouse_code]['current_price'],
+                        total_sold_price: quantity * product['prices'][this.currentUser().warehouse_code]['current_price'],
                     });
                 }).catch(error => {
                     this.displayApiCallError(error);

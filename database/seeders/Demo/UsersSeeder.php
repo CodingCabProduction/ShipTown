@@ -22,6 +22,7 @@ class UsersSeeder extends Seeder
         ], [
             'name' => 'Artur Hanusek',
             'warehouse_id' => Warehouse::firstOrCreate(['code' => 'DUB'], ['name' => 'Dublin'])->getKey(),
+            'warehouse_code' => Warehouse::firstOrCreate(['code' => 'DUB'], ['name' => 'Dublin'])->code,
             'password' => bcrypt('secret1144'),
             'ask_for_shipping_number' => false,
         ]);
@@ -33,6 +34,7 @@ class UsersSeeder extends Seeder
         ], [
             'name' => 'Joni Melabo',
             'warehouse_id' => Warehouse::firstOrCreate(['code' => 'GAL'], ['name' => 'Galway'])->getKey(),
+            'warehouse_code' => Warehouse::firstOrCreate(['code' => 'GAL'], ['name' => 'Galway'])->code,
             'password' => bcrypt('secret1144'),
         ]);
         $user->assignRole(Role::findOrCreate('user'));
