@@ -3,7 +3,7 @@
     <div class="card my-1">
         <div class="card-body m-auto p-0 row">
 <!--            <text-card label="transaction number" :text="transaction['transaction_number']"></text-card>-->
-            <div class="col-4"><number-card label="total_to_pay" :number="transaction['total_to_pay']"></number-card></div>
+            <div class="col-4"><number-card label="total_to_pay" :number="transactionTotal"></number-card></div>
             <div class="col-4"><number-card label="total paid" :number="transaction['total_paid']"></number-card></div>
             <div class="col-4"><number-card label="total_outstanding" :number="transaction['total_outstanding']"></number-card></div>
         </div>
@@ -86,6 +86,12 @@ export default {
         this.loadTransaction();
     },
 
+    computed: {
+        transactionTotal() {
+            return this.transaction.entries.reduce((acc, entry) => acc + entry.sold_price * entry.quantity, 0);
+        }
+    },
+
     data() {
         return {
             transaction: {
@@ -130,6 +136,10 @@ export default {
     },
     methods: {
         addProductToTransaction(barcode) {
+            if (barcode.trim() === '') {
+                return;
+            }
+
             this.apiGetProducts({'filter[sku_or_alias]' : barcode, 'include': 'prices'})
                 .then(response => {
                     if (response.data.data.length === 0) {
@@ -140,7 +150,8 @@ export default {
                     this.beep();
 
                     const product = response.data.data[0];
-                    const productPrices = product['prices'][this.currentUser().warehouse_code];
+
+                    const productPrices = product['prices']['DUB'];
 
                     let quantity = 1;
 
