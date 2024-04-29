@@ -1,5 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);
 @charset "UTF-8";
+/* stylelint-disable */
 .ratio-1x1 {
   position: relative;
   padding-bottom: 100%;
@@ -5460,7 +5461,6 @@
     position: absolute;
   }
 }
-/* stylelint-disable */
 /* stylelint-enable */
 /*!
  * Bootstrap v4.6.2 (https://getbootstrap.com/)
@@ -11133,8 +11133,7 @@ a.close.disabled {
   float: left;
   width: 100%;
   margin-right: -100%;
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
+  backface-visibility: hidden;
   transition: transform 0.6s ease-in-out;
 }
 @media (prefers-reduced-motion: reduce) {
@@ -15024,18 +15023,10 @@ a.text-dark:hover, a.text-dark:focus {
 }
 .custom-switch.b-custom-control-lg .custom-control-label::after,
 .input-group-lg .custom-switch .custom-control-label::after {
-  top: calc(
-        0.21875rem + 2px
-      );
-  left: calc(
-        -2.8125rem + 2px
-      );
-  width: calc(
-  1.25rem - 4px
-);
-  height: calc(
-  1.25rem - 4px
-);
+  top: calc(0.21875rem + 2px);
+  left: calc(-2.8125rem + 2px);
+  width: calc(1.25rem - 4px);
+  height: calc(1.25rem - 4px);
   border-radius: 0.625rem;
   background-size: 50% 50%;
 }
@@ -15063,18 +15054,10 @@ a.text-dark:hover, a.text-dark:focus {
 }
 .custom-switch.b-custom-control-sm .custom-control-label::after,
 .input-group-sm .custom-switch .custom-control-label::after {
-  top: calc(
-        0.153125rem + 2px
-      );
-  left: calc(
-        -1.96875rem + 2px
-      );
-  width: calc(
-  0.875rem - 4px
-);
-  height: calc(
-  0.875rem - 4px
-);
+  top: calc(0.153125rem + 2px);
+  left: calc(-1.96875rem + 2px);
+  width: calc(0.875rem - 4px);
+  height: calc(0.875rem - 4px);
   border-radius: 0.4375rem;
   background-size: 50% 50%;
 }
@@ -15206,9 +15189,7 @@ a.text-dark:hover, a.text-dark:focus {
 .b-custom-control-lg .custom-file-label::after,
 .input-group-lg .custom-file-label::after {
   font-size: inherit;
-  height: calc(
-  1.5em + 1rem
-);
+  height: calc(1.5em + 1rem);
   border-radius: 0 0.3rem 0.3rem 0;
 }
 
@@ -15235,9 +15216,7 @@ a.text-dark:hover, a.text-dark:focus {
 .b-custom-control-sm .custom-file-label::after,
 .input-group-sm .custom-file-label::after {
   font-size: inherit;
-  height: calc(
-  1.5em + 0.5rem
-);
+  height: calc(1.5em + 0.5rem);
   border-radius: 0 0.2rem 0.2rem 0;
 }
 
@@ -16151,7 +16130,7 @@ input[type=color].form-control:disabled {
   bottom: 0;
   left: 0;
   z-index: 0;
-  background: linear-gradient(90deg, transparent, hsla(0deg, 0%, 100%, 0.4), transparent);
+  background: linear-gradient(90deg, transparent, hsla(0, 0%, 100%, 0.4), transparent);
   animation: b-skeleton-animate-wave 1.75s linear infinite;
 }
 @media (prefers-reduced-motion: reduce) {
@@ -16724,8 +16703,7 @@ input[type=color].form-control:disabled {
   display: block;
   position: relative;
   max-width: 350px;
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
+  backface-visibility: hidden;
   background-clip: padding-box;
   z-index: 1;
   border-radius: 0.25rem;
