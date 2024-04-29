@@ -4,8 +4,8 @@
         <div class="card-body m-auto p-0 row">
 <!--            <text-card label="transaction number" :text="transaction['transaction_number']"></text-card>-->
             <div class="col-4"><number-card label="total_to_pay" :number="transactionTotal"></number-card></div>
-            <div class="col-4"><number-card label="total paid" :number="transaction['total_paid']"></number-card></div>
-            <div class="col-4"><number-card label="total_outstanding" :number="transaction['total_outstanding']"></number-card></div>
+            <div class="col-4"><number-card label="total paid" :number="transactionTotalPaid"></number-card></div>
+            <div class="col-4"><number-card label="total_outstanding" :number="transactionTotal - transactionTotalPaid"></number-card></div>
         </div>
     </div>
 
@@ -54,7 +54,7 @@
             <template v-for="payment in transaction['payments']">
                 {{ payment['name'] }} {{ payment['amount'] }} <br>
             </template>
-            <input id="payment_amount" class="form-control"  placeholder="Payment amount">
+            <input id="payment_amount" class="form-control" placeholder="Payment amount" v-model="paymentAmount">
             <button type="button" class="btn btn-primary fa-pull-right m-1 btn-sm" @click="addPaymentCash">Add Payment Cash</button>
             <button type="button" class="btn btn-primary fa-pull-right m-1 btn-sm" @click="addPaymentCard">Add Payment Clover</button>
         </card>
@@ -89,11 +89,15 @@ export default {
     computed: {
         transactionTotal() {
             return this.transaction.entries.reduce((acc, entry) => acc + entry.sold_price * entry.quantity, 0);
-        }
+        },
+        transactionTotalPaid() {
+            return this.transaction.payments.reduce((acc, payment) => acc + payment.amount, 0);
+        },
     },
 
     data() {
         return {
+            paymentAmount: 0,
             transaction: {
                 transaction_number: '#123378819',
                 entries: [
@@ -196,11 +200,11 @@ export default {
         },
 
         addPaymentCash() {
-            this.addPayment('cash', 1251);
+            this.addPayment('cash', this.paymentAmount);
         },
 
         addPaymentCard() {
-            this.addPayment('clover', 1251);
+            this.addPayment('clover',  this.paymentAmount);
             this.addPayment('auth id:', 23721973912);
             this.addPayment('las 4 digits:', 1234);
             this.addPayment('transaction time:', 202404120114);
