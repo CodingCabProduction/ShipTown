@@ -88,10 +88,10 @@ export default {
 
     computed: {
         transactionTotal() {
-            return this.transaction.entries.reduce((acc, entry) => acc + entry.sold_price * entry.quantity, 0);
+            return this.transaction.entries.reduce((acc, entry) => acc + Number(entry.sold_price) * Number(entry.quantity), 0);
         },
         transactionTotalPaid() {
-            return this.transaction.payments.reduce((acc, payment) => acc + payment.amount, 0);
+            return this.transaction.payments.reduce((acc, payment) => acc + Number(payment.amount), 0);
         },
     },
 
@@ -120,8 +120,11 @@ export default {
                 ],
                 payments: [
                     {
+                        'payment_time': '202404120114',
                         'name': 'cash',
-                        'amount': 100
+                        'amount': 100,
+                        'auth_id': '123456',
+                        'last_4_digits': '1234',
                     }
                 ],
                 total_to_pay: 135,
@@ -195,7 +198,7 @@ export default {
 
             this.transaction['payments'].push({
                 'name': name,
-                'amount': amount
+                'amount': amount,
             });
         },
 
@@ -205,9 +208,9 @@ export default {
 
         addPaymentCard() {
             this.addPayment('clover',  this.paymentAmount);
-            this.addPayment('auth id:', 23721973912);
-            this.addPayment('las 4 digits:', 1234);
-            this.addPayment('transaction time:', 202404120114);
+            // this.addPayment('auth id:', 23721973912);
+            // this.addPayment('card 4 digits:', 1234);
+            // this.addPayment('transaction time:', 202404120114);
         },
 
         clearTransaction() {
