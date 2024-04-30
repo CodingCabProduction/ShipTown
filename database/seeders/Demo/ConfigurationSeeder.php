@@ -15,8 +15,8 @@ class ConfigurationSeeder extends Seeder
     public function run()
     {
         Configuration::updateOrCreate([], [
-            'business_name' => env('APP_NAME', 'Demo'),
-            'disable_2fa' => env('DISABLE_2FA', false)
+            'business_name' => '',
+            'disable_2fa' => true
         ]);
     }
 }

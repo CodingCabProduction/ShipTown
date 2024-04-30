@@ -37,6 +37,17 @@
                                     </td>
                                 </tr>
                             </template>
+
+                            <tr class="text-right">
+                                <td class="text-left font-weight-bold"></td>
+                                <td class="text-left font-weight-bold"></td>
+                                <td class="font-weight-bold">{{ toNumberOrDash(product['inventoryTotals'][0]['quantity_available'])}}</td>
+                                <td class="d-none d-md-table-cell">{{ toNumberOrDash(product['inventoryTotals'][0]['quantity_reserved'])}}</td>
+                                <td class="pr-1">{{ toNumberOrDash(product['inventoryTotals'][0]['quantity_incoming']) }}</td>
+                                <td class="d-none d-md-table-cell pr-1">{{ toNumberOrDash(product['inventoryTotals'][0]['quantity_required']) }}</td>
+                                <td class="ml-2 pl-2"></td>
+                                <td class="ml-2"></td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>

@@ -8,9 +8,7 @@ const Modals = {
             },
 
             showRecentInventoryMovementsModal(inventory_id) {
-                this.show('recent-inventory-movements-modal', {
-                    'inventory_id': inventory_id
-                });
+                this.show('recent-inventory-movements-modal', {'inventory_id': inventory_id});
             },
 
             showDataCollectorQuantityRequestModal(data_collection_id, sku_or_alias) {
@@ -19,6 +17,10 @@ const Modals = {
                     'sku_or_alias': sku_or_alias,
                 });
             },
+
+            showProductDetailsModal(product_id) {
+                this.show('product-details-modal', {'product_id': product_id});
+            }
         }
     }
 }

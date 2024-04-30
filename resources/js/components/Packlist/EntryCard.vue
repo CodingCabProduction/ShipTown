@@ -6,7 +6,7 @@
                 sku ordered: <b :class="entry['product_id'] ? '' : 'bg-warning'">{{ entry['sku_ordered'] }}</b>
             </div>
             <div>
-                product: <b><a target="_blank" :href="productUrl">{{ productSku }}</a></b>
+                product: <b><a href="" @click.prevent="showProductDetailsModal">{{ productSku }}</a></b>
             </div>
         </div>
         <div class="col-lg-6">
@@ -60,6 +60,10 @@
             }
         },
         methods: {
+            showProductDetailsModal() {
+                this.$modal.showProductDetailsModal(this.entry['product']['id']);
+            },
+
             dashIfZero(value) {
                 return value === 0 ? '-' : value;
             },

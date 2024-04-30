@@ -31,7 +31,7 @@ class StocktakeSuggestionsSeeder extends Seeder
                         $stocktakeSuggestion->inventory_id  = $inventory->getKey();
                         $stocktakeSuggestion->warehouse_id  = $inventory->warehouse_id;
                         $stocktakeSuggestion->points  = 20;
-                        $stocktakeSuggestion->reason  = 'Manual stoctake request';
+                        $stocktakeSuggestion->reason  = 'Manual stocktake request';
                         $stocktakeSuggestion->save();
                     });
             });

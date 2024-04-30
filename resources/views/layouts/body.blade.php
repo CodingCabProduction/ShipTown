@@ -12,7 +12,7 @@
         <meta name="current-user" content="{{ \App\Http\Resources\UserResource::make(Auth::user()->load('warehouse'))->toJson() }}">
     @endauth
 
-    <title>ship.town @yield('title')</title>
+    <title>ST @yield('title')</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>

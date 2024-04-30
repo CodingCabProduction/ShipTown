@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Demo;
 
 use App\Models\Inventory;
 use App\Models\InventoryMovement;
@@ -32,7 +32,7 @@ class InventorySeeder extends Seeder
                 ]);
 
                 return [
-                    'occurred_at' => '2022-01-03 09:07:00',
+                    'occurred_at' => now()->subMonth(),
                     'inventory_id' => $inventory->getKey(),
                     'product_id' => $inventory->product_id,
                     'warehouse_code' => $inventory->warehouse_code,
@@ -42,7 +42,7 @@ class InventorySeeder extends Seeder
                     'quantity_after' => $inventory->restock_level,
                     'type' => 'stocktake',
                     'description' => 'initial stocktake',
-                    'created_at' => '2022-01-03 09:07:00'
+                    'created_at' => now()->subMonth(),
                 ];
             });
 

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Modules;
 use App\Mail\OrderMail;
 use App\Models\Configuration;
 use App\Models\MailTemplate;
@@ -99,6 +100,40 @@ class AppInstall extends Command
         EventServiceProviderBase::installModule();
         InventoryMovementsServiceProvider::installModule();
 
+        // misc modules
+        Modules\Maintenance\src\EventServiceProviderBase::installModule();
+        Modules\SystemHeartbeats\src\SystemHeartbeatsServiceProvider::installModule();
+        Modules\StockControl\src\StockControlServiceProvider::installModule();
+        Modules\OrderTotals\src\OrderTotalsServiceProvider::installModule();
+        Modules\OrderStatus\src\OrderStatusServiceProvider::installModule();
+        Modules\FireActiveOrderCheckEvent\src\ActiveOrderCheckEventServiceProvider::installModule();
+
+        Modules\InventoryReservations\src\EventServiceProviderBase::installModule();
+        Modules\InventoryTotals\src\InventoryTotalsServiceProvider::installModule();
+        Modules\Automations\src\AutomationsServiceProvider::installModule();
+        Modules\Reports\src\ReportsServiceProvider::installModule();
+
+        // Automations modules
+        // order MIGHT be important!
+        Modules\AutoPilot\src\AutoPilotServiceProvider::installModule();
+        Modules\AutoTags\src\EventServiceProviderBase::installModule();
+        Modules\OversoldProductNotification\src\OversoldProductNotificationServiceProvider::installModule();
+
+        // AutoStatus modules
+        // order is important!
+        Modules\AutoStatusPicking\src\AutoStatusPickingServiceProvider::installModule();
+
+        // 3rd party integrations
+        // order SHOULD not be important
+        Modules\Webhooks\src\WebhooksServiceProviderBase::installModule();
+        Modules\Api2cart\src\Api2cartServiceProvider::installModule();
+        Modules\Rmsapi\src\RmsapiModuleServiceProvider::installModule();
+        Modules\MagentoApi\src\EventServiceProviderBase::installModule();
+        Modules\ScurriAnpost\src\ScurriServiceProvider::installModule();
+        Modules\DpdUk\src\DpdUkServiceProvider::installModule();
+        Modules\AddressLabel\src\AddressLabelServiceProvider::installModule();
+        Modules\DpdIreland\src\DpdIrelandServiceProvider::installModule();
+        Modules\PrintNode\src\PrintNodeServiceProvider::installModule();
 
         StocktakeSuggestionsServiceProvider::enableModule();
         InventoryMovementsStatisticsServiceProvider::enableModule();

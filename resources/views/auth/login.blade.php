@@ -5,11 +5,8 @@
     <div class="row justify-content-center">
         <div class="col-md-8 mt-3">
             @if(config('app.demo_mode'))
-                <div class="alert alert-danger">
-                    This is a demo site with public access<br>
-                </div>
-                <div class="alert alert-danger">
-                    Please do no use real data here as it will be deleted without notice or might be exposed to others<br>
+                <div class="alert alert-warning text-center">
+                    DEMO MODE<br>
                 </div>
             @endif
             <div class="card">

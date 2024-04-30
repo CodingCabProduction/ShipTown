@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\BaseModel;
+use App\Modules\InventoryMovementsStatistics\src\Models\InventoryMovementsStatistic;
 use App\Traits\LogsActivityTrait;
 use Barryvdh\LaravelIdeHelper\Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -308,5 +309,10 @@ class Inventory extends BaseModel
         return $this->hasMany(InventoryMovement::class, 'inventory_id', 'id')
             ->where('type', InventoryMovement::TYPE_SALE)
             ->whereBetween('created_at', [Carbon::now()->subDays(7), Carbon::now()]);
+    }
+
+    public function movementsStatistics(): HasMany
+    {
+        return $this->hasMany(InventoryMovementsStatistic::class, 'inventory_id', 'id');
     }
 }

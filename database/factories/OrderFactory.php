@@ -2,10 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Order;
 use App\Models\OrderAddress;
 use App\Models\OrderStatus;
-use App\User;
 use Carbon\Carbon;
 use Carbon\Exceptions\InvalidFormatException;
 use DateTimeZone;

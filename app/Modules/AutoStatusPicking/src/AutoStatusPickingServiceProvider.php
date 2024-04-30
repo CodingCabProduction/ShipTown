@@ -4,6 +4,7 @@ namespace App\Modules\AutoStatusPicking\src;
 
 use App\Events\EveryHourEvent;
 use App\Events\Order\OrderUpdatedEvent;
+use App\Modules\AutoStatusPicking\src\Jobs\RefillPickingIfEmptyJob;
 use App\Modules\BaseModuleServiceProvider;
 
 /**
@@ -38,4 +39,11 @@ class AutoStatusPickingServiceProvider extends BaseModuleServiceProvider
             Listeners\OrderUpdatedEvent\RefillPickingIfEmpty::class,
         ],
     ];
+
+    public static function enabling(): bool
+    {
+        RefillPickingIfEmptyJob::dispatch();
+
+        return true;
+    }
 }

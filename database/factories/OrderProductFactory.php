@@ -2,14 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\Inventory;
 use App\Models\Order;
-use App\Models\OrderProduct;
 use App\Models\Product;
-use App\Models\Warehouse;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
 
 class OrderProductFactory extends Factory
 {

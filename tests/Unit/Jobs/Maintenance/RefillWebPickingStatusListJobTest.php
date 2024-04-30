@@ -9,6 +9,7 @@ use App\Models\OrderProduct;
 use App\Models\OrderStatus;
 use App\Models\Product;
 use App\Modules\AutoStatusPicking\src\AutoStatusPickingServiceProvider;
+use App\Modules\AutoStatusPicking\src\Jobs\RefillPickingIfEmptyJob;
 use App\Modules\InventoryReservations\src\EventServiceProviderBase as InventoryReservationsEventServiceProviderBase;
 use Tests\TestCase;
 
@@ -40,7 +41,7 @@ class RefillWebPickingStatusListJobTest extends TestCase
                     ->create(['order_id' => $order->id]);
             });
 
-        DispatchEveryDayEventJob::dispatch();
+        RefillPickingIfEmptyJob::dispatch();
 
         $this->assertEquals(
             AutoStatusPickingConfiguration::firstOrCreate([], [])->max_batch_size,

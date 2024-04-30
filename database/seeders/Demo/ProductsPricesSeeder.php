@@ -1,12 +1,12 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Demo;
 
 use App\Models\Product;
 use App\Models\ProductPrice;
 use Illuminate\Database\Seeder;
 
-class ProductPriceSeeder extends Seeder
+class ProductsPricesSeeder extends Seeder
 {
     /**
      * Run the database seeds.

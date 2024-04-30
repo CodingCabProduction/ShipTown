@@ -32,6 +32,5 @@
     <vue-snotify></vue-snotify>
 
     <recent-inventory-movements-modal></recent-inventory-movements-modal>
-    <product-modal></product-modal>
-
+    <product-details-modal></product-details-modal>
 @endsection

@@ -160,7 +160,6 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
  */
 Vue.component('point-of-sale-page', require('./components/PointOfSalePage.vue').default);
 Vue.component('recent-inventory-movements-modal', require('./modals/RecentInventoryMovementsModal.vue').default);
-Vue.component('product-info-modal', require('./modals/ProductInfoModal.vue').default);
 Vue.component('stocktake-suggestions-page', require('./components/Settings/Modules/StocktakeSuggestionsPage.vue').default);
 Vue.component('activity-log-page', require('./components/ActivityLogPage.vue').default);
 Vue.component('admin-modules-slack-config-page', require('./components/admin/modules/slack/config-page.vue').default);
@@ -204,7 +203,7 @@ Vue.component('printer-configuration', require('./components/Settings/PrintersCo
 Vue.component('printnode-configuration', require('./components/Settings/PrintNode.vue').default);
 Vue.component('product-count-request-input-field', require('./components/SharedComponents/ProductCountRequestInputField.vue').default);
 Vue.component('product-info-card', require('./components/SharedComponents/ProductInfoCard.vue').default);
-Vue.component('product-modal', require('./components/Products/ProductModal.vue').default);
+Vue.component('product-details-modal', require('./modals/ProductDetailsModal.vue').default);
 Vue.component('products-table', require('./components/ProductsPage.vue').default);
 Vue.component('quick-connect-magento-page', require('./components/QuickConnectMagentoPage.vue').default);
 Vue.component('restocking-page', require('./components/RestockingPage.vue').default);

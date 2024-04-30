@@ -44,12 +44,12 @@ class RestockingReport extends Report
             'last_received_at',
             'last_movement_at',
             'last_counted_at',
-            'inventory_source_shelf_location'
+            'inventory_source_shelf_location',
         ]);
 
         $this->defaultSort = '-quantity_required';
 
-        $this->allowedIncludes = ['product', 'product.tags', 'product.prices'];
+        $this->allowedIncludes = ['product', 'product.tags', 'product.prices', 'movementsStatistics'];
 
         $warehouseIds = Warehouse::withAnyTagsOfAnyType('fulfilment')->get('id');
 

@@ -5,22 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Configuration;
 use Illuminate\Http\JsonResponse;
 
-/**
- * Class ManifestController.
- */
 class ManifestController extends Controller
 {
-    /**
-     * @return JsonResponse
-     */
     public function index(): JsonResponse
     {
+        /** @var Configuration $config */
         $config = Configuration::first();
 
         return response()->json([
-            'name'       => 'Product Management ' . $config->business_name,
-            'short_name' => 'ShipTown ' . $config->business_name,
-            "description" => "Helps businesses increase profits by simplifying and automating order fulfilment process",
+            'name'       => 'ShipTown ' . $config->business_name,
+            'short_name' => empty($config->business_name) ? 'ShipTown' : 'ST ' . $config->business_name,
+            "description" => "Order and Inventory Management made simple",
             "categories" => ["ecommerce", "business", "productivity", "utilities"],
             'icons'      => [
                 [

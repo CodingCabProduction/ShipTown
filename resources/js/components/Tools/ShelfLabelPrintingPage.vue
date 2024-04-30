@@ -69,8 +69,8 @@ export default {
             customLabelText: this.getUrlParameter('search', ''),
             fromLetter: this.getUrlParameter('from-letter', 'A'),
             fromNumber: this.getUrlParameter('from-number', 1),
-            toLetter: this.getUrlParameter('to-letter', 'A'),
-            toNumber: this.getUrlParameter('to-number', 3),
+            toLetter: this.getUrlParameter('to-letter', 'B'),
+            toNumber: this.getUrlParameter('to-number', 2),
             templates:[
                 'shelf-labels/6x4-1-per-page',
                 'shelf-labels/4x6-2-per-page',

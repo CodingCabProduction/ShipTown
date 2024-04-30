@@ -2,7 +2,7 @@
     <div>
         <search-and-option-bar-observer/>
         <search-and-option-bar :isStickable="true">
-            <stocktake-input @stocktakeSubmitted="reloadData"></stocktake-input>
+            <stocktake-input @stocktakeSubmitted="reloadData" :placeholder="'test'"></stocktake-input>
             <template v-slot:buttons>
                 <button type="button" v-b-modal="'quick-actions-modal'" class="btn btn-primary ml-1 md:ml-2"><font-awesome-icon icon="cog" class="fa-lg"></font-awesome-icon></button>
             </template>

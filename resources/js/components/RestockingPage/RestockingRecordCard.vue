@@ -36,7 +36,7 @@
                         <number-card label="weeks cover" :number="weeksCover"></number-card>
                         <text-card label="" text=""></text-card>
                         <number-card label="sold 7 days" :number="record['quantity_sold_last_7_days']"></number-card>
-                        <number-card label="incoming" :number="record['quantity_incoming']"></number-card>
+                        <number-card label="incoming" :number="record['inventory_movements_statistics']"></number-card>
                     </div>
                 </div>
 

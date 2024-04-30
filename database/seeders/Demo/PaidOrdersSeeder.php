@@ -3,6 +3,7 @@
 namespace Database\Seeders\Demo;
 
 use App\Models\Order;
+use App\Models\OrderAddress;
 use App\Models\OrderProduct;
 use App\Models\Product;
 use Illuminate\Database\Seeder;
@@ -18,7 +19,7 @@ class PaidOrdersSeeder extends Seeder
     {
         Order::factory()
             ->count(1)
-            ->create(['status_code' => 'paid', 'label_template' => 'address_label'])
+            ->create(['status_code' => 'paid', 'label_template' => 'address_label', 'shipping_address_id' => $this->createIrishShippingAddress()->getKey()])
             ->each(function (Order $order) {
                 Product::query()
                     ->whereIn('sku', ['45', '46'])
@@ -41,7 +42,7 @@ class PaidOrdersSeeder extends Seeder
 
         Order::factory()
             ->count(1)
-            ->create(['status_code' => 'paid', 'label_template' => 'address_label'])
+            ->create(['status_code' => 'paid', 'label_template' => 'address_label', 'shipping_address_id' => $this->createIrishShippingAddress()->getKey()])
             ->each(function (Order $order) {
                 Product::query()
                     ->inRandomOrder()
@@ -64,7 +65,7 @@ class PaidOrdersSeeder extends Seeder
 
         Order::factory()
             ->count(10)
-            ->create(['status_code' => 'paid', 'label_template' => 'address_label'])
+            ->create(['status_code' => 'paid', 'label_template' => 'address_label', 'shipping_address_id' => $this->createIrishShippingAddress()->getKey()])
             ->each(function (Order $order) {
                 Product::query()
                     ->inRandomOrder()
@@ -87,7 +88,7 @@ class PaidOrdersSeeder extends Seeder
 
         Order::factory()
             ->count(3)
-            ->create(['status_code' => 'paid', 'label_template' => 'address_label'])
+            ->create(['status_code' => 'paid', 'label_template' => 'address_label', 'shipping_address_id' => $this->createIrishShippingAddress()->getKey()])
             ->each(function (Order $order) {
                 Product::query()
                     ->inRandomOrder()
@@ -110,7 +111,7 @@ class PaidOrdersSeeder extends Seeder
 
         Order::factory()
             ->count(2)
-            ->create(['status_code' => 'paid'])
+            ->create(['status_code' => 'paid', 'shipping_address_id' => $this->createIrishShippingAddress()->getKey()])
             ->each(function (Order $order) {
                 Product::query()
                     ->inRandomOrder()
@@ -133,7 +134,7 @@ class PaidOrdersSeeder extends Seeder
 
         Order::factory()
             ->count(1)
-            ->create(['status_code' => 'packing', 'label_template' => 'address_label'])
+            ->create(['status_code' => 'packing', 'label_template' => 'address_label', 'shipping_address_id' => $this->createIrishShippingAddress()->getKey()])
             ->each(function (Order $order) {
                 Product::query()
                     ->whereIn('sku', ['45'])
@@ -153,5 +154,13 @@ class PaidOrdersSeeder extends Seeder
                 $order = $order->refresh();
                 Order::query()->where(['id' => $order->getKey()])->update(['total_paid' => $order->total_order]);
             });
+    }
+
+    /**
+     * @return mixed
+     */
+    public function createIrishShippingAddress(): mixed
+    {
+        return OrderAddress::factory()->create(['country_name' => 'Ireland', 'country_code' => 'IE']);
     }
 }

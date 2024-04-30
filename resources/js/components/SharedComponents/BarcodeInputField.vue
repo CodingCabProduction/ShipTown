@@ -174,7 +174,7 @@
                 this.shelfLocationModalContinuesScan = false;
                 this.shelfLocationModalCommandScanCount = 0;
                 this.importValueFromUrlParam();
-                this.setFocusElementById('barcodeInput')
+                this.setFocusElementById(this.getInputId)
                 this.$emit('refreshRequest');
             },
 
@@ -223,21 +223,19 @@
                 window.location.href = this.command['value'];
             },
 
-            updateShelfLocation(event)
-            {
+            updateShelfLocation(event) {
                 const textEntered = event.target.value;
 
                 if (textEntered === "") {
                     return;
                 }
 
-                let s = this.command['name'] + ':' + this.command['value'];
+                let lastCommand = this.command['name'] + ':' + this.command['value'];
 
-                if (textEntered === s) {
+                if (textEntered === lastCommand) {
                     event.target.value = '';
 
                     if (this.shelfLocationModalContinuesScan) {
-                        this.setFocusOnBarcodeInput();
                         this.$bvModal.hide(this.getModalID);
                         return;
 
@@ -263,6 +261,7 @@
                                 'shelve_location': this.command['value'],
                             })
                             .then(() => {
+                                this.$bvModal.hide(this.getModalID);
                                 this.notifySuccess('Shelf updated');
                             })
                             .catch((error) => {
@@ -275,11 +274,7 @@
 
                 if(this.shelfLocationModalContinuesScan) {
                     this.setFocusElementById('set-shelf-location-command-modal-input')
-                    return;
                 }
-
-                this.setFocusOnBarcodeInput();
-                this.$bvModal.hide(this.getModalID);
             },
 
             setFocusOnBarcodeInput(showKeyboard = false, autoSelectAll = true, delay = 100) {

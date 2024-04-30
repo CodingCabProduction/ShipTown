@@ -66,14 +66,7 @@ class DpdIrelandSeeder extends Seeder
         $orders[] = Order::factory()->create([
             'order_number' => 'T100004 - DPD Ireland Test Order',
             'shipping_address_id' => $testAddress->getKey(),
-            'status_code' => 'test_orders_courier_dpd_ireland',
-            'label_template' => 'dpd_irl_next_day',
-        ]);
-
-        $orders[] = Order::factory()->create([
-            'order_number' => 'T100005 - Dpd Ireland Test Order',
-            'shipping_address_id' => $testAddress->getKey(),
-            'status_code' => 'autopilot_packlist_test',
+            'status_code' => 'paid',
             'label_template' => 'dpd_irl_next_day',
         ]);
 

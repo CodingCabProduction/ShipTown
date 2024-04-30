@@ -21,7 +21,6 @@ use Illuminate\Support\Carbon;
  *
  * @method static Builder|AutoStatusPickingConfiguration newModelQuery()
  * @method static Builder|AutoStatusPickingConfiguration newQuery()
- * @method static Builder|AutoStatusPickingConfiguration query()
  * @method static Builder|AutoStatusPickingConfiguration whereCreatedAt($value)
  * @method static Builder|AutoStatusPickingConfiguration whereId($value)
  * @method static Builder|AutoStatusPickingConfiguration whereMaxBatchSize($value)

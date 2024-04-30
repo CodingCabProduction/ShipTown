@@ -728,8 +728,7 @@ export default {
         },
 
         showProductModal(orderProduct) {
-            let search = orderProduct['product'] ? orderProduct['product']['sku'] : orderProduct['sku_ordered'];
-            this.$eventBus.$emit('show-product-modal', search);
+            this.$modal.showProductDetailsModal(orderProduct['product']['id']);
         },
 
         getProductQuantity(orderProduct) {

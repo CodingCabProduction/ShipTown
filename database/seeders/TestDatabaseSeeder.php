@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Jobs\DispatchEveryHourEventJobs;
+use Database\Seeders\Demo\InventorySeeder;
 use Illuminate\Database\Seeder;
 
 class TestDatabaseSeeder extends Seeder

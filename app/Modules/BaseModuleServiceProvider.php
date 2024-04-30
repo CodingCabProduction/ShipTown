@@ -59,6 +59,12 @@ abstract class BaseModuleServiceProvider extends EventServiceProvider
         return true;
     }
 
+    public static function installing(): bool
+    {
+        // this method is fired when module is being installed
+        // return false if you want to prevent installing
+        return true;
+    }
 
     public static function enabling(): bool
     {
@@ -70,7 +76,7 @@ abstract class BaseModuleServiceProvider extends EventServiceProvider
     public static function disabling(): bool
     {
         // this method is fired when module is being disabled
-        // return false if you want to prevent enabling
+        // return false if you want to prevent disabling
         return true;
     }
 
@@ -148,7 +154,18 @@ abstract class BaseModuleServiceProvider extends EventServiceProvider
     public static function installModule(): bool
     {
         try {
-            Module::firstOrCreate(['service_provider_class' => get_called_class()], []);
+            /** @var BaseModuleServiceProvider $moduleServiceProvider */
+            $moduleServiceProvider = get_called_class();
+
+            if (!$moduleServiceProvider::installing()) {
+                return false;
+            }
+
+            Module::query()->firstOrCreate([
+                'service_provider_class' => $moduleServiceProvider
+            ], [
+                'enabled' => $moduleServiceProvider::$autoEnable,
+            ]);
 
             return true;
         } catch (Exception $exception) {
@@ -157,16 +174,16 @@ abstract class BaseModuleServiceProvider extends EventServiceProvider
         }
     }
 
-    /**
-     *
-     */
-    public static function disableModule()
+    public static function disableModule(): void
     {
-        $module = Module::firstOrCreate(['service_provider_class' => get_called_class()], ['enabled' => false]);
+        $module = Module::query()->firstOrCreate([
+            'service_provider_class' => get_called_class()
+        ], [
+            'enabled' => false
+        ]);
 
         if ($module->enabled) {
-            $module->enabled = false;
-            $module->save();
+            $module->update(['enabled' => false]);
         }
     }
 }

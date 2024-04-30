@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\OrderAddress;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class OrderAddressFactory extends Factory

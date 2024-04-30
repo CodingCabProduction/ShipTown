@@ -32,7 +32,12 @@ class TestOrdersSeeder extends Seeder
 
     protected function create_order_with_sku_not_in_our_database(): void
     {
-        $order = Order::query()->create(['order_number' => 'T100001', 'order_placed_at' => now()->subDays(3)]);
+        $shippingAddress = OrderAddress::factory()->create([
+            'country_name' => 'Ireland',
+            'country_code' => 'IE',
+        ]);
+
+        $order = Order::query()->create(['order_number' => 'T100001', 'order_placed_at' => now()->subDays(3), 'shipping_address_id' => $this->createIrishShippingAddress()->getKey()]);
 
         OrderComment::create([
             'order_id' => $order->getKey(),
@@ -58,7 +63,7 @@ class TestOrdersSeeder extends Seeder
 
     protected function create_test_order_for_packing(): void
     {
-        $order = Order::query()->create(['order_number' => 'T100002 - Packsheet', 'status_code' => 'paid', 'order_placed_at' => now()->subDays(3)]);
+        $order = Order::query()->create(['order_number' => 'T100002 - Packsheet', 'status_code' => 'paid', 'order_placed_at' => now()->subDays(3), 'shipping_address_id' => $this->createIrishShippingAddress()->getKey()]);
 
         Product::query()
             ->whereIn('sku', ['45', '44'])
@@ -80,7 +85,7 @@ class TestOrdersSeeder extends Seeder
 
     protected function create_test_unpaid_order(): void
     {
-        $order = Order::factory()->create(['order_number' => 'T100002 - Unpaid order', 'order_placed_at' => now()->subDays(3), 'total_paid' => 0]);
+        $order = Order::factory()->create(['order_number' => 'T100002 - Unpaid order', 'order_placed_at' => now()->subDays(3), 'total_paid' => 0, 'shipping_address_id' => $this->createIrishShippingAddress()->getKey()]);
 
         Product::query()
             ->whereIn('sku', ['45'])
@@ -140,7 +145,7 @@ class TestOrdersSeeder extends Seeder
 
     private function create_test_paid_order(): void
     {
-        $order = Order::factory()->create(['status_code' => 'paid', 'order_placed_at' => now()->subDays(3)]);
+        $order = Order::factory()->create(['status_code' => 'paid', 'order_placed_at' => now()->subDays(3), 'shipping_address_id' => $this->createIrishShippingAddress()->getKey()]);
 
         Product::query()
             ->inRandomOrder()
@@ -158,5 +163,10 @@ class TestOrdersSeeder extends Seeder
             });
 
         Order::query()->where(['id' => $order->getKey()])->update(['total_paid' => DB::raw('IFNULL(total_order, 0)')]);
+    }
+
+    private function createIrishShippingAddress()
+    {
+        return OrderAddress::factory()->create(['country_name' => 'Ireland', 'country_code' => 'IE']);
     }
 }

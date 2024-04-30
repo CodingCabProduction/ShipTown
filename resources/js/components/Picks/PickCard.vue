@@ -16,7 +16,7 @@
                             <div class="col-md-8 col-lg-6">
                                 <div class="text-primary h5">{{ pick['name_ordered'] }}</div>
                                 <div>sku: <div dusk="product_sku" id="product_sku" class="font-weight-bold d-inline"> {{ pick['sku_ordered'] }} </div></div>
-                                <div>product: <b> <a target="_blank" :href="'/products?hide_nav_bar=true&filter[sku]=' + product_sku ">{{ product_sku }}</a></b></div>
+                                <div>product: <b> <a :href="'/products?hide_nav_bar=true&filter[sku]=' + product_sku" @click.prevent="showProductDetailsModal">{{ product_sku }}</a></b></div>
                             </div>
                             <div class="col-md-4 col-lg-6">
                                 <div class="row">
@@ -88,6 +88,10 @@ export default {
     },
 
     methods: {
+        showProductDetailsModal() {
+            this.$modal.showProductDetailsModal(this.pick['product']['id']);
+        },
+
         transitionEnd() {
             if (this.swiper.activeIndex === 1) {
                 return;

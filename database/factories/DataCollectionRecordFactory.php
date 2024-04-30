@@ -6,7 +6,6 @@ use App\Models\DataCollection;
 use App\Models\DataCollectionRecord;
 use App\Models\Inventory;
 use App\Models\Product;
-use Closure;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class DataCollectionRecordFactory extends Factory

@@ -5,9 +5,11 @@ namespace Database\Seeders\Demo\DataCollections;
 use App\Models\DataCollection;
 use App\Models\DataCollectionRecord;
 use App\Models\DataCollectionTransferIn;
+use App\Models\Product;
 use App\Models\Warehouse;
-use App\Modules\DataCollector\src\Jobs\DispatchCollectionsTasksJob;
 use App\Modules\DataCollector\src\Jobs\TransferInJob;
+use App\Modules\InventoryMovements\src\Jobs\SequenceNumberJob;
+use App\Modules\InventoryMovementsStatistics\src\Jobs\RecalculateStatisticsTableJob;
 use Illuminate\Database\Seeder;
 
 class ArchivedTransfersFromWarehouseSeeder extends Seeder
@@ -22,7 +24,7 @@ class ArchivedTransfersFromWarehouseSeeder extends Seeder
         $sourceWarehouse = Warehouse::query()->firstOrCreate(['code' => 'WHS'], ['name' => 'Warehouse']);
 
         Warehouse::query()
-            ->whereNotIn('id', [$sourceWarehouse->id])
+            ->whereNotIn('code', ['WHS', '999'])
             ->get()
             ->each(function ($destinationWarehouse) use ($sourceWarehouse) {
                 $dataCollection = DataCollection::factory()
@@ -37,11 +39,15 @@ class ArchivedTransfersFromWarehouseSeeder extends Seeder
                     ->count(5)
                     ->create([
                         'data_collection_id' => $dataCollection->getKey(),
+                        'product_id' => Product::query()->inRandomOrder()->first()->getKey(),
                     ]);
 
                 $dataCollection->delete();
 
                 TransferInJob::dispatch($dataCollection->getKey());
             });
+
+        SequenceNumberJob::dispatch();
+        RecalculateStatisticsTableJob::dispatch();
     }
 }

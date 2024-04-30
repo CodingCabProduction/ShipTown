@@ -16,7 +16,7 @@ class WarehousesSeeder extends Seeder
     {
         Warehouse::firstOrCreate(['code' => 'WEB'], ['name' => 'Website Orders'])->attachTag('ALL');
 
-        Warehouse::firstOrCreate(['code' => 'WHS'], ['name' => 'Warehouse'])->attachTag('ALL');
+        Warehouse::firstOrCreate(['code' => 'WHS'], ['name' => 'Warehouse'])->attachTag('ALL')->attachTag('fulfilment');
         Warehouse::firstOrCreate(['code' => 'DUB'], ['name' => 'Dublin'])->attachTag('ALL');
         Warehouse::firstOrCreate(['code' => 'CRK'], ['name' => 'Cork'])->attachTag('ALL');
         Warehouse::firstOrCreate(['code' => 'GAL'], ['name' => 'Galway'])->attachTag('ALL');

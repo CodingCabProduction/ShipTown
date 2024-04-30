@@ -19,7 +19,7 @@ class ActiveOrdersInventoryReservationsServiceProvider extends BaseModuleService
 
     public static string $settings_link = '/settings/modules/active-orders-inventory-reservations';
 
-    public static bool $autoEnable = false;
+    public static bool $autoEnable = true;
 
     protected $listen = [
         OrderProductUpdatedEvent::class => [

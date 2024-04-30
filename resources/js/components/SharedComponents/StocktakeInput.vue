@@ -1,6 +1,6 @@
 <template>
     <div>
-        <barcode-input-field :input_id="input_id" placeholder="Search products using name, sku, alias or command"
+        <barcode-input-field :input_id="input_id" placeholder="Enter sku or alias to stocktake"
                              @barcodeScanned="showStocktakeModal"></barcode-input-field>
 
         <b-modal :id="modal_name" scrollable no-fade hide-header

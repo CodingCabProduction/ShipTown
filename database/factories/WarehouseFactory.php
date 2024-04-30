@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\OrderAddress;
-use App\Models\Warehouse;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 

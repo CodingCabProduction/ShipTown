@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', __('Data Collector List'))
+
 @section('content')
     <div class="container">
         <div class="row justify-content-center">

@@ -14,10 +14,7 @@
 
         <div class="row mb-1 pb-2 p-1 sticky-top bg-light" style="z-index: 10;" v-if="currentUser['warehouse'] !== null">
             <div class="flex-fill">
-
             </div>
-
-
         </div>
 
         <div class="row pl-2 p-0">
@@ -25,6 +22,10 @@
                 TOOLS > RESTOCKING
             </div>
         </div>
+
+        <template v-for="record in data">
+            <restocking-record-card :record="record" :key="record.id" @showModalMovement=showRecentInventoryMovementsModal></restocking-record-card>
+        </template>
 
         <b-modal id="configuration-modal" no-fade hide-header
                  @shown="setFocusElementById('stocktake-input')"
@@ -42,9 +43,6 @@
             </template>
         </b-modal>
 
-        <template v-for="record in data">
-            <restocking-record-card :record="record" :key="record.id" @showModalMovement=showRecentInventoryMovementsModal></restocking-record-card>
-        </template>
 
         <div class="row">
             <div class="col">
@@ -108,7 +106,7 @@ export default {
                 this.showLoading();
 
                 const params = this.$router.currentRoute.query;
-                params['include'] = 'product,product.tags,product.prices';
+                params['include'] = 'product,product.tags,product.prices,movementsStatistics';
                 params['per_page'] = this.per_page;
                 params['page'] = page;
 

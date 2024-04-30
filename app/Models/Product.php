@@ -34,6 +34,7 @@ use Spatie\Tags\Tag;
  * @property int              $id
  * @property string           $sku
  * @property string           $name
+ * @property string           $supplier
  * @property float            $price
  * @property float            $sale_price
  * @property Carbon           $sale_price_start_date
@@ -61,7 +62,6 @@ use Spatie\Tags\Tag;
  * @method static Builder|Product newModelQuery()
  * @method static Builder|Product newQuery()
  * @method static Builder|Product onlyTrashed()
- * @method static Builder|Product query()
  * @method static Builder|Product skuOrAlias($skuOrAlias)
  * @method static Builder|Product whereCreatedAt($value)
  * @method static Builder|Product whereDeletedAt($value)
@@ -195,7 +195,8 @@ class Product extends BaseModel
                 'tags',
                 'prices',
                 'inventory.warehouse',
-                'inventoryMovementsStatistics'
+                'inventoryMovementsStatistics',
+                'inventoryTotals',
             ]);
     }
 
