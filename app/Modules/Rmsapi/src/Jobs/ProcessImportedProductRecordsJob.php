@@ -3,7 +3,6 @@
 namespace App\Modules\Rmsapi\src\Jobs;
 
 use App\Abstracts\UniqueJob;
-use App\Models\Inventory;
 use App\Models\InventoryReservation;
 use App\Models\ProductAlias;
 use App\Modules\Rmsapi\src\Models\RmsapiProductImport;
@@ -134,18 +133,21 @@ class ProcessImportedProductRecordsJob extends UniqueJob
 
         $quantityCommittedInRMS = data_get($importedProduct->raw_import, 'quantity_committed', 0);
 
-        if ($quantityCommittedInRMS != 0) {
-            InventoryReservation::query()->updateOrCreate([
-                'custom_uuid' => $reservationUuid,
-            ], [
+        $inventoryReservation = InventoryReservation::query()->where('custom_uuid', $reservationUuid)->first();
+
+        if ($quantityCommittedInRMS === 0 && $inventoryReservation) {
+            $inventoryReservation->delete();
+        } elseif ($quantityCommittedInRMS > 0 && $inventoryReservation) {
+            $inventoryReservation->update(['quantity_reserved' => $quantityCommittedInRMS]);
+        } elseif ($quantityCommittedInRMS > 0 && !$inventoryReservation) {
+            InventoryReservation::query()->create([
                 'inventory_id' => $importedProduct->inventory->id,
-                'warehouse_code' => $importedProduct->inventory->warehouse_code,
-                'product_sku' => $importedProduct->sku,
+                'warehouse_code' => $importedProduct->inventory->warehouse->code,
+                'product_sku' => $importedProduct->product->sku,
                 'quantity_reserved' => $quantityCommittedInRMS,
+                'custom_uuid' => $reservationUuid,
                 'comment' => 'Microsoft RMS - Imported Quantity Committed',
             ]);
-        } else {
-            InventoryReservation::query()->where('custom_uuid', $reservationUuid)->delete();
         }
     }
 
