@@ -106,6 +106,7 @@ export default {
                 this.showLoading();
 
                 const params = this.$router.currentRoute.query;
+                params['select'] = 'product_sku,product_name,warehouse_code,reorder_point,restock_level,quantity_in_stock,quantity_available,quantity_incoming,quantity_required,last_movement_at,last_sold_at,first_sold_at,last_counted_at,first_received_at,last_received_at,last7days_sales_quantity_delta,last14days_sales_quantity_delta,last28days_sales_quantity_delta,quantity_sold_last_7_days,quantity_sold_last_14_days,quantity_sold_last_28_days,warehouse_quantity,inventory_source_warehouse_code,warehouse_has_stock,inventory_source_shelf_location,id,product_id,inventory_id,warehouse_id'
                 params['include'] = 'product,product.tags,product.prices,movementsStatistics';
                 params['per_page'] = this.per_page;
                 params['page'] = page;

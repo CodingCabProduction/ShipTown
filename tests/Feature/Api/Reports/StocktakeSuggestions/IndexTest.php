@@ -50,7 +50,7 @@ class IndexTest extends TestCase
             ],
         );
         $response = $this->actingAs($user, 'api')
-            ->getJson('/api/reports/stocktake-suggestions');
+            ->getJson('/api/reports/stocktake-suggestions?select=inventory_id,points,reason');
 
         $response->assertOk();
     }

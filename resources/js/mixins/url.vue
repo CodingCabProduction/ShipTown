@@ -68,8 +68,9 @@
 
             setUrlParameterAngGo: function(param, value) {
                 this.setUrlParameter(param, value);
-                window.location.reload();
-
+                this.$nextTick(() => {
+                    this.$router.go();
+                });
                 return this;
             },
 

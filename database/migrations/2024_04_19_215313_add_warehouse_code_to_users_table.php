@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('warehouse_code')->nullable();
+            $table->string('warehouse_code')->nullable()->after('name');
 
             $table->foreign('warehouse_code')
                 ->references('code')

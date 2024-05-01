@@ -13,10 +13,10 @@
 </template>
 
 <script>
-    import helpers from "../../mixins/helpers";
-    import url from "../../mixins/url";
+import helpers from "../../mixins/helpers";
+import url from "../../mixins/url";
 
-    export default {
+export default {
         mixins: [helpers, url],
 
         name: "ProductInfoCard",
@@ -31,12 +31,6 @@
             },
             getTagName(tag) {
                 return tag.name instanceof Object ? tag.name['en'] : tag.name
-            },
-
-            setUrlParameterAngGo: function(param, value) {
-                this.setUrlParameter(param, value);
-                window.location.reload();
-                return this;
             },
         }
     }

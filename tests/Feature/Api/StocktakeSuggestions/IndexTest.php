@@ -27,7 +27,7 @@ class IndexTest extends TestCase
             ]
         );
 
-        $response = $this->actingAs($user, 'api')->getJson(url('api/stocktake-suggestions'));
+        $response = $this->actingAs($user, 'api')->getJson(url('api/stocktake-suggestions?select=inventory_id,points,reason'));
 
         ray($response->json());
 

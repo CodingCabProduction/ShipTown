@@ -41,7 +41,7 @@ class StocktakingPageTest extends DuskTestCase
                 ->pause($this->shortDelay)
                 ->assertSee('TOOLS > STOCKTAKING')
                 ->assertSee('SEE MORE')
-                ->assertSee('STOCKTAKING SUGGESTIONS')
+                ->assertSee('REPORTS > STOCKTAKE SUGGESTIONS')
                 ->assertSourceMissing('snotify-error')
                 ->assertFocused('@barcode-input-field');
         });

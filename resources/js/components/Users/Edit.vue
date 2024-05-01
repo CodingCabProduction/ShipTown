@@ -36,13 +36,13 @@
                 <label for="create-warehouse_id" class="col-sm-3 col-form-label">Warehouse</label>
                 <div class="col-sm-9">
                     <ValidationProvider vid="warehouse_id" name="warehouse_id" v-slot="{ errors }">
-                        <select v-model="warehouseId" :class="{
+                        <select v-model="selectedWarehouse" :class="{
                                 'form-control': true,
                                 'is-invalid': errors.length > 0,
                             }"
                             id="create-warehouse_id">
                             <option value=""></option>
-                            <option v-for="warehouse in warehouses" :key="warehouse.id" :value="warehouse.id">
+                            <option v-for="warehouse in warehouses" :key="warehouse.id" :value="warehouse">
                                 {{ warehouse.name }}
                             </option>
                         </select>
@@ -93,7 +93,7 @@ export default {
                 const user = data.data[0];
                 this.name = user.name;
                 this.roleId = user['roles'][0]['id'];
-                this.warehouseId = user.warehouse_id;
+                this.selectedWarehouse = user.warehouse;
                 this.default_dashboard_uri = user.default_dashboard_uri;
             })
             .catch(e => {
@@ -113,7 +113,8 @@ export default {
     data: () => ({
         name: null,
         roleId: null,
-        warehouseId: null,
+        selectedWarehouse: null,
+        warehouseCode: null,
         default_dashboard_uri: null,
     }),
 
@@ -123,7 +124,8 @@ export default {
             this.apiPostUserUpdate(this.id, {
                     name: this.name,
                     role_id: this.roleId,
-                    warehouse_id: this.warehouseId,
+                    warehouse_id: this.selectedWarehouse['id'],
+                    warehouse_code: this.selectedWarehouse['code'],
                     default_dashboard_uri: this.default_dashboard_uri,
                 })
                 .then(({ data }) => {

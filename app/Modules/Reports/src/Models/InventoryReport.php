@@ -21,107 +21,52 @@ class InventoryReport extends Report
                     ->on('inventory.warehouse_id', '=', 'product_prices.warehouse_id');
             });
 
-        $this->defaultSelect = implode(',', [
-            'warehouse_code',
-            'product_sku',
-            'product_name',
-            'supplier',
-            'department',
-            'shelf_location',
-            'quantity',
-            'retail_value',
-            'cost_value',
-            'quantity_reserved',
-            'quantity_available',
-            'quantity_incoming',
-            'quantity_required',
-            'reorder_point',
-            'restock_level',
-            'last_movement_at',
-            'last_received_at',
-            'last_sold_at',
-            'last_counted_at',
-            'reservations'
-        ]);
+        $this->addField('warehouse_code', 'inventory.warehouse_code', hidden: false);
+        $this->addField('product_sku', 'product.sku', hidden: false);
+        $this->addField('product_name', 'product.name', hidden: false);
+        $this->addField('quantity', 'inventory.quantity', 'float', hidden: false);
+        $this->addField('quantity_reserved', 'inventory.quantity_reserved', 'float', hidden: false);
+        $this->addField('quantity_available', 'inventory.quantity_available', 'float', hidden: false);
+        $this->addField('quantity_incoming', 'inventory.quantity_incoming', 'float', hidden: false);
+        $this->addField('quantity_required', 'inventory.quantity_required', 'float', hidden: false);
+        $this->addField('reorder_point', 'inventory.reorder_point', 'float');
+        $this->addField('restock_level', 'inventory.restock_level', 'float');
 
-        $this->fields = [
-            'product_sku'           => 'product.sku',
-            'product_name'          => 'product.name',
-            'supplier'              => 'product.supplier',
-            'department'            => 'product.department',
-            'category'              => 'product.category',
-            'id'                    => 'inventory.id',
-            'warehouse_id'          => 'inventory.warehouse_id',
-            'product_id'            => 'inventory.product_id',
-            'warehouse_code'        => 'inventory.warehouse_code',
-            'shelf_location'        => 'inventory.shelve_location',
-            'recount_required'      => 'inventory.recount_required',
-            'quantity_available'    => 'inventory.quantity_available',
-            'quantity'              => 'inventory.quantity',
-            'quantity_reserved'     => 'inventory.quantity_reserved',
-            'quantity_incoming'     => 'inventory.quantity_incoming',
-            'quantity_required'     => 'inventory.quantity_required',
-            'reorder_point'         => 'inventory.reorder_point',
-            'restock_level'         => 'inventory.restock_level',
-            'last_sequence_number'  => 'inventory.last_sequence_number',
-            'first_movement_at'     => 'inventory.first_movement_at',
-            'last_movement_at'      => 'inventory.last_movement_at',
-            'first_received_at'     => 'inventory.first_received_at',
-            'last_received_at'      => 'inventory.last_received_at',
-            'first_sold_at'         => 'inventory.first_sold_at',
-            'last_sold_at'          => 'inventory.last_sold_at',
-            'first_counted_at'      => 'inventory.first_counted_at',
-            'last_counted_at'       => 'inventory.last_counted_at',
-            'last_movement_id'      => 'inventory.last_movement_id',
-            'deleted_at'            => 'inventory.deleted_at',
-            'created_at'            => 'inventory.created_at',
-            'updated_at'            => 'inventory.updated_at',
-            'price'                 => 'products_prices.price',
-            'cost'                  => 'products_prices.cost',
-            'sale_price'            => 'products_prices.sale_price',
-            'sale_start_date'       => 'products_prices.sale_price_start_date',
-            'sale_end_date'         => 'products_prices.sale_price_end_date',
-            'reservations'          => DB::raw('SELECT GROUP_CONCAT(concat(quantity_reserved, \' - \', comment) SEPARATOR \', \') FROM `inventory_reservations` WHERE inventory_reservations.inventory_id = inventory.id'),
-            'retail_value'          => DB::raw('ROUND(product_prices.price * inventory.quantity, 2)'),
-            'cost_value'            => DB::raw('ROUND(product_prices.cost * inventory.quantity, 2)'),
-        ];
+        $this->addField('reservations', DB::raw('SELECT GROUP_CONCAT(concat(quantity_reserved, \' - \', comment) SEPARATOR \', \') FROM `inventory_reservations` WHERE inventory_reservations.inventory_id = inventory.id'), 'string');
 
-        $this->casts = [
-            'id'                    => 'integer',
-            'warehouse_id'          => 'integer',
-            'product_id'            => 'integer',
-            'price'                 => 'float',
-            'cost'                  => 'float',
-            'sale_price'            => 'float',
-            'sale_start_date'       => 'datetime',
-            'sale_end_date'         => 'datetime',
-            'retail_value'          => 'float',
-            'cost_value'            => 'float',
-            'warehouse_code'        => 'string',
-            'shelf_location'        => 'string',
-            'recount_required'      => 'string',
-            'reservations'          => 'string',
-            'quantity_available'    => 'float',
-            'quantity'              => 'float',
-            'quantity_reserved'     => 'float',
-            'quantity_incoming'     => 'float',
-            'quantity_required'     => 'float',
-            'reorder_point'         => 'float',
-            'restock_level'         => 'float',
-            'last_sequence_number'  => 'integer',
-            'first_movement_at'     => 'datetime',
-            'last_movement_at'      => 'datetime',
-            'first_received_at'     => 'datetime',
-            'last_received_at'      => 'datetime',
-            'first_sold_at'         => 'datetime',
-            'last_sold_at'          => 'datetime',
-            'first_counted_at'      => 'datetime',
-            'last_counted_at'       => 'datetime',
-            'last_movement_id'      => 'datetime',
-            'deleted_at'            => 'datetime',
-            'created_at'            => 'datetime',
-            'updated_at'            => 'datetime',
-        ];
+        $this->addField('unit_price', 'product_prices.price', 'float');
+        $this->addField('unit_cost', 'product_prices.cost', 'float');
+        $this->addField('total_price', DB::raw('ROUND(product_prices.price * inventory.quantity, 2)'), 'float');
+        $this->addField('total_cost', DB::raw('ROUND(product_prices.cost * inventory.quantity, 2)'), 'float');
+
+        $this->addField('sale_price', 'product_prices.sale_price', 'float');
+        $this->addField('sale_start_date', 'product_prices.sale_price_start_date', 'datetime');
+        $this->addField('sale_end_date', 'product_prices.sale_price_end_date', 'datetime');
+
+        $this->addField('supplier', 'product.supplier');
+        $this->addField('department', 'product.department');
+        $this->addField('category', 'product.category');
+        $this->addField('shelf_location', 'inventory.shelve_location');
+
+        $this->addField('first_movement_at', 'inventory.first_movement_at', 'datetime');
+        $this->addField('last_movement_at', 'inventory.last_movement_at', 'datetime');
+        $this->addField('first_received_at', 'inventory.first_received_at', 'datetime');
+        $this->addField('last_received_at', 'inventory.last_received_at', 'datetime');
+        $this->addField('first_sold_at', 'inventory.first_sold_at', 'datetime');
+        $this->addField('last_sold_at', 'inventory.last_sold_at', 'datetime');
+        $this->addField('first_counted_at', 'inventory.first_counted_at', 'datetime');
+        $this->addField('last_counted_at', 'inventory.last_counted_at', 'datetime');
+        $this->addField('last_movement_id', 'inventory.last_movement_id', 'datetime');
+        $this->addField('deleted_at', 'inventory.deleted_at', 'datetime');
+        $this->addField('created_at', 'inventory.created_at', 'datetime');
+        $this->addField('updated_at', 'inventory.updated_at', 'datetime');
+
+
+        $this->addField('last_sequence_number', 'inventory.last_sequence_number', 'integer');
+        $this->addField('recount_required', 'inventory.recount_required');
+        $this->addField('product_id', 'inventory.product_id', 'integer');
+        $this->addField('id', 'inventory.id', 'integer');
+        $this->addField('warehouse_id', 'inventory.warehouse_id', 'integer');
 
         $this->addFilter(
             AllowedFilter::callback('has_tags', function ($query, $value) {

@@ -34,7 +34,7 @@
         </template>
 
         <div class="d-flex justify-content-between align-items-center mt-2 pl-2 p-1 font-weight-bold text-uppercase small text-secondary">
-            STOCKTAKING SUGGESTIONS
+            REPORTS > STOCKTAKE SUGGESTIONS
 <!--            <button class="btn btn-sm btn-primary" @click="downloadStocktakeSuggestion">Download</button>-->
         </div>
 
@@ -158,6 +158,7 @@ export default {
                 this.showLoading();
 
                 let params = {...this.$router.currentRoute.query};
+                params['select'] = 'warehouse_code,product_sku,product_name,quantity_in_stock,reason,points,last_movement_at,last_counted_at,last_sold_at,in_stock_since,inventory_id,product_id,warehouse_id'
                 params['filter[warehouse_code]'] = this.getUrlParameter('filter[warehouse_code]');
                 params['include'] = 'product,inventory,product.tags,product.prices';
                 params['sort'] = this.getUrlParameter('sort', '-points');

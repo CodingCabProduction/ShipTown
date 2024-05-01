@@ -27,11 +27,13 @@ class ReportBase extends Model
 
     public string $view = 'report-default';
 
-    public string $defaultSelect = '';
+    public array $defaultSelect = [];
 
     public ?string $defaultSort = null;
 
     public array $fields = [];
+
+    public array $allFields = [];
 
     public mixed $baseQuery;
 
@@ -156,7 +158,11 @@ class ReportBase extends Model
      */
     private function addSelectFields(QueryBuilder $queryBuilder): QueryBuilder
     {
-        $requestedSelect = collect(explode(',', request()->get('select', $this->defaultSelect)))->filter();
+        $requestedSelect = collect(explode(',', request()->get('select', '')))->filter();
+
+        if ($requestedSelect->isEmpty()) {
+            $requestedSelect = collect($this->defaultSelect);
+        }
 
         if ($requestedSelect->isEmpty()) {
             $requestedSelect = collect(array_keys($this->fields));
@@ -164,6 +170,13 @@ class ReportBase extends Model
 
         $requestedSelect
             ->each(function ($selectFieldName) use ($queryBuilder) {
+
+                $field = data_get($this->allFields, $selectFieldName);
+
+                if ($field && $field['displayable'] === false) {
+                    return;
+                }
+
                 $fieldValue = data_get($this->fields, $selectFieldName);
 
                 if ($fieldValue === null) {

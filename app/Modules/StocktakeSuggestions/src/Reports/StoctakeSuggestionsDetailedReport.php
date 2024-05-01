@@ -15,13 +15,6 @@ class StoctakeSuggestionsDetailedReport extends Report
         $this->view = 'reports.inventory-report';
 
         $this->report_name = 'Stocktake Suggestions Detailed';
-
-        $this->defaultSelect = implode(',', [
-            'inventory_id',
-            'points',
-            'reason',
-        ]);
-
         $this->defaultSort = 'points';
 
         $this->allowedIncludes = [
@@ -34,22 +27,14 @@ class StoctakeSuggestionsDetailedReport extends Report
             $this->report_name = request('title').' ('.$this->report_name.')';
         }
 
+        $this->addField('inventory_id', 'inventory_id', 'integer');
+        $this->addField('warehouse_id', 'inventory.warehouse_id', 'integer');
+        $this->addField('warehouse_code', 'inventory.warehouse_code');
+        $this->addField('points', 'points', 'float');
+        $this->addField('reason', 'reason');
+
         $this->baseQuery = StocktakeSuggestion::query()
             ->leftJoin('inventory', 'inventory.id', '=', 'stocktake_suggestions.inventory_id');
-
-        $this->fields = [
-            'inventory_id'                       => 'inventory_id',
-            'warehouse_id'                       => 'inventory.warehouse_id',
-            'warehouse_code'                     => 'inventory.warehouse_code',
-            'points'                             => 'points',
-            'reason'                             => 'reason',
-        ];
-
-        $this->casts = [
-            'warehouse_code'     => 'string',
-            'reason'             => 'string',
-            'points'             => 'float',
-        ];
 
         $this->addFilter(
             AllowedFilter::callback('search', function ($query, $value) {

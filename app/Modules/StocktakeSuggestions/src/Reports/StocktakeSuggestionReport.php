@@ -14,24 +14,21 @@ class StocktakeSuggestionReport extends Report
 
         $this->report_name = 'Stocktake Suggestions';
 
-        $this->defaultSelect = implode(',', [
-            'warehouse_code',
-            'product_sku',
-            'product_name',
-            'reason',
-            'points',
-            'quantity_in_stock',
-            'last_movement_at',
-            'last_counted_at',
-            'last_sold_at',
-            'in_stock_since',
-            'inventory_id',
-            'product_id',
-            'warehouse_id',
-        ]);
+        $this->addField('warehouse_code', 'inventory.warehouse_code', hidden: false);
+        $this->addField('product_sku', 'products.sku', hidden: false);
+        $this->addField('product_name', 'products.name', hidden: false);
+        $this->addField('quantity_in_stock', 'inventory.quantity', hidden: false);
+        $this->addField('reason', 'stocktake_suggestions.reason', hidden: false);
+        $this->addField('points', 'stocktake_suggestions.points', hidden: false);
+        $this->addField('last_movement_at', 'inventory.last_movement_at', 'datetime', hidden: false);
+        $this->addField('last_counted_at', 'inventory.last_counted_at', 'datetime', hidden: false);
+        $this->addField('last_sold_at', 'inventory.last_sold_at', 'datetime', hidden: false);
+        $this->addField('in_stock_since', 'inventory.in_stock_since', 'datetime');
+        $this->addField('inventory_id', 'stocktake_suggestions.inventory_id');
+        $this->addField('product_id', 'stocktake_suggestions.product_id');
+        $this->addField('warehouse_id', 'stocktake_suggestions.warehouse_id');
 
         $this->defaultSort = 'points';
-
         $this->allowedIncludes = [
             'product',
             'product.tags',
@@ -39,40 +36,9 @@ class StocktakeSuggestionReport extends Report
             'inventory',
         ];
 
-        if (request('title')) {
-            $this->report_name = request('title').' ('.$this->report_name.')';
-        }
-
         $this->baseQuery = StocktakeSuggestion::query()
             ->leftJoin('inventory', 'inventory.id', '=', 'stocktake_suggestions.inventory_id')
             ->leftJoin('products', 'products.id', '=', 'stocktake_suggestions.product_id');
-
-        $this->fields = [
-            'inventory_id'          => 'stocktake_suggestions.inventory_id',
-            'product_id'            => 'stocktake_suggestions.product_id',
-            'warehouse_id'          => 'stocktake_suggestions.warehouse_id',
-            'reason'                => 'stocktake_suggestions.reason',
-            'points'                => 'stocktake_suggestions.points',
-            'warehouse_code'        => 'inventory.warehouse_code',
-            'last_movement_at'      => 'inventory.last_movement_at',
-            'last_counted_at'       => 'inventory.last_counted_at',
-            'last_sold_at'          => 'inventory.last_sold_at',
-            'in_stock_since'        => 'inventory.in_stock_since',
-            'product_sku'           => 'products.sku',
-            'product_name'          => 'products.name',
-            'quantity_in_stock'     => 'inventory.quantity',
-        ];
-
-        $this->casts = [
-            'inventory_id'                       => 'integer',
-            'product_id'                         => 'integer',
-            'warehouse_id'                       => 'integer',
-            'warehouse_code'                     => 'string',
-            'points'                             => 'float',
-            'quantity_in_stock'                  => 'float',
-            'product_sku'                        => 'string',
-            'product_name'                       => 'string',
-        ];
 
         $this->addFilter(
             AllowedFilter::callback('product_has_tags', function ($query, $value) {
