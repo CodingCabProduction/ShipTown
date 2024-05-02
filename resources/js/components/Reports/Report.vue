@@ -56,7 +56,14 @@
                                 <td v-if="field.type === 'datetime'" class="pr-3">{{ formatDateTime(record[field.name], 'YYYY MMM D HH:mm') }}</td>
                                 <td v-else-if="field.type === 'date'" class="pr-3">{{ formatDateTime(record[field.name], 'YYYY MMM D') }}</td>
                                 <td v-else-if="field.type === 'numeric'"class="pr-3 text-right">{{ record[field.name] }}</td>
-                                <td v-else class="pr-3" >{{ record[field.name] }}</td>
+                                <td v-else class="pr-3" >
+                                    <template v-if="field.name === 'product_sku'">
+                                        <product-sku-button :product_sku="record[field.name]"/>
+                                    </template>
+                                    <template v-else>
+                                        {{ record[field.name] }}
+                                    </template>
+                                </td>
                             </template>
                         </tr>
                     </tbody>
@@ -148,11 +155,14 @@
     import ReportHead from "./ReportHead.vue";
     import moment from "moment";
     import helpers from "../../helpers";
+    import ProductSkuButton from "../SharedComponents/ProductSkuButton.vue";
 
     export default {
         mixins: [loadingOverlay, url, api, helpers],
 
-        components: {IconArrowRight, IconArrowLeft, IconSortAsc, IconSortDesc, IconFilter, ModalDateBetweenSelector, SearchFilter, ReportHead},
+        components: {
+            ProductSkuButton,
+            IconArrowRight, IconArrowLeft, IconSortAsc, IconSortDesc, IconFilter, ModalDateBetweenSelector, SearchFilter, ReportHead},
 
         props: {
             metaString: String,
