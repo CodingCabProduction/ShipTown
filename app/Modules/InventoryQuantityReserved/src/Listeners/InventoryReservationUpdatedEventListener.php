@@ -9,6 +9,6 @@ class InventoryReservationUpdatedEventListener
 {
     public function handle(InventoryReservationUpdatedEvent $event): void
     {
-         QuantityReservedService::recalculateQuantityReserved(collect([$event->inventoryReservation->inventory_id]));
+        QuantityReservedService::recalculateQuantityReserved(collect([$event->inventoryReservation->inventory_id]));
     }
 }

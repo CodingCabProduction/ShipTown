@@ -19,15 +19,15 @@ class OrderUpdatedEventListener
         }
 
         if ($event->order->refresh()->is_active) {
-            $this->createInventoryReservationsForOrderProducts($event);
+            $this->createReservations($event);
         } else {
-            $this->deleteInventoryReservationsForOrderProducts($event);
+            $this->deleteReservations($event);
         }
 
         return true;
     }
 
-    public function createInventoryReservationsForOrderProducts(OrderUpdatedEvent $event): void
+    public function createReservations(OrderUpdatedEvent $event): void
     {
         /** @var Configuration $config */
         $config = Configuration::query()->firstOrCreate();
@@ -56,7 +56,7 @@ class OrderUpdatedEventListener
         InventoryReservation::query()->create($inventoryReservations->toArray());
     }
 
-    public function deleteInventoryReservationsForOrderProducts(OrderUpdatedEvent $event): void
+    public function deleteReservations(OrderUpdatedEvent $event): void
     {
         $uuidPrefix = implode(';', [
             ReservationsService::UUID_PREFIX,

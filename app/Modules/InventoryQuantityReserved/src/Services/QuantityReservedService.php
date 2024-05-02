@@ -15,6 +15,7 @@ class QuantityReservedService
             UPDATE inventory
             SET
                 updated_at = NOW(),
+                recount_required = true,
                 quantity_reserved = (SELECT IFNULL(SUM(quantity_reserved), 0) FROM inventory_reservations WHERE inventory_id = inventory.id)
             WHERE id IN ($inventoryIds)
         ");
