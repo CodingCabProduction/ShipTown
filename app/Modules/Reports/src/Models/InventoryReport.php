@@ -32,7 +32,6 @@ class InventoryReport extends Report
         $this->addField('reorder_point', 'inventory.reorder_point', 'float');
         $this->addField('restock_level', 'inventory.restock_level', 'float');
 
-        $this->addField('reservations', DB::raw('SELECT GROUP_CONCAT(concat(quantity_reserved, \' - \', comment) SEPARATOR \', \') FROM `inventory_reservations` WHERE inventory_reservations.inventory_id = inventory.id'), 'string');
 
         $this->addField('unit_price', 'product_prices.price', 'float');
         $this->addField('unit_cost', 'product_prices.cost', 'float');
@@ -47,6 +46,8 @@ class InventoryReport extends Report
         $this->addField('department', 'product.department');
         $this->addField('category', 'product.category');
         $this->addField('shelf_location', 'inventory.shelve_location');
+
+        $this->addField('reservations', DB::raw('SELECT GROUP_CONCAT(concat(quantity_reserved, \' - \', comment) SEPARATOR \', \') FROM `inventory_reservations` WHERE inventory_reservations.inventory_id = inventory.id'), 'string');
 
         $this->addField('first_movement_at', 'inventory.first_movement_at', 'datetime');
         $this->addField('last_movement_at', 'inventory.last_movement_at', 'datetime');

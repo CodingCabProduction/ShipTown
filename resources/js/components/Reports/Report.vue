@@ -32,7 +32,7 @@
                                         <font-awesome-icon v-if="isUrlSortedBy(field['name'])" :icon="isUrlSortDesc ? 'caret-down' : 'caret-up'" class="fa-xs" role="button"></font-awesome-icon>
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                        <button class="dropdown-item" type="button" @click="setUrlParameterAngGo('sort', '-' . field.name)">
+                                        <button class="dropdown-item" type="button" @click="setUrlParameterAngGo('sort',  ['-', field.name].join(''))">
                                             <icon-sort-desc class="mr-1"/> Sort Descending
                                         </button>
                                         <button class="dropdown-item" type="button" @click="setUrlParameterAngGo('sort', field.name)">
