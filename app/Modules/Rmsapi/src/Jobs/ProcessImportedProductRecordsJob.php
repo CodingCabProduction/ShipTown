@@ -79,6 +79,7 @@ class ProcessImportedProductRecordsJob extends UniqueJob
             'name' => $importedProduct->name,
             'department' => data_get($importedProduct, 'department_name', ''),
             'category' => data_get($importedProduct, 'category_name', ''),
+            'supplier' => data_get($importedProduct, 'supplier_name', ''),
         ]);
 
         $this->attachTags($importedProduct);
