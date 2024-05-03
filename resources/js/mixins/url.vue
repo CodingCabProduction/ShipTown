@@ -46,8 +46,11 @@
             },
 
             setUrlParameter: function(param, value) {
-                this.$router.currentRoute.query[param] = value;
-                this.updateUrl(this.$router.currentRoute.query);
+                // we need to clone the object because we are going to modify it
+                const urlParameters = JSON.parse(JSON.stringify(this.$router.currentRoute.query));
+                urlParameters[param] = value;
+
+                this.$router.push({query: urlParameters});
 
                 return this;
             },
