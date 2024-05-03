@@ -11,7 +11,7 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title text-center">{{ __($report_name) }}</h4>
+                    <h4 class="card-title text-center">{{ __($meta['report_name']) }}</h4>
                     <table class="table-hover w-100">
                         <thead>
                         <tr>
