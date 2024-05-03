@@ -141,7 +141,7 @@
             findProductsWithExactSku: function() {
                 const params = { ...this.$router.currentRoute.query};
                 params['filter[sku_or_alias]'] = this.getUrlParameter('sku') ?? this.getUrlParameter('search');
-                params['include'] = 'inventory,tags,prices,aliases,inventory.warehouse,inventoryMovementsStatistics';
+                params['include'] = 'inventory,tags,prices,aliases,inventory.warehouse,inventoryMovementsStatistics,inventoryTotals';
                 params['per_page'] = 1;
 
                 this.apiGetProducts(params)
