@@ -21,6 +21,7 @@
                     <div class="col text-right">
                         <button type="button" @click.prevent="printTestPage(printer)" class="btn btn-primary btn-sm mb-1">PDF Test</button>
                         <button type="button" @click.prevent="printEplTestPage(printer)" class="btn btn-primary btn-sm mb-1">EPL Test</button>
+                        <button type="button" @click.prevent="printRawTestPage(printer)" class="btn btn-primary btn-sm mb-1">Raw Text Test</button>
                         <button type="button" @click.prevent="setUserPrinter(printer['id'])" v-if="!isDefaultPrinter(printer['id'])" class="btn btn-primary btn-sm mb-1">Use</button>
                     </div>
                 </div>
@@ -67,6 +68,25 @@ export default {
                 })
                 .then(({ data }) => {
                     this.defaultPrinter = data.data.printer_id;
+                })
+                .catch(e => {
+                    this.displayApiCallError(e);
+                });
+        },
+
+        printRawTestPage(printer) {
+            let data = {
+                'printer_id': printer.id,
+                'content_type': 'raw_base64',
+                'content': btoa('Hello World/n' +
+                    'blue rectangle/n' +
+                    'A50,50'
+                ),
+            };
+
+            this.apiPostPrintnodePrintJob(data)
+                .then(() => {
+                    this.$snotify.info('Test page sent to PrintNode');
                 })
                 .catch(e => {
                     this.displayApiCallError(e);

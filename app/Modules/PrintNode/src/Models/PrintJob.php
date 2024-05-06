@@ -2,7 +2,6 @@
 
 namespace App\Modules\PrintNode\src\Models;
 
-use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,7 +19,6 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|PrintJob newModelQuery()
  * @method static Builder|PrintJob newQuery()
  * @method static Builder|PrintJob query()
- * @mixin Eloquent
  */
 class PrintJob extends Model
 {
@@ -46,7 +44,7 @@ class PrintJob extends Model
         }
     }
 
-    public function setPdfUrlAttribute($value)
+    public function setPdfUrlAttribute($value): void
     {
         $this->content_type = 'pdf_uri';
         $this->content = $value;
@@ -55,7 +53,7 @@ class PrintJob extends Model
     public function toPrintNodePayload(): array
     {
         return [
-            'source'      => 'Products Management',
+            'source'      => 'ShipTown',
             'expireAfter' => $this->expire_after, // seconds
             'printerId'   => $this->printer_id,
             'title'       => $this->title,
