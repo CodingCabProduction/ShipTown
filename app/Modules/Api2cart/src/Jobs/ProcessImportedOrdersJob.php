@@ -40,7 +40,7 @@ class ProcessImportedOrdersJob extends UniqueJob
             'total_products'             => data_get($data, 'totals.subtotal'),
             'total_shipping'             => data_get($data, 'totals.shipping', 0),
             'total_discounts'            => data_get($data, 'totals.discount', 0),
-            'total_paid'                 => data_get($data, 'total.total_paid', 0),
+            'total_paid'                 => data_get($data, 'total.total_paid', 0) ?? 0,
             'shipping_method_name'       => data_get($data, 'shipping_method.name', 0),
             'shipping_method_code'       => data_get($data, 'shipping_method.additional_fields.code', 0),
             'order_placed_at'            => $orderImport->ordersCreateAt()->tz('UTC'),
