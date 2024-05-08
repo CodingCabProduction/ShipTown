@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('inventory_totals', function (Blueprint $table) {
-            $table->boolean('recount_required')->default(true);
+            $table->boolean('recount_required')->default(true)->after('product_id');
         });
     }
 };
