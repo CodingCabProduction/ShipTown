@@ -30,7 +30,7 @@ class RecalculateInventoryTotalsTableJob extends UniqueJob
                     inventory_totals.product_id, NOW() as calculated_at
                 FROM inventory_totals
 
-                WHERE (calculated_at IS NULL OR calculated_at < max_inventory_updated_at)
+                WHERE recount_required = 1
 
                 LIMIT 500;
         ");
@@ -62,6 +62,7 @@ class RecalculateInventoryTotalsTableJob extends UniqueJob
                 ON tempInventoryTotals.product_id = inventory_totals.product_id
 
             SET
+                inventory_totals.recount_required = 0,
                 inventory_totals.quantity = tempInventoryTotals.quantity,
                 inventory_totals.quantity_reserved = tempInventoryTotals.quantity_reserved,
                 inventory_totals.quantity_incoming = tempInventoryTotals.quantity_incoming,
