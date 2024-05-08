@@ -38,7 +38,7 @@
                                 </tr>
                             </template>
 
-                            <tr class="text-right">
+                            <tr class="text-right" v-if="product['inventoryTotals']">
                                 <td class="text-left font-weight-bold"></td>
                                 <td class="text-left font-weight-bold"></td>
                                 <td class="font-weight-bold">{{ toNumberOrDash(product['inventoryTotals'][0]['quantity_available'])}}</td>
