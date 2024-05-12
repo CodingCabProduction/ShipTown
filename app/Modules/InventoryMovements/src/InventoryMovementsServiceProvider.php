@@ -31,10 +31,6 @@ class InventoryMovementsServiceProvider extends BaseModuleServiceProvider
      * @var array
      */
     protected $listen = [
-//        RecalculateInventoryRequestEvent::class => [
-//            Listeners\RecalculateInventoryRequestEventListener::class,
-//        ],
-
         InventoryMovementCreatedEvent::class => [
             Listeners\InventoryMovementCreatedEventListener::class,
         ],
