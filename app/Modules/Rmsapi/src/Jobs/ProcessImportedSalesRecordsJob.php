@@ -52,9 +52,9 @@ class ProcessImportedSalesRecordsJob extends UniqueJob
         $inventoryMovements = $records
             ->each(function (RmsapiSaleImport $salesRecord) {
                 InventoryMovement::query()->updateOrCreate([
-                        'inventory_id' => $salesRecord->inventory_id
-                    ], [
                         'custom_unique_reference_id' => $salesRecord->uuid,
+                    ], [
+                        'inventory_id' => $salesRecord->inventory_id,
                         'warehouse_code' => $salesRecord->warehouse->code,
                         'warehouse_id' => $salesRecord->warehouse_id,
                         'product_id' => $salesRecord->product_id,
