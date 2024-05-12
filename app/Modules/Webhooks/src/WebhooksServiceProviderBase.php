@@ -6,8 +6,8 @@ use App\Events\EveryDayEvent;
 use App\Events\EveryMinuteEvent;
 use App\Events\Inventory\InventoryUpdatedEvent;
 use App\Events\InventoryMovement\InventoryMovementCreatedEvent;
+use App\Events\InventoryMovement\InventoryMovementUpdatedEvent;
 use App\Events\OrderProduct\OrderProductShipmentCreatedEvent;
-use App\Events\SyncRequestedEvent;
 use App\Modules\BaseModuleServiceProvider;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -18,31 +18,14 @@ use Ramsey\Uuid\Guid\Guid;
  */
 class WebhooksServiceProviderBase extends BaseModuleServiceProvider
 {
-    /**
-     * @var string
-     */
     public static string $module_name = '.CORE - Webhooks';
 
-    /**
-     * @var string
-     */
     public static string $module_description = 'Amazon SNS integration to provide webhooks';
 
-    /**
-     * @var string
-     */
     public static string $settings_link = '/admin/settings/modules/webhooks/subscriptions';
 
-    /**
-     * @var bool
-     */
     public static bool $autoEnable = false;
 
-    /**
-     * The event listener mappings for the application.
-     *
-     * @var array
-     */
     protected $listen = [
         EveryMinuteEvent::class => [
             Listeners\DispatchEveryMinuteJobsListener::class,
@@ -59,6 +42,10 @@ class WebhooksServiceProviderBase extends BaseModuleServiceProvider
 
         InventoryMovementCreatedEvent::class => [
             Listeners\InventoryMovementCreatedEventListener::class,
+        ],
+
+        InventoryMovementUpdatedEvent::class => [
+            Listeners\InventoryMovementUpdatedEventListener::class,
         ],
 
         InventoryUpdatedEvent::class => [
@@ -100,7 +87,6 @@ class WebhooksServiceProviderBase extends BaseModuleServiceProvider
             report($exception);
             return false;
         }
-
 
         return true;
     }

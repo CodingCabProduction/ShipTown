@@ -38,10 +38,6 @@ class InventoryTotalsServiceProvider extends BaseModuleServiceProvider
      * @var array
      */
     protected $listen = [
-        RecalculateInventoryRequestEvent::class => [
-            Listeners\RecalculateInventoryRequestEventListener::class,
-        ],
-
         EveryMinuteEvent::class => [
             Listeners\EveryMinuteEventListener::class,
         ],

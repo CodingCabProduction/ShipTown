@@ -16,7 +16,7 @@ class EveryHourEventListener
             'code' => self::class,
         ], [
             'error_message' => 'Every Hour Event heartbeat missed',
-            'expires_at' => now()->addHours(2),
+            'expires_at' => now()->addHour()->addMinutes(15),
             'auto_heal_job_class' => DispatchEveryHourEventJobs::class
         ]);
     }

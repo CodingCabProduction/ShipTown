@@ -16,7 +16,7 @@ class EveryWeekEventListener
             'code' => self::class,
         ], [
             'error_message' => 'Every Week heartbeat missed',
-            'expires_at' => now()->addWeek(),
+            'expires_at' => now()->addWeek()->addHour(),
             'auto_heal_job_class' => DispatchEveryWeekEventJob::class
         ]);
     }

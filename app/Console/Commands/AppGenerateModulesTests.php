@@ -37,16 +37,20 @@ class AppGenerateModulesTests extends Command
         $modulesList = File::directories('app/modules');
 
         $expectedTestsList = collect($modulesList)->map(function ($moduleDirectory) {
-            $testPath = Str::replaceArray('app/modules/', ['/Modules/'], $moduleDirectory);
+            $testPath = Str::replaceArray('app/modules/', ['Unit/Modules/'], $moduleDirectory);
             return $testPath . '/BasicModuleTest';
         });
 
         $expectedTestsList->each(function ($route) {
             $testName = $route;
+            $testFileName = app()->basePath() . '/tests/'. $testName . '.php';
+
+            if (File::exists($testFileName)) {
+                return true;
+            }
 
             $command = 'app:make-test ' . $testName . ' --stub=test.module';
 
-            $this->comment($testName);
             Artisan::call($command);
             $this->info(Artisan::output());
         });

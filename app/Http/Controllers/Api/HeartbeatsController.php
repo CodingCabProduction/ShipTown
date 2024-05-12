@@ -20,8 +20,14 @@ class HeartbeatsController extends Controller
             Heartbeat::expired()
                 ->whereNotNull('auto_heal_job_class')
                 ->each(function (Heartbeat $heartbeat) {
-                    (new $heartbeat->auto_heal_job_class)->dispatch($heartbeat);
+                    try {
+                        (new $heartbeat->auto_heal_job_class())->handle();
+                    } catch (\Throwable $exception) {
+                        report($exception);
+                    }
                 });
+
+            $expiredHeartbeats = Heartbeat::expired()->limit(2)->get();
         }
 
         return HeartbeatResources::collection($expiredHeartbeats);

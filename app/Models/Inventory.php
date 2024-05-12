@@ -71,6 +71,7 @@ class Inventory extends BaseModel
     ];
 
     protected $fillable = [
+        'recount_required',
         'warehouse_id',
         'location_id',
         'warehouse_code',
@@ -103,7 +104,7 @@ class Inventory extends BaseModel
     ];
 
     protected $casts = [
-        'recount_required'  => 'boolean',
+        'recount_required'   => 'boolean',
         'quantity'           => 'float',
         'quantity_reserved'  => 'float',
         'quantity_available' => 'float',

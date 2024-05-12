@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Log;
 
 class EveryMinuteEventListener
 {
-    public function handle()
+    public function handle(): void
     {
         Log::debug('heartbeat', ['code' => self::class]);
 
@@ -16,7 +16,7 @@ class EveryMinuteEventListener
             'code' => self::class,
         ], [
             'error_message' => 'Every Minute heartbeat missed',
-            'expires_at' => now()->addMinutes(20),
+            'expires_at' => now()->addMinutes(2),
             'auto_heal_job_class' => DispatchEveryMinuteEventJob::class
         ]);
     }

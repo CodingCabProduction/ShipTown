@@ -12,8 +12,8 @@ use App\Models\InventoryReservation;
 use App\Models\Product;
 use App\Models\Warehouse;
 use App\Modules\ActiveOrdersInventoryReservations\src\Models\Configuration;
+use App\Modules\Inventory\src\Jobs\DispatchRecalculateInventoryRecordsJob;
 use App\Modules\InventoryQuantityReserved\src\InventoryQuantityReservedServiceProvider;
-use App\Modules\InventoryTotals\src\Jobs\RecalculateInventoryRecordsJob;
 use Tests\TestCase;
 
 class BasicModuleTest extends TestCase
@@ -58,7 +58,7 @@ class BasicModuleTest extends TestCase
         $inventory->save();
 
         // run the job to recalculate the inventory record back to the correct total
-        RecalculateInventoryRecordsJob::dispatchSync();
+        DispatchRecalculateInventoryRecordsJob::dispatchSync();
 
         $this->assertDatabaseHas('inventory', [
             'id' => $inventory->id,

@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @method static self first($columns = ['*'])
  * @method static findOrFail($id)
- * @method static updateOrCreate(array $array, array $array1)
  * @method static whereBetween(string $string, array $array)
  * @method static whereId(int $id)
  *

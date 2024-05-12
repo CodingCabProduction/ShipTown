@@ -59,7 +59,7 @@ class AppMakeTest extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace.'\Feature';
+        return $rootNamespace;
     }
 
     /**

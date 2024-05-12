@@ -2,21 +2,21 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Heartbeat;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * Class HeartbeatResources
+ *
+ * @mixin Heartbeat
+ */
 class HeartbeatResources extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
-     */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
             'code'              => $this->code,
-            'expired_at'        => $this->expired_at,
+            'expires_at'        => $this->expires_at,
             'error_message'     => $this->error_message,
             'auto_heal_job_class' => $this->auto_heal_job_class,
         ];

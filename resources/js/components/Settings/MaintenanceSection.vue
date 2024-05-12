@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <div class="card card-default">
             <div class="card-header">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -11,45 +10,18 @@
             </div>
 
             <div class="card-body">
-                <button :disabled="buttonDisabled['EveryDay']" @click.prevent="runJobs('EveryDay')" class="btn btn-block btn-primary mb-2">
-                    Run Every Day Jobs
-                </button>
-                <button :disabled="buttonDisabled['EveryHour']" @click.prevent="runJobs('EveryHour')" class="btn btn-block btn-primary mb-2">
-                    Run Every Hour Jobs
-                </button>
-                <button :disabled="buttonDisabled['EveryTenMinutes']" @click.prevent="runJobs('EveryTenMinutes')" class="btn btn-block btn-primary mb-2">
-                    Run Every 10 Minutes Jobs
-                </button>
-                <button :disabled="buttonDisabled['EveryFiveMinutes']" @click.prevent="runJobs('EveryFiveMinutes')" class="btn btn-block btn-primary mb-2">
-                    Run Every 5 Minutes Jobs
-                </button>
-                <button :disabled="buttonDisabled['EveryMinute']" @click.prevent="runJobs('EveryMinute')" class="btn btn-block btn-primary mb-2">
-                    Run Every 1 Minute Jobs
-                </button>
-                <button :disabled="buttonDisabled['SyncRequest']" @click.prevent="runJobs('SyncRequest')" class="btn btn-block btn-primary mb-2">
-                    Run Manual Request Jobs
-                </button>
-            </div>
-        </div>
-
-
-
-        <div class="card card-default">
-            <div class="card-header">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span>
-                        Maintenance
-                    </span>
-                </div>
-            </div>
-
-            <div class="card-body">
-
-                <template v-for="job in jobs">
-                    <button :disabled="buttonDisabled[job['job_class']]" @click.prevent="runJobs(job)" class="btn btn-block btn-primary mb-2 small">
-                        {{ job['job_name'] }}
-                    </button>
-                </template>
+                <table class="w-100 small">
+                    <template v-for="job in jobs">
+                        <tr>
+                            <td>
+                                {{ job['job_name'] }}
+                            </td>
+                            <td class="text-right">
+                                <button :disabled="buttonDisabled[job['job_class']]" @click.prevent="runJobs(job)" class="btn btn-block btn-primary mb-2 btn-sm">RUN</button>
+                            </td>
+                        </tr>
+                    </template>
+                </table>
             </div>
         </div>
     </div>

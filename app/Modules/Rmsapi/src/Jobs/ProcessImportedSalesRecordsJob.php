@@ -50,38 +50,24 @@ class ProcessImportedSalesRecordsJob extends UniqueJob
             ->get();
 
         $inventoryMovements = $records
-            ->map(function (RmsapiSaleImport $salesRecord) {
-                return [
-                    'inventory_id' => $salesRecord->inventory_id,
-                    'custom_unique_reference_id' => $salesRecord->uuid,
-                    'warehouse_code' => $salesRecord->warehouse->code,
-                    'warehouse_id' => $salesRecord->warehouse_id,
-                    'product_id' => $salesRecord->product_id,
-                    'sequence_number' => null,
-                    'occurred_at' => Carbon::createFromTimeString($salesRecord->transaction_time, 'Europe/Dublin')->utc(),
-                    'type' => $salesRecord->type === 'rms_sale' ? 'sale' : 'adjustment',
-                    'quantity_before' => 0,
-                    'quantity_delta' => $salesRecord->quantity,
-                    'quantity_after' => 0,
-                    'description' => $salesRecord->type === 'rms_sale' ? 'rms_sale' : 'rmsapi_inventory_movement',
-                    'updated_at' => now()->utc()->toDateTimeLocalString(),
-                    'created_at' => now()->utc()->toDateTimeLocalString()
-                ];
+            ->each(function (RmsapiSaleImport $salesRecord) {
+                InventoryMovement::query()->updateOrCreate([
+                        'inventory_id' => $salesRecord->inventory_id
+                    ], [
+                        'custom_unique_reference_id' => $salesRecord->uuid,
+                        'warehouse_code' => $salesRecord->warehouse->code,
+                        'warehouse_id' => $salesRecord->warehouse_id,
+                        'product_id' => $salesRecord->product_id,
+                        'sequence_number' => null,
+                        'occurred_at' => Carbon::createFromTimeString($salesRecord->transaction_time, 'Europe/Dublin')->utc(),
+                        'type' => $salesRecord->type === 'rms_sale' ? 'sale' : 'adjustment',
+                        'quantity_before' => 0,
+                        'quantity_delta' => $salesRecord->quantity,
+                        'quantity_after' => 0,
+                        'description' => $salesRecord->type === 'rms_sale' ? 'rms_sale' : 'rmsapi_inventory_movement',
+                        'updated_at' => now()->utc()->toDateTimeLocalString(),
+                ]);
             });
-
-        InventoryMovement::query()
-            ->upsert($inventoryMovements->toArray(), ['custom_unique_reference_id'], [
-                'inventory_id',
-                'warehouse_code',
-                'warehouse_id',
-                'product_id',
-                'sequence_number',
-                'occurred_at',
-                'type',
-                'quantity_delta',
-                'description',
-                'updated_at',
-            ]);
 
         RmsapiSaleImport::query()
             ->whereIn('id', $records->pluck('id')->toArray())

@@ -15,9 +15,12 @@ class RecalculateInventoryRequestEvent
 
     public Collection $inventoryRecordsIds;
 
-    public function __construct($inventoryRecordsIds)
+    public Collection $inventory;
+
+    public function __construct($inventoryRecordsIds, $inventory = null)
     {
         $this->inventoryRecordsIds = $inventoryRecordsIds;
+        $this->inventory = $inventory;
     }
 
     public function broadcastOn(): Channel|PrivateChannel

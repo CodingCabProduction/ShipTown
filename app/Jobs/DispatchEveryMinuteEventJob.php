@@ -4,11 +4,16 @@ namespace App\Jobs;
 
 use App\Abstracts\UniqueJob;
 use App\Events\EveryMinuteEvent;
+use Exception;
 
 class DispatchEveryMinuteEventJob extends UniqueJob
 {
     public function handle(): void
     {
-        EveryMinuteEvent::dispatch();
+        try {
+            EveryMinuteEvent::dispatch();
+        } catch (Exception $e) {
+            report($e);
+        }
     }
 }

@@ -39,7 +39,7 @@ class IndexTest extends TestCase
             'data' => [
                 '*' => [
                     'code',
-                    'expired_at',
+                    'expires_at',
                     'error_message',
                     'auto_heal_job_class'
                 ],

@@ -11,13 +11,13 @@ use App\Models\Inventory;
 use App\Models\InventoryMovement;
 use App\Models\Product;
 use App\Models\Warehouse;
+use App\Modules\Inventory\src\Jobs\DispatchRecalculateInventoryRecordsJob;
 use App\Modules\InventoryMovements\src\InventoryMovementsServiceProvider;
 use App\Modules\InventoryMovements\src\Jobs\InventoryQuantityCheckJob;
 use App\Modules\InventoryMovements\src\Jobs\QuantityAfterCheckJob;
 use App\Modules\InventoryMovements\src\Jobs\QuantityBeforeCheckJob;
 use App\Modules\InventoryMovements\src\Jobs\QuantityDeltaCheckJob;
 use App\Modules\InventoryMovements\src\Jobs\SequenceNumberJob;
-use App\Modules\InventoryTotals\src\Jobs\RecalculateInventoryRecordsJob;
 use App\Services\InventoryService;
 use Tests\TestCase;
 
@@ -57,7 +57,7 @@ class BasicModuleTest extends TestCase
 
         SequenceNumberJob::dispatch();
 
-        RecalculateInventoryRecordsJob::dispatch();
+        DispatchRecalculateInventoryRecordsJob::dispatch();
 
         ray(InventoryMovement::query()->get()->toArray());
 
@@ -146,7 +146,7 @@ class BasicModuleTest extends TestCase
 
         InventoryQuantityCheckJob::dispatch();
         SequenceNumberJob::dispatch();
-        RecalculateInventoryRecordsJob::dispatch();
+        DispatchRecalculateInventoryRecordsJob::dispatch();
 
         $this->assertDatabaseHas('inventory', [
             'id' => $this->inventory->id,

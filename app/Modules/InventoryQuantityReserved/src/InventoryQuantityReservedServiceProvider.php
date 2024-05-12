@@ -31,9 +31,9 @@ class InventoryQuantityReservedServiceProvider extends BaseModuleServiceProvider
             Listeners\InventoryReservationUpdatedEventListener::class,
         ],
 
-        RecalculateInventoryRequestEvent::class => [
-            Listeners\RecalculateInventoryRequestEventListener::class,
-        ],
+//        RecalculateInventoryRequestEvent::class => [
+//            Listeners\RecalculateInventoryRequestEventListener::class,
+//        ],
     ];
 
     public function boot(): void
