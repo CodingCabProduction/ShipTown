@@ -40,6 +40,7 @@ class OrderUpdatedEventListener
         $inventoryReservations = $event->order
             ->orderProducts()
             ->whereNotNull('product_id')
+            ->get()
             ->map(function (OrderProduct $orderProduct) use ($event, $config) {
                 $inventory = Inventory::find($orderProduct->product_id, $config->warehouse_id);
 
