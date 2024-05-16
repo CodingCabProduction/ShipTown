@@ -19,6 +19,7 @@ class Taggable extends BaseModel
 
     protected $fillable = [
         'tag_id',
+        'tag_name',
         'taggable_type',
         'taggable_id',
     ];

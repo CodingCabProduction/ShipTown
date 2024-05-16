@@ -4,6 +4,7 @@ namespace App\Modules\Maintenance\src;
 
 use App\Events\EveryDayEvent;
 use App\Events\EveryHourEvent;
+use App\Events\EveryMinuteEvent;
 use App\Events\EveryTenMinutesEvent;
 use App\Modules\BaseModuleServiceProvider;
 
@@ -31,6 +32,10 @@ class EventServiceProviderBase extends BaseModuleServiceProvider
      * @var array
      */
     protected $listen = [
+        EveryMinuteEvent::class => [
+            Listeners\EveryMinuteEventListener::class,
+        ],
+
         EveryHourEvent::class => [
             Listeners\HourlyEventListener::class,
         ],
