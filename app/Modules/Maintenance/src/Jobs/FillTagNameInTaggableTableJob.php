@@ -24,6 +24,8 @@ class FillTagNameInTaggableTableJob implements ShouldQueue
 
                 LIMIT 5000;
             ');
+
+            usleep(100000); // 0.1 second
         } while ($recordsUpdated > 0);
     }
 }
