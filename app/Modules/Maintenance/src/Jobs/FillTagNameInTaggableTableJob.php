@@ -18,11 +18,10 @@ class FillTagNameInTaggableTableJob implements ShouldQueue
         do {
             $recordsUpdated = DB::affectingStatement('
                 UPDATE taggables
-                LEFT JOIN tags ON taggables.tag_id = tags.id
+                    LEFT JOIN tags ON taggables.tag_id = tags.id
                 SET taggables.tag_name = tags.name->>"$.en"
                 WHERE taggables.tag_name IS NULL
-
-                LIMIT 5000;
+                  AND taggables.tag_id IN (SELECT tag_id FROM (SELECT tag_id FROM taggables WHERE tag_name IS NULL) as tbl);
             ');
 
             usleep(100000); // 0.1 second
