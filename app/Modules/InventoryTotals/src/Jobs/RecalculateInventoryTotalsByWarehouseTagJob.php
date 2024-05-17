@@ -22,38 +22,30 @@ class RecalculateInventoryTotalsByWarehouseTagJob extends UniqueJob
                         'product_sku' => DB::raw("(
                             IFNULL(product_sku,
                                 SELECT products.sku
-
                                 FROM products
-
                                 WHERE products.id = inventory_totals_by_warehouse_tag.product_id
                             )
                         )"),
                         'warehouse_tag_name' => DB::raw("(
                             IFNULL(warehouse_tag_name,
-                                SELECT tags.name
-
-                                FROM tags
-
-                                WHERE tags.id = inventory_totals_by_warehouse_tag.tag_id
+                                SELECT taggables.tag_name
+                                FROM taggables
+                                WHERE taggables.tag_id = inventory_totals_by_warehouse_tag.tag_id
+                                LIMIT 1
                             )
                         )"),
                         'quantity' => DB::raw("(
                             SELECT SUM(inventory.quantity)
-
                             FROM inventory
-
                             INNER JOIN taggables
                                 ON taggables.tag_id = inventory_totals_by_warehouse_tag.tag_id
                                 AND taggables.taggable_type = 'App\\\\Models\\\\Warehouse'
                                 AND taggables.taggable_id = inventory.warehouse_id
-
                             WHERE inventory.product_id = inventory_totals_by_warehouse_tag.product_id
                         )"),
                         'quantity_reserved' => DB::raw("(
                             SELECT SUM(inventory.quantity_reserved)
-
                             FROM inventory
-
                             INNER JOIN taggables
                                 ON taggables.tag_id = inventory_totals_by_warehouse_tag.tag_id
                                 AND taggables.taggable_type = 'App\\\\Models\\\\Warehouse'
@@ -63,26 +55,20 @@ class RecalculateInventoryTotalsByWarehouseTagJob extends UniqueJob
                         )"),
                         'quantity_incoming' => DB::raw("(
                             SELECT SUM(inventory.quantity_incoming)
-
                             FROM inventory
-
                             INNER JOIN taggables
                                 ON taggables.tag_id = inventory_totals_by_warehouse_tag.tag_id
                                 AND taggables.taggable_type = 'App\\\\Models\\\\Warehouse'
                                 AND taggables.taggable_id = inventory.warehouse_id
-
                             WHERE inventory.product_id = inventory_totals_by_warehouse_tag.product_id
                         )"),
                         'max_inventory_updated_at' => DB::raw("(
                             SELECT MAX(inventory.updated_at)
-
                             FROM inventory
-
                             INNER JOIN taggables
                                 ON taggables.tag_id = inventory_totals_by_warehouse_tag.tag_id
                                 AND taggables.taggable_type = 'App\\\\Models\\\\Warehouse'
                                 AND taggables.taggable_id = inventory.warehouse_id
-
                             WHERE inventory.product_id = inventory_totals_by_warehouse_tag.product_id
                         )"),
                         'calculated_at' => now(),
