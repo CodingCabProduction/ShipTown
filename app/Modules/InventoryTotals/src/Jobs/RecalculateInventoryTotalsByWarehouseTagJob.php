@@ -3,7 +3,7 @@
 namespace App\Modules\InventoryTotals\src\Jobs;
 
 use App\Abstracts\UniqueJob;
-use App\Events\InventoryTotalByWarehouseTagUpdatedEvent;
+use App\Events\InventoryTotalsByWarehouseTagUpdatedEvent;
 use App\Modules\InventoryTotals\src\Models\InventoryTotalByWarehouseTag;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -72,7 +72,7 @@ class RecalculateInventoryTotalsByWarehouseTagJob extends UniqueJob
                     ]);
 
                 $records->each(function (InventoryTotalByWarehouseTag $inventoryTotalByWarehouseTag) {
-                    InventoryTotalByWarehouseTagUpdatedEvent::dispatch($inventoryTotalByWarehouseTag);
+                    InventoryTotalsByWarehouseTagUpdatedEvent::dispatch($inventoryTotalByWarehouseTag);
                 });
 
                 Log::debug('Job processing', ['job' => self::class, 'records_updated' => $recordsUpdated]);

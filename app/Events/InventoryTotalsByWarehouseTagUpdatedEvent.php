@@ -8,13 +8,15 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class InventoryTotalByWarehouseTagUpdatedEvent
+class InventoryTotalsByWarehouseTagUpdatedEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public function __construct(public InventoryTotalByWarehouseTag $inventoryTotalByWarehouseTag)
+    public InventoryTotalByWarehouseTag $inventoryTotalByWarehouseTag;
+
+    public function __construct(InventoryTotalByWarehouseTag $inventoryTotalByWarehouseTag)
     {
-        //
+        $this->inventoryTotalByWarehouseTag = $inventoryTotalByWarehouseTag;
     }
 
     public function broadcastOn(): PrivateChannel
