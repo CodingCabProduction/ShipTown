@@ -28,6 +28,15 @@ class RecalculateInventoryTotalsByWarehouseTagJob extends UniqueJob
                                 WHERE products.id = inventory_totals_by_warehouse_tag.product_id
                             )
                         )"),
+                        'warehouse_tag_name' => DB::raw("(
+                            IFNULL(warehouse_tag_name,
+                                SELECT tags.name
+
+                                FROM tags
+
+                                WHERE tags.id = inventory_totals_by_warehouse_tag.tag_id
+                            )
+                        )"),
                         'quantity' => DB::raw("(
                             SELECT SUM(inventory.quantity)
 
