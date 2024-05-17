@@ -20,18 +20,19 @@ class RecalculateInventoryTotalsByWarehouseTagJob extends UniqueJob
                     ->update([
                         'recalc_required' => false,
                         'product_sku' => DB::raw("(
-                            IFNULL(product_sku,
-                                SELECT products.sku
-                                FROM products
-                                WHERE products.id = inventory_totals_by_warehouse_tag.product_id
-                            )
+                            IFNULL(product_sku, (
+                                    SELECT products.sku
+                                    FROM products
+                                    WHERE products.id = inventory_totals_by_warehouse_tag.product_id)
+                                )
                         )"),
                         'warehouse_tag_name' => DB::raw("(
-                            IFNULL(warehouse_tag_name,
-                                SELECT taggables.tag_name
-                                FROM taggables
-                                WHERE taggables.tag_id = inventory_totals_by_warehouse_tag.tag_id
-                                LIMIT 1
+                            IFNULL(warehouse_tag_name, (
+                                    SELECT taggables.tag_name
+                                    FROM taggables
+                                    WHERE taggables.tag_id = inventory_totals_by_warehouse_tag.tag_id
+                                    LIMIT 1
+                                )
                             )
                         )"),
                         'quantity' => DB::raw("(
