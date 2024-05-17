@@ -15,7 +15,7 @@ class DispatchRecalculateInventoryRecordsJob extends UniqueJob
     public function handle(): void
     {
         Inventory::where(['recount_required' => true])
-            ->chunkById(100, function (Collection $records) {
+            ->chunkById(1000, function (Collection $records) {
                 $recordsUpdated = Inventory::whereIn('id', $records->pluck('id'))
                     ->update([
                         'recount_required'      => false,
