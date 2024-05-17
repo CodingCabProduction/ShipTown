@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Events\AfterInstallEvent;
 use App\Modules;
 use App\Mail\OrderMail;
 use App\Models\Configuration;
@@ -54,93 +55,15 @@ class AppInstall extends Command
 
     public function handle(): int
     {
-        if (env('PASSPORT_PRIVATE_KEY', '') === '') {
-            $this->info('Generating passport keys');
-            $this->createPassportKeys();
+        $configuration = Configuration::query()->firstOrCreate([], ['database_version' => '0.0.0']);
+
+        if (version_compare($configuration->database_version, '0.0.0', '=')) {
+            $this->ensureAppKeysGenerated();
+            $this->preconfigureDatabase();
+            $configuration->update(['database_version' => '2.1.0']);
         }
 
-        if (env('APP_KEY', '') === '') {
-            $this->info('Generating application key');
-            $this->call('key:generate');
-        }
-
-        $this->createDefaultConfigurationRecord();
-        $this->createDefaultUserRoles();
-        $this->createDefaultNavigationLinks();
-        $this->createShipmentConfirmationNotificationTemplate();
-        $this->createReadyForCollectionNotificationTemplate();
-        $this->createDefaultMailTemplateShipmentNotification();
-        $this->createDefaultMailTemplateOversoldProduct();
-
-        $this->createNewToPaidAutomation();
-//        $this->createPaidToPickingAutomation();
-        $this->createPickingToPackingAutomation();
-        $this->createPackingToShippedAutomation();
-
-
-        $this->createPaidToCompleteAutomation();
-        $this->createPickedToCompleteAutomation();
-        $this->createPaidToSingleLineOrdersAutomation();
-
-        \App\Services\ModulesService::updateModulesTable();
-
-        Configuration::create([
-            'warehouse_id' => Warehouse::query()->firstOrCreate(['code' => '999'], ['name' => '999'])->id,
-        ]);
-
-        StocktakeSuggestionsServiceProvider::installModule();
-        AutoRestockLevelsServiceProvider::installModule();
-        InventoryQuantityIncomingServiceProvider::installModule();
-        DataCollectorServiceProvider::installModule();
-        NonInventoryProductTagServiceProvider::installModule();
-        QueueMonitorServiceProvider::installModule();
-        TelescopeModuleServiceProvider::installModule();
-        InventoryMovementsStatisticsServiceProvider::installModule();
-        SlackServiceProvider::installModule();
-        EventServiceProviderBase::installModule();
-        InventoryMovementsServiceProvider::installModule();
-
-        // misc modules
-        Modules\Maintenance\src\EventServiceProviderBase::installModule();
-        Modules\SystemHeartbeats\src\SystemHeartbeatsServiceProvider::installModule();
-        Modules\StockControl\src\StockControlServiceProvider::installModule();
-        Modules\OrderTotals\src\OrderTotalsServiceProvider::installModule();
-        Modules\OrderStatus\src\OrderStatusServiceProvider::installModule();
-        Modules\FireActiveOrderCheckEvent\src\ActiveOrderCheckEventServiceProvider::installModule();
-
-        Modules\InventoryReservations\src\EventServiceProviderBase::installModule();
-        Modules\InventoryTotals\src\InventoryTotalsServiceProvider::installModule();
-        Modules\Automations\src\AutomationsServiceProvider::installModule();
-        Modules\Reports\src\ReportsServiceProvider::installModule();
-
-        // Automations modules
-        // order MIGHT be important!
-        Modules\AutoPilot\src\AutoPilotServiceProvider::installModule();
-        Modules\AutoTags\src\EventServiceProviderBase::installModule();
-        Modules\OversoldProductNotification\src\OversoldProductNotificationServiceProvider::installModule();
-
-        // AutoStatus modules
-        // order is important!
-        Modules\AutoStatusPicking\src\AutoStatusPickingServiceProvider::installModule();
-
-        // 3rd party integrations
-        // order SHOULD not be important
-        Modules\Webhooks\src\WebhooksServiceProviderBase::installModule();
-        Modules\Api2cart\src\Api2cartServiceProvider::installModule();
-        Modules\Rmsapi\src\RmsapiModuleServiceProvider::installModule();
-        Modules\MagentoApi\src\EventServiceProviderBase::installModule();
-        Modules\ScurriAnpost\src\ScurriServiceProvider::installModule();
-        Modules\DpdUk\src\DpdUkServiceProvider::installModule();
-        Modules\AddressLabel\src\AddressLabelServiceProvider::installModule();
-        Modules\DpdIreland\src\DpdIrelandServiceProvider::installModule();
-        Modules\PrintNode\src\PrintNodeServiceProvider::installModule();
-
-        StocktakeSuggestionsServiceProvider::enableModule();
-        InventoryMovementsStatisticsServiceProvider::enableModule();
-        EventServiceProviderBase::enableModule();
-        InventoryMovementsServiceProvider::enableModule();
-        InventoryTotalsServiceProvider::enableModule();
-        InventoryMovementsServiceProvider::enableModule();
+        AfterInstallEvent::dispatch();
 
         return 0;
     }
@@ -218,6 +141,106 @@ class AppInstall extends Command
         ]);
 
         $automation->update(['enabled' => true]);
+    }
+
+    /**
+     * @return void
+     */
+    public function preconfigureDatabase(): void
+    {
+        $this->createDefaultConfigurationRecord();
+        $this->createDefaultUserRoles();
+        $this->createDefaultNavigationLinks();
+        $this->createShipmentConfirmationNotificationTemplate();
+        $this->createReadyForCollectionNotificationTemplate();
+        $this->createDefaultMailTemplateShipmentNotification();
+        $this->createDefaultMailTemplateOversoldProduct();
+
+        $this->createNewToPaidAutomation();
+//        $this->createPaidToPickingAutomation();
+        $this->createPickingToPackingAutomation();
+        $this->createPackingToShippedAutomation();
+
+
+        $this->createPaidToCompleteAutomation();
+        $this->createPickedToCompleteAutomation();
+        $this->createPaidToSingleLineOrdersAutomation();
+
+        \App\Services\ModulesService::updateModulesTable();
+
+        Configuration::create([
+            'warehouse_id' => Warehouse::query()->firstOrCreate(['code' => '999'], ['name' => '999'])->id,
+        ]);
+
+        StocktakeSuggestionsServiceProvider::installModule();
+        AutoRestockLevelsServiceProvider::installModule();
+        InventoryQuantityIncomingServiceProvider::installModule();
+        DataCollectorServiceProvider::installModule();
+        NonInventoryProductTagServiceProvider::installModule();
+        QueueMonitorServiceProvider::installModule();
+        TelescopeModuleServiceProvider::installModule();
+        InventoryMovementsStatisticsServiceProvider::installModule();
+        SlackServiceProvider::installModule();
+        EventServiceProviderBase::installModule();
+        InventoryMovementsServiceProvider::installModule();
+
+        // misc modules
+        Modules\Maintenance\src\EventServiceProviderBase::installModule();
+        Modules\SystemHeartbeats\src\SystemHeartbeatsServiceProvider::installModule();
+        Modules\StockControl\src\StockControlServiceProvider::installModule();
+        Modules\OrderTotals\src\OrderTotalsServiceProvider::installModule();
+        Modules\OrderStatus\src\OrderStatusServiceProvider::installModule();
+        Modules\FireActiveOrderCheckEvent\src\ActiveOrderCheckEventServiceProvider::installModule();
+
+        Modules\InventoryReservations\src\EventServiceProviderBase::installModule();
+        Modules\InventoryTotals\src\InventoryTotalsServiceProvider::installModule();
+        Modules\Automations\src\AutomationsServiceProvider::installModule();
+        Modules\Reports\src\ReportsServiceProvider::installModule();
+
+        // Automations modules
+        // order MIGHT be important!
+        Modules\AutoPilot\src\AutoPilotServiceProvider::installModule();
+        Modules\AutoTags\src\EventServiceProviderBase::installModule();
+        Modules\OversoldProductNotification\src\OversoldProductNotificationServiceProvider::installModule();
+
+        // AutoStatus modules
+        // order is important!
+        Modules\AutoStatusPicking\src\AutoStatusPickingServiceProvider::installModule();
+
+        // 3rd party integrations
+        // order SHOULD not be important
+        Modules\Webhooks\src\WebhooksServiceProviderBase::installModule();
+        Modules\Api2cart\src\Api2cartServiceProvider::installModule();
+        Modules\Rmsapi\src\RmsapiModuleServiceProvider::installModule();
+        Modules\MagentoApi\src\EventServiceProviderBase::installModule();
+        Modules\ScurriAnpost\src\ScurriServiceProvider::installModule();
+        Modules\DpdUk\src\DpdUkServiceProvider::installModule();
+        Modules\AddressLabel\src\AddressLabelServiceProvider::installModule();
+        Modules\DpdIreland\src\DpdIrelandServiceProvider::installModule();
+        Modules\PrintNode\src\PrintNodeServiceProvider::installModule();
+
+        StocktakeSuggestionsServiceProvider::enableModule();
+        InventoryMovementsStatisticsServiceProvider::enableModule();
+        EventServiceProviderBase::enableModule();
+        InventoryMovementsServiceProvider::enableModule();
+        InventoryTotalsServiceProvider::enableModule();
+        InventoryMovementsServiceProvider::enableModule();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureAppKeysGenerated(): void
+    {
+        if (env('PASSPORT_PRIVATE_KEY', '') === '') {
+            $this->info('Generating passport keys');
+            $this->createPassportKeys();
+        }
+
+        if (env('APP_KEY', '') === '') {
+            $this->info('Generating application key');
+            $this->call('key:generate');
+        }
     }
 
     private function createPaidToPickingAutomation(): void

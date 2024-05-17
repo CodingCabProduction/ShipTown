@@ -868,6 +868,7 @@ return new class extends Migration
         Schema::create('configurations', function (Blueprint $table) {
             $table->id();
             $table->string('business_name')->default('');
+            $table->string('database_version')->default('0.0.0');
             $table->boolean('disable_2fa')->default(0);
             $table->timestamps();
         });
