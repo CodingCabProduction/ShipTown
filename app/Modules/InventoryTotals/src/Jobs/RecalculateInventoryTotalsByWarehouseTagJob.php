@@ -14,7 +14,7 @@ class RecalculateInventoryTotalsByWarehouseTagJob extends UniqueJob
     public function handle(): void
     {
         InventoryTotalByWarehouseTag::where(['recalc_required' => true])
-            ->chunkById(10, function (Collection $records) {
+            ->chunkById(100, function (Collection $records) {
                 $recordsUpdated = InventoryTotalByWarehouseTag::query()
                     ->whereIn('id', $records->pluck('id'))
                     ->update([
