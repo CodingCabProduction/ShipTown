@@ -2,21 +2,21 @@
 
 namespace App\Events;
 
-use App\Modules\InventoryTotals\src\Models\InventoryTotalByWarehouseTag;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
 
 class InventoryTotalsByWarehouseTagUpdatedEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public InventoryTotalByWarehouseTag $inventoryTotalByWarehouseTag;
+    public Collection $inventoryTotalByWarehouseTags;
 
-    public function __construct(InventoryTotalByWarehouseTag $inventoryTotalByWarehouseTag)
+    public function __construct(Collection $inventoryTotalByWarehouseTag)
     {
-        $this->inventoryTotalByWarehouseTag = $inventoryTotalByWarehouseTag;
+        $this->inventoryTotalByWarehouseTags = $inventoryTotalByWarehouseTag;
     }
 
     public function broadcastOn(): PrivateChannel
