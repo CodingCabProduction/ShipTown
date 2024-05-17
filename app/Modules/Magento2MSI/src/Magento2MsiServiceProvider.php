@@ -2,7 +2,6 @@
 
 namespace App\Modules\Magento2MSI\src;
 
-use App\Events\AfterInstallEvent;
 use App\Events\EveryDayEvent;
 use App\Events\EveryFiveMinutesEvent;
 use App\Events\EveryHourEvent;
