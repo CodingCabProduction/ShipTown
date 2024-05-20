@@ -14,9 +14,9 @@ class InventoryTotalsByWarehouseTagUpdatedEvent
 
     public Collection $inventoryTotalByWarehouseTags;
 
-    public function __construct(Collection $inventoryTotalByWarehouseTag)
+    public function __construct(Collection $inventoryTotalsByWarehouseTag)
     {
-        $this->inventoryTotalByWarehouseTags = $inventoryTotalByWarehouseTag;
+        $this->inventoryTotalByWarehouseTags = $inventoryTotalsByWarehouseTag;
     }
 
     public function broadcastOn(): PrivateChannel

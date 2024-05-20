@@ -31,6 +31,7 @@ class InventoryUpdatedEventListener
         InventoryTotal::query()
             ->where('product_id', $inventory->product_id)
             ->update([
+                'recount_required' => true,
                 'quantity' => DB::raw("quantity + $quantityDelta"),
                 'quantity_reserved' => DB::raw("quantity_reserved + $quantityReservedDelta"),
                 'quantity_incoming' => DB::raw("quantity_incoming + $quantityIncomingDelta"),
@@ -49,6 +50,7 @@ class InventoryUpdatedEventListener
             ->where('product_id', $inventory->product_id)
             ->whereIn('tag_id', $tags->pluck('tag_id'))
             ->update([
+                'recalc_required' => true,
                 'quantity' => DB::raw("quantity + $quantityDelta"),
                 'quantity_reserved' => DB::raw("quantity_reserved + $quantityReservedDelta"),
                 'quantity_incoming' => DB::raw("quantity_incoming + $quantityIncomingDelta"),

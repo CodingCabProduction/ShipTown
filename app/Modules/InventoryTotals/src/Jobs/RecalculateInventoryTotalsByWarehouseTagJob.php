@@ -77,9 +77,9 @@ class RecalculateInventoryTotalsByWarehouseTagJob extends UniqueJob
                     ]);
 
 
-                $updatedInventoryTotalByWarehouseTags = InventoryTotalByWarehouseTag::whereIn('id', $records->pluck('id'))->get();
+                $updatedInventoryTotalsByWarehouseTags = InventoryTotalByWarehouseTag::whereIn('id', $records->pluck('id'))->get();
 
-                InventoryTotalsByWarehouseTagUpdatedEvent::dispatch($updatedInventoryTotalByWarehouseTags);
+                InventoryTotalsByWarehouseTagUpdatedEvent::dispatch($updatedInventoryTotalsByWarehouseTags);
 
                 Log::debug('Job processing', ['job' => self::class, 'records_updated' => $recordsUpdated]);
 

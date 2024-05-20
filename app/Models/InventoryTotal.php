@@ -20,14 +20,16 @@ class InventoryTotal extends Model
 {
     protected $fillable = [
         'product_id',
+        'recount_required',
         'quantity',
         'quantity_reserved',
         'quantity_incoming',
     ];
 
-    /**
-     * @return BelongsTo
-     */
+    protected $casts = [
+        'recount_required' => 'boolean',
+    ];
+
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);

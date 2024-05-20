@@ -17,10 +17,15 @@ class InventoryTotalByWarehouseTag extends BaseModel
     protected $fillable = [
         'tag_id',
         'product_id',
+        'recalc_required',
         'quantity',
         'quantity_reserved',
         'quantity_incoming',
         'max_inventory_updated_at',
         'calculated_at',
+    ];
+
+    protected $casts = [
+        'recalc_required' => 'boolean',
     ];
 }

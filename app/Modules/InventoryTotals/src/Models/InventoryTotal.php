@@ -10,6 +10,7 @@ class InventoryTotal extends BaseModel
 
     protected $fillable = [
         'product_id',
+        'recount_required',
         'quantity',
         'quantity_reserved',
         'quantity_incoming',
