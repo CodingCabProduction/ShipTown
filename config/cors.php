@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*', 'myshiptown.com'],
+    'allowed_origins' => ['*', 'https://myshiptown.com'],
 
     'allowed_origins_patterns' => [],
 
