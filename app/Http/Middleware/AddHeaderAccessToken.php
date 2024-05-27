@@ -16,6 +16,8 @@ class AddHeaderAccessToken
      */
     public function handle(Request $request, Closure $next)
     {
+        $request->headers->set('Access-Control-Allow-Origin', '*');
+
         if ($request->has('access_token')) {
             $request->headers->set('Authorization', 'Bearer ' . $request->get('access_token'));
         }
