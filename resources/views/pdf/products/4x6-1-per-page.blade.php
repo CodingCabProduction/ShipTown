@@ -2,7 +2,7 @@
 @section('content')
     @php
         $label ='test';
-        \App\Models\Product::whereIn('sku', ['316765', '321334'])->get();
+//        \App\Models\Product::whereIn('sku', ['316765', '321334'])->get();
         $products[] = [
             'name' => 'Tennis Balls PRO - 6pk',
             'sku' => '316765',
