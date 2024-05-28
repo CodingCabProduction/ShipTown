@@ -38,6 +38,16 @@ class ProductsSeeder extends Seeder
         Product::factory()->create(['sku' => '3004', 'name' => 'Test Product - 3004']);
         Product::factory()->create(['sku' => '3005', 'name' => 'Test Product - 3005']);
 
+        Product::factory()->create(['sku' => '4001', 'name' => 'T-Shirt Blue']);
+        Product::factory()->create(['sku' => '4002', 'name' => 'T-Shirt Brown Grey']);
+        Product::factory()->create(['sku' => '4003', 'name' => 'T-Shirt Light Brown']);
+        Product::factory()->create(['sku' => '4004', 'name' => 'T-Shirt Light Grey']);
+        Product::factory()->create(['sku' => '4005', 'name' => 'T-Shirt Grey']);
+        Product::factory()->create(['sku' => '4002', 'name' => 'T-Shirt Black']);
+        Product::factory()->create(['sku' => '4003', 'name' => 'T-Shirt Purple']);
+        Product::factory()->create(['sku' => '4004', 'name' => 'T-Shirt Green']);
+        Product::factory()->create(['sku' => '4005', 'name' => 'T-Shirt ']);
+
         Product::factory()->count(50)->create();
     }
 
