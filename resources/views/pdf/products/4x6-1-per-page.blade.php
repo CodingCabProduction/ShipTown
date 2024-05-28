@@ -1,9 +1,8 @@
 @extends('pdf.template')
 @section('content')
-
-
     @php
         $label ='test';
+        \App\Models\Product::whereIn('sku', ['316765', '321334'])->get();
         $products[] = [
             'name' => 'Tennis Balls PRO - 6pk',
             'sku' => '316765',
@@ -26,7 +25,7 @@
                 <span class="product_name" style="">{{ $product['name'] }}</span>
                 <div class="product_price">€ {{ $product['price'] }}</div>
                 <div class="product_barcode">
-                    <img src="data:image/svg,{{ DNS1D::getBarcodeSVG($product['sku'], 'C39', 0.5, 25) }}" alt="barcode" />
+                    <img src="data:image/svg,{{ DNS1D::getBarcodeSVG($product['sku'], 'C39', 1, 25) }}" alt="barcode" />
                 </div>
             </div>
         @endforeach
@@ -37,7 +36,7 @@
 
     <style>
         @page {
-            size: 70mm 32mm;
+            size: 57mm 32mm;
             margin: 2mm;
         }
 
