@@ -13,8 +13,8 @@ class OrderFactory extends Factory
 {
     public function definition(): array
     {
-        $shippingAddress = OrderAddress::factory()->create();
-        $billingAddress = OrderAddress::factory()->create();
+        $shippingAddress = OrderAddress::factory()->create(['country_name' => 'Ireland', 'country_code' => 'IE']);
+        $billingAddress = OrderAddress::factory()->create(['country_name' => 'Ireland', 'country_code' => 'IE']);
 
         /** @var OrderStatus $orderStatus */
         $orderStatus = OrderStatus::query()->inRandomOrder()->first() ?? OrderStatus::factory()->create();
