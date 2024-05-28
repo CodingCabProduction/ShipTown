@@ -3,16 +3,26 @@
     @php
         $label ='test';
 //        \App\Models\Product::whereIn('sku', ['316765', '321334'])->get();
-        $products[] = [
-            'name' => 'Tennis Balls PRO - 6pk',
-            'sku' => '316765',
-            'price' => 14.95,
-        ];
-        $products[] = [
-            'name' => 'Tennis Racket Evo 2022 L',
-            'sku' => '321334',
-            'price' => 74.95,
-        ];
+        $products[] = ['sku' => '40011', 'name' => 'Secret Box', 'price' => 199];
+        $products[] = ['sku' => '40012', 'name' => 'Power Adaptor', 'price' => 19.95];
+        $products[] = ['sku' => '40013', 'name' => 'Christmas Snowball', 'price' => 29.95];
+        $products[] = ['sku' => '40014', 'name' => 'Gloves Size L', 'price' => 8.95];
+        $products[] = ['sku' => '40015', 'name' => 'Buttons 100pk', 'price' => 9.99];
+
+        $products[] = ['sku' => '4001', 'name' => 'T-Shirt Blue', 'price' => 29.95];
+        $products[] = ['sku' => '4002', 'name' => 'T-Shirt Brown Grey', 'price' => 29.95];
+        $products[] = ['sku' => '4003', 'name' => 'T-Shirt Light Brown', 'price' => 29.95];
+        $products[] = ['sku' => '4004', 'name' => 'T-Shirt Light Grey', 'price' => 29.95];
+        $products[] = ['sku' => '4005', 'name' => 'T-Shirt Grey', 'price' => 29.95];
+        $products[] = ['sku' => '4006', 'name' => 'T-Shirt Black', 'price' => 29.95];
+        $products[] = ['sku' => '4007', 'name' => 'T-Shirt Purple', 'price' => 29.95];
+        $products[] = ['sku' => '4008', 'name' => 'T-Shirt Green', 'price' => 29.95];
+        $products[] = ['sku' => '4009', 'name' => 'T-Shirt ', 'price' => 29.95];
+
+        $products[] = ['sku' => '46', 'name' => 'Silver Tennis Racket', 'price' => 85];
+        $products[] = ['sku' => '47', 'name' => 'Green Cap', 'price' => 12.97];
+        $products[] = ['sku' => '48', 'name' => 'Ball Mega pack 100', 'price' => 35.90];
+        $products[] = ['sku' => '49', 'name' => 'EVO PRO 2 Tennis Racket', 'price' => 35.90];
     @endphp
     @foreach($products as $product)
 {{--        @foreach($chunk as $index => $label)--}}

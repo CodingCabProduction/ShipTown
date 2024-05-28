@@ -71,7 +71,7 @@ class DpdIrelandSeeder extends Seeder
         ]);
 
         /** @var Product $product */
-        $product = Product::findBySku('45');
+        $product = Product::query()->inRandomOrder('45')->first();
 
         foreach ($orders as $order) {
             OrderProduct::factory()->create([

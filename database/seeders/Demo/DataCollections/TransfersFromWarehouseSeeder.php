@@ -36,21 +36,21 @@ class TransfersFromWarehouseSeeder extends Seeder
                 // not scanned yet
                 DataCollectionRecord::factory()->create([
                     'data_collection_id' => $dataCollection->getKey(),
-                    'product_id' => Product::findBySKU('45')->getKey(),
+                    'product_id' => Product::inRandomOrder('45')->first()->getKey(),
                     'quantity_requested' => 12,
                     'quantity_scanned' => 0,
                 ]);
 
                 DataCollectionRecord::factory()->create([
                     'data_collection_id' => $dataCollection->getKey(),
-                    'product_id' => Product::findBySKU('46')->getKey(),
+                    'product_id' => Product::inRandomOrder('46')->first()->getKey(),
                     'quantity_requested' => 12,
                     'quantity_scanned' => 0,
                 ]);
 
                 DataCollectionRecord::factory()->create([
                     'data_collection_id' => $dataCollection->getKey(),
-                    'product_id' => Product::findBySKU('47')->getKey(),
+                    'product_id' => Product::inRandomOrder('47')->first()->getKey(),
                     'quantity_requested' => 54,
                     'quantity_scanned' => 0,
                 ]);
@@ -58,7 +58,7 @@ class TransfersFromWarehouseSeeder extends Seeder
                 // fully scanned
                 DataCollectionRecord::factory()->create([
                     'data_collection_id' => $dataCollection->getKey(),
-                    'product_id' => Product::findBySKU('48')->getKey(),
+                    'product_id' => Product::inRandomOrder('48')->first()->getKey(),
                     'quantity_requested' => 6,
                     'quantity_scanned' => 6,
                 ]);

@@ -47,12 +47,12 @@ class InventorySeeder extends Seeder
             });
 
         InventoryMovement::query()->insert($movements->toArray());
-
-        $product_id = Product::findBySKU('45')->getKey();
-
-        Inventory::query()
-            ->where(['product_id' => $product_id])
-            ->update(['shelve_location' => 'A1']);
+//
+//        $product_id = Product::findBySKU('45')->getKey();
+//
+//        Inventory::query()
+//            ->where(['product_id' => $product_id])
+//            ->update(['shelve_location' => 'A1']);
 
         SequenceNumberJob::dispatch();
     }
