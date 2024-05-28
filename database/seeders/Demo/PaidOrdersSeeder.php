@@ -29,7 +29,7 @@ class PaidOrdersSeeder extends Seeder
                         return OrderProduct::create([
                             'order_id' => $order->getKey(),
                             'product_id' => $product->getKey(),
-                            'quantity_ordered' => rand(2, 6),
+                            'quantity_ordered' => rand(1, 2),
                             'price' => $product->price,
                             'name_ordered' => $product->name,
                             'sku_ordered' => $product->sku,
@@ -52,7 +52,7 @@ class PaidOrdersSeeder extends Seeder
                         return OrderProduct::create([
                             'order_id' => $order->getKey(),
                             'product_id' => $product->getKey(),
-                            'quantity_ordered' => rand(2, 6),
+                            'quantity_ordered' => rand(1, 2),
                             'price' => $product->price,
                             'name_ordered' => $product->name,
                             'sku_ordered' => $product->sku,
@@ -75,7 +75,7 @@ class PaidOrdersSeeder extends Seeder
                         return OrderProduct::create([
                             'order_id' => $order->getKey(),
                             'product_id' => $product->getKey(),
-                            'quantity_ordered' => rand(2, 6),
+                            'quantity_ordered' => rand(1, 2),
                             'price' => $product->price,
                             'name_ordered' => $product->name,
                             'sku_ordered' => $product->sku,
@@ -98,7 +98,7 @@ class PaidOrdersSeeder extends Seeder
                         return OrderProduct::create([
                             'order_id' => $order->getKey(),
                             'product_id' => $product->getKey(),
-                            'quantity_ordered' => rand(2, 6),
+                            'quantity_ordered' => rand(1, 2),
                             'price' => $product->price,
                             'name_ordered' => $product->name,
                             'sku_ordered' => $product->sku,
@@ -121,7 +121,7 @@ class PaidOrdersSeeder extends Seeder
                         return OrderProduct::create([
                             'order_id' => $order->getKey(),
                             'product_id' => $product->getKey(),
-                            'quantity_ordered' => rand(2, 6),
+                            'quantity_ordered' => rand(1, 2),
                             'price' => $product->price,
                             'name_ordered' => $product->name,
                             'sku_ordered' => $product->sku,
@@ -144,7 +144,7 @@ class PaidOrdersSeeder extends Seeder
                         return OrderProduct::create([
                             'order_id' => $order->getKey(),
                             'product_id' => $product->getKey(),
-                            'quantity_ordered' => rand(2, 6),
+                            'quantity_ordered' => rand(1, 2),
                             'price' => $product->price,
                             'name_ordered' => $product->name,
                             'sku_ordered' => $product->sku,
