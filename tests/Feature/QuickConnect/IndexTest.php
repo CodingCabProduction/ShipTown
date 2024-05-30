@@ -14,7 +14,7 @@ class IndexTest extends TestCase
     /**
      * @var string
      */
-    protected string $uri = '';
+    protected string $uri = 'quick-connect';
 
     protected mixed $user;
 

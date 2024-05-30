@@ -3,7 +3,6 @@
 namespace Tests\Feature\QuickConnect\Shopify;
 
 use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 /**
@@ -14,7 +13,7 @@ class IndexTest extends TestCase
     /**
      * @var string
      */
-    protected string $uri = '';
+    protected string $uri = 'quick-connect/shopify';
 
     protected mixed $user;
 
