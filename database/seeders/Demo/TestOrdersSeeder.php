@@ -66,7 +66,6 @@ class TestOrdersSeeder extends Seeder
         $order = Order::query()->create(['order_number' => 'T100002 - Packsheet', 'status_code' => 'paid', 'order_placed_at' => now()->subDays(3), 'shipping_address_id' => $this->createIrishShippingAddress()->getKey()]);
 
         Product::query()
-            ->whereIn('sku', ['45', '44'])
             ->inRandomOrder()
             ->get()
             ->each(function (Product $product) use ($order) {
@@ -88,7 +87,6 @@ class TestOrdersSeeder extends Seeder
         $order = Order::factory()->create(['order_number' => 'T100002 - Unpaid order', 'order_placed_at' => now()->subDays(3), 'total_paid' => 0, 'shipping_address_id' => $this->createIrishShippingAddress()->getKey()]);
 
         Product::query()
-            ->whereIn('sku', ['45'])
             ->inRandomOrder()
             ->get()
             ->each(function (Product $product) use ($order) {
