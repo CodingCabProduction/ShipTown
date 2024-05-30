@@ -12,11 +12,6 @@
             </template>
         </search-and-option-bar>
 
-        <div class="row mb-1 pb-2 p-1 sticky-top bg-light" style="z-index: 10;" v-if="currentUser['warehouse'] !== null">
-            <div class="flex-fill">
-            </div>
-        </div>
-
         <div class="row pl-2 p-0">
             <div class="col-12 text-left align-bottom pb-0 m-0 font-weight-bold text-uppercase small text-secondary">
                 TOOLS > RESTOCKING
