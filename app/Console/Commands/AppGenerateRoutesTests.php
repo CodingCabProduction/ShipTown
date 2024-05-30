@@ -40,9 +40,10 @@ class AppGenerateRoutesTests extends Command
             $testName = self::getWebRouteTestName($route);
 
             $fullFileName = app()->basePath();
-            $fullFileName .= '/tests/Feature/';
+            $fullFileName .= '/tests/';
             $fullFileName .= $testName;
             $fullFileName .= '.php';
+
 
             if (! file_exists($fullFileName)) {
                 Artisan::call('app:make-test '.$testName.' --stub=test.controller');
@@ -75,7 +76,7 @@ class AppGenerateRoutesTests extends Command
             $testName = self::getWebRouteTestName($route);
 
             $fullFileName = app()->basePath();
-            $fullFileName .= '/tests/Feature/';
+            $fullFileName .= '/tests/';
             $fullFileName .= $testName;
             $fullFileName .= '.php';
 
@@ -101,7 +102,7 @@ class AppGenerateRoutesTests extends Command
             'DELETE'    => 'destroy',
         ];
 
-        $routeName = $route->uri . '/'. $m[$route->method] .'Test';
+        $routeName = 'Feature/' . $route->uri . '/'. $m[$route->method] .'Test';
 
         $routeName = str_replace('-', '_', $routeName);
         $routeName = str_replace('.', '_', $routeName);

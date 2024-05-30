@@ -22,7 +22,7 @@ class RoutesCoverageTest extends TestCase
         collect($artisanOutput)
             ->each(function ($route) {
                 $fullFileName = app()->basePath();
-                $fullFileName .= '/tests/Feature/';
+                $fullFileName .= '/tests/';
                 $fullFileName .= AppGenerateRoutesTests::getWebRouteTestName($route);
                 $fullFileName .= '.php';
 
