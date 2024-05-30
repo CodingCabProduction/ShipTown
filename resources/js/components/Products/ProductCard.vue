@@ -6,7 +6,7 @@
                     <product-info-card :product= "product"></product-info-card>
                 </div>
                 <div class="col-lg-7" :class="forModal ? '': 'col-md-6'">
-                    <div class="table-responsive small" @click="toggle">
+                    <div class="table-responsive small">
                         <table class="table table-borderless mb-0 w-100 text-right">
                             <thead>
                             <tr class="small font-weight-bold">
@@ -24,13 +24,13 @@
                             <template v-for="inventory in product.inventory" >
                                 <tr class="" v-bind:class="{ 'table-active': currentUser()['warehouse'] && inventory['warehouse_code'] === currentUser()['warehouse']['code']}">
                                     <td class="text-left"><a class="text-primary cursor-pointer" @click.prevent="showInventoryMovementModal(inventory['id'])">{{ inventory['warehouse_code'] }}</a></td>
-                                    <td class="text-left">{{ inventory['shelf_location'] }}</td>
-                                    <td>{{ toNumberOrDash(inventory['quantity_available'])}}</td>
-                                    <td class="d-none d-md-table-cell">{{ toNumberOrDash(inventory['quantity_reserved'])}}</td>
-                                    <td class="pr-1">{{ toNumberOrDash(inventory['quantity_incoming']) }}</td>
-                                    <td class="d-none d-md-table-cell pr-1">{{ toNumberOrDash(inventory['quantity_required']) }}</td>
-                                    <td class="ml-2 pl-2" :class="{ 'bg-warning': product.prices[inventory['warehouse_code']]['is_on_sale'] === true }">{{ toNumberOrDash(product.prices[inventory['warehouse_code']]['current_price'], 2) }}</td>
-                                    <td class="ml-2">
+                                    <td @click="toggleProductDetails" class="text-left">{{ inventory['shelf_location'] }}</td>
+                                    <td @click="toggleProductDetails" class="text-left">{{ toNumberOrDash(inventory['quantity_available'])}}</td>
+                                    <td @click="toggleProductDetails" class="d-none d-md-table-cell">{{ toNumberOrDash(inventory['quantity_reserved'])}}</td>
+                                    <td @click="toggleProductDetails" class="pr-1">{{ toNumberOrDash(inventory['quantity_incoming']) }}</td>
+                                    <td @click="toggleProductDetails" class="d-none d-md-table-cell pr-1">{{ toNumberOrDash(inventory['quantity_required']) }}</td>
+                                    <td @click="toggleProductDetails" class="ml-2 pl-2" :class="{ 'bg-warning': product.prices[inventory['warehouse_code']]['is_on_sale'] === true }">{{ toNumberOrDash(product.prices[inventory['warehouse_code']]['current_price'], 2) }}</td>
+                                    <td @click="toggleProductDetails" class="ml-2">
                                         <template v-for="inventory_statistic in product['inventoryMovementsStatistics']">
                                             <div v-if="inventory_statistic['type'] === 'sale' && inventory['warehouse_code'] === inventory_statistic['warehouse_code']">{{ toNumberOrDash( inventory_statistic['last7days_quantity_delta'] * (-1) ) }}</div>
                                         </template>
@@ -52,7 +52,7 @@
                         </table>
                     </div>
 
-                    <div @click="toggle" class="row-col text-center text-secondary" >
+                    <div @click="toggleProductDetails" class="row-col text-center text-secondary" >
                         <font-awesome-icon v-if="showDetails" icon="chevron-up" class="fa fa-xs"></font-awesome-icon>
                         <font-awesome-icon v-if="!showDetails" icon="chevron-down" class="fa fa-xs"></font-awesome-icon>
                     </div>
@@ -311,7 +311,7 @@
 
         created: function () {
             if (this.expanded) {
-                this.toggle();
+                this.toggleProductDetails();
             }
         },
 
@@ -355,7 +355,7 @@
                 });
             },
 
-            toggle() {
+            toggleProductDetails() {
                 this.showDetails = !this.showDetails;
                 if (this.showDetails) {
                     this.loadActiveOrders();
