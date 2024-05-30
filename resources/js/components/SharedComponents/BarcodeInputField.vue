@@ -238,7 +238,6 @@
                     if (this.shelfLocationModalContinuesScan) {
                         this.$bvModal.hide(this.getModalID);
                         return;
-
                     }
 
                     this.shelfLocationModalContinuesScan = true;
@@ -261,7 +260,9 @@
                                 'shelve_location': this.command['value'],
                             })
                             .then(() => {
-                                this.$bvModal.hide(this.getModalID);
+                                if (! this.shelfLocationModalContinuesScan) {
+                                    this.$bvModal.hide(this.getModalID);
+                                }
                                 this.notifySuccess('Shelf updated');
                             })
                             .catch((error) => {
