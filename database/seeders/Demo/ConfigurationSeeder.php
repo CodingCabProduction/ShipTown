@@ -7,15 +7,11 @@ use Illuminate\Database\Seeder;
 
 class ConfigurationSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
+    public function run(): void
     {
         Configuration::updateOrCreate([], [
             'business_name' => '',
+            'ecommerce_connected' => true,
             'disable_2fa' => true
         ]);
     }

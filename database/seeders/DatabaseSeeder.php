@@ -59,7 +59,6 @@ class DatabaseSeeder extends Seeder
             Modules\Slack\ConfigurationSeeder::class,
             Modules\Magento2MSI\ConnectionSeeder::class,
 
-
 //            RestockingReportSeeder::class,
 //            DataCollectionsSeeder::class,
 //            RmsapiConnectionSeeder::class,
@@ -85,12 +84,10 @@ class DatabaseSeeder extends Seeder
             'group' => 'picklist'
         ]);
 
-
         DispatchEveryMinuteEventJob::dispatch();
         DispatchEveryFiveMinutesEventJob::dispatch();
         DispatchEveryTenMinutesEventJob::dispatch();
         DispatchEveryHourEventJobs::dispatch();
         DispatchEveryDayEventJob::dispatch();
-
     }
 }
