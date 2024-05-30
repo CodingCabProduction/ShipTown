@@ -25,7 +25,7 @@
                                 <tr class="" v-bind:class="{ 'table-active': currentUser()['warehouse'] && inventory['warehouse_code'] === currentUser()['warehouse']['code']}">
                                     <td class="text-left"><a class="text-primary cursor-pointer" @click.prevent="showInventoryMovementModal(inventory['id'])">{{ inventory['warehouse_code'] }}</a></td>
                                     <td @click="toggleProductDetails" class="text-left">{{ inventory['shelf_location'] }}</td>
-                                    <td @click="toggleProductDetails" class="text-left">{{ toNumberOrDash(inventory['quantity_available'])}}</td>
+                                    <td @click="toggleProductDetails">{{ toNumberOrDash(inventory['quantity_available'])}}</td>
                                     <td @click="toggleProductDetails" class="d-none d-md-table-cell">{{ toNumberOrDash(inventory['quantity_reserved'])}}</td>
                                     <td @click="toggleProductDetails" class="pr-1">{{ toNumberOrDash(inventory['quantity_incoming']) }}</td>
                                     <td @click="toggleProductDetails" class="d-none d-md-table-cell pr-1">{{ toNumberOrDash(inventory['quantity_required']) }}</td>
