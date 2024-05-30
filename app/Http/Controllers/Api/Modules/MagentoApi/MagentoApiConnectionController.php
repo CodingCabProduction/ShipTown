@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Modules\MagentoApi;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MagentoApiConnectionUpdateRequest;
 use App\Http\Resources\MagentoConnectionResource;
+use App\Models\Configuration;
 use App\Modules\MagentoApi\src\Http\Requests\MagentoApiConnectionDestroyRequest;
 use App\Modules\MagentoApi\src\Http\Requests\MagentoApiConnectionIndexRequest;
 use App\Modules\MagentoApi\src\Http\Requests\MagentoApiConnectionStoreRequest;
@@ -32,12 +33,13 @@ class MagentoApiConnectionController extends Controller
 
         $connection->save();
 
+        Configuration::query()->update(['ecommerce_connected' => true]);
+
         return new MagentoConnectionResource($connection);
     }
 
     public function update(MagentoApiConnectionUpdateRequest $request, MagentoConnection $connection)
     {
-
         $connection->fill($request->validated());
         if ($request->tag) {
             $tag = Tag::findOrCreate($request->tag);

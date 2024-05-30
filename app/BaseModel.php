@@ -8,13 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class BaseModel.
  *
- * @method static self create(array $array)
- *
- * @method static self first($columns = ['*'])
- * @method static findOrFail($id)
- * @method static whereBetween(string $string, array $array)
- * @method static whereId(int $id)
- *
  * @mixin Eloquent
  */
 abstract class BaseModel extends Model
