@@ -205,7 +205,9 @@ Vue.component('product-count-request-input-field', require('./components/SharedC
 Vue.component('product-info-card', require('./components/SharedComponents/ProductInfoCard.vue').default);
 Vue.component('product-details-modal', require('./modals/ProductDetailsModal.vue').default);
 Vue.component('products-table', require('./components/ProductsPage.vue').default);
+Vue.component('quick-connect-page', require('./components/QuickConnectPage.vue').default);
 Vue.component('quick-connect-magento-page', require('./components/QuickConnectMagentoPage.vue').default);
+Vue.component('quick-connect-shopify-page', require('./components/QuickConnectShopifyPage.vue').default);
 Vue.component('restocking-page', require('./components/RestockingPage.vue').default);
 Vue.component('restocking-record-card', require('./components/RestockingPage/RestockingRecordCard.vue').default);
 Vue.component('rmsapi-configuration', require('./components/Settings/RmsapiiConfiguration.vue').default);

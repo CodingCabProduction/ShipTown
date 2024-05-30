@@ -148,7 +148,6 @@ class AppInstall extends Command
      */
     public function preconfigureDatabase(): void
     {
-        $this->createDefaultConfigurationRecord();
         $this->createDefaultUserRoles();
         $this->createDefaultNavigationLinks();
         $this->createShipmentConfirmationNotificationTemplate();
@@ -168,9 +167,9 @@ class AppInstall extends Command
 
         \App\Services\ModulesService::updateModulesTable();
 
-        Configuration::create([
-            'warehouse_id' => Warehouse::query()->firstOrCreate(['code' => '999'], ['name' => '999'])->id,
-        ]);
+        Configuration::query()->firstOrCreate();
+
+        Warehouse::query()->firstOrCreate(['code' => '999'], ['name' => '999']);
 
         StocktakeSuggestionsServiceProvider::installModule();
         AutoRestockLevelsServiceProvider::installModule();
@@ -423,11 +422,6 @@ class AppInstall extends Command
             $permission = Permission::firstOrCreate(['name' => $permissionName]);
             $admin->givePermissionTo($permission);
         }
-    }
-
-    private function createDefaultConfigurationRecord(): void
-    {
-        Configuration::create([]);
     }
 
     private function createDefaultMailTemplateShipmentNotification(): void

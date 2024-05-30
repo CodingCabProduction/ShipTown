@@ -30,7 +30,9 @@ Route::redirect('home', '/')->name('home');
 
 Route::resource('verify', Auth\TwoFactorController::class)->only(['index', 'store']);
 
+Route::view('quick-connect', 'quick-connect');
 Route::view('quick-connect/magento', 'quick-connect.magento');
+Route::view('quick-connect/shopify', 'quick-connect.shopify');
 
 Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('fulfillment-dashboard', [FulfillmentDashboardController::class, 'index'])->name('fulfillment-dashboard');

@@ -77,7 +77,7 @@ export default {
                 '6x4in-3-per-page',
                 '57x32mm-1-per-page',
             ],
-            templateSelected: this.getUrlParameter('template-selected', helpers.getCookie('templateSelected', 'shelf-labels/6x4-3-per-page') ),
+            templateSelected: this.getUrlParameter('template-selected', helpers.getCookie('templateSelected', this.templates[0])),
             pdfUrl: '',
             previewLimited: false,
             downloadInProgress: false,
