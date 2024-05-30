@@ -39,10 +39,10 @@ class DatabaseSeeder extends Seeder
             Demo\InventorySeeder::class,
 
             // Orders Seeders
-            Demo\TestOrdersSeeder::class,
             Demo\PaidOrdersSeeder::class,
             Demo\PaidPickedOrdersSeeder::class,
             Demo\CollectionOrdersSeeder::class,
+            Demo\TestOrdersSeeder::class,
 
             // Data Collector Seeders
             Demo\DataCollections\TransferToCorkBranchSeeder::class,

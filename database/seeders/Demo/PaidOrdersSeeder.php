@@ -22,7 +22,6 @@ class PaidOrdersSeeder extends Seeder
             ->create(['status_code' => 'paid', 'label_template' => 'address_label', 'shipping_address_id' => $this->createIrishShippingAddress()->getKey()])
             ->each(function (Order $order) {
                 Product::query()
-                    ->whereIn('sku', ['45', '46'])
                     ->inRandomOrder()
                     ->get()
                     ->each(function (Product $product) use ($order) {
@@ -137,7 +136,6 @@ class PaidOrdersSeeder extends Seeder
             ->create(['status_code' => 'packing', 'label_template' => 'address_label', 'shipping_address_id' => $this->createIrishShippingAddress()->getKey()])
             ->each(function (Order $order) {
                 Product::query()
-                    ->whereIn('sku', ['45'])
                     ->inRandomOrder()
                     ->get()
                     ->each(function (Product $product) use ($order) {
