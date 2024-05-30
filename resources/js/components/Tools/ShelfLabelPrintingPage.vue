@@ -9,7 +9,7 @@
         </search-and-option-bar>
         <div class="grid-col-12 pl-2 p-1">
             <div class="col-span-6 md:col-span-4 xl:col-span-6 mb-2 mb-sm-0">
-                <header-upper>TOOLS > PRINTER</header-upper>
+                <header-upper>TOOLS > LABEL PRINTER</header-upper>
             </div>
             <div class="col-span-6 md:col-span-4 xl:col-span-4">
                 <div class="col-span-8 d-flex justify-content-end justify-content-md-center justify-content-xl-end">
@@ -72,11 +72,10 @@ export default {
             toLetter: this.getUrlParameter('to-letter', 'B'),
             toNumber: this.getUrlParameter('to-number', 2),
             templates:[
-                'shelf-labels/6x4-1-per-page',
-                'shelf-labels/4x6-2-per-page',
-                'shelf-labels/6x4-3-per-page',
-                'shelf-labels/57mm_x_32mm',
-                'products/57mmx32mm-1-per-page',
+                '6x4in-1-per-page',
+                '4x6in-2-per-page',
+                '6x4in-3-per-page',
+                '57x32mm-1-per-page',
             ],
             templateSelected: this.getUrlParameter('template-selected', helpers.getCookie('templateSelected', 'shelf-labels/6x4-3-per-page') ),
             pdfUrl: '',
@@ -158,17 +157,18 @@ export default {
 
             let data = {
                 data: { labels: labels },
-                template: this.templateSelected,
+                template: 'shelf-labels/' + this.templateSelected,
             };
 
-            this.apiPostPdfPreview(data).then(response => {
-                let blob = new Blob([response.data], { type: 'application/pdf' });
-                this.pdfUrl = URL.createObjectURL(blob);
-            }).catch(error => {
-                this.displayApiCallError(error);
-            }).finally(() => {
-                this.hideLoading();
-            });
+            this.apiPostPdfPreview(data)
+                .then(response => {
+                    let blob = new Blob([response.data], { type: 'application/pdf' });
+                    this.pdfUrl = URL.createObjectURL(blob);
+                }).catch(error => {
+                    this.displayApiCallError(error);
+                }).finally(() => {
+                    this.hideLoading();
+                });
         },
 
         buildUrl() {

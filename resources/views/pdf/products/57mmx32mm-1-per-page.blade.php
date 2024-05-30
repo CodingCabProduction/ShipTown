@@ -32,8 +32,8 @@
                 $marginTop = strlen($label) > 4 ? '40px' : '50px';
             @endphp
             <div>
-                <span class="product_name" style="">{{ $product['name'] }}</span>
-                <div class="product_price">€ {{ $product['price'] }}</div>
+
+                <span class="product_name" style="">Artur Hanusek</span>
                 <div class="product_barcode">
                     <img src="data:image/svg,{{ DNS1D::getBarcodeSVG($product['sku'], 'C39', 1, 25) }}" alt="barcode" />
                 </div>
