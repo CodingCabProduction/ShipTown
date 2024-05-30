@@ -184,7 +184,7 @@ export default {
             const params = {
                 'include': 'product,product.aliases',
                 'sort': 'inventory_source_shelf_location,sku_ordered',
-                'per_page': this.getUrlParameter('per_page', 3),
+                'per_page': this.getUrlParameter('per_page', 5),
                 'filter[in_stock_only]': this.getUrlParameter('in_stock_only', true),
                 'filter[warehouse_id]': this.getUrlParameter('warehouse_id'),
                 'filter[current_shelf_location]': this.getUrlParameter('current_shelf_location'),
