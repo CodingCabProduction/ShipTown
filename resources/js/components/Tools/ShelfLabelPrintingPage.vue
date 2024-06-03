@@ -77,17 +77,18 @@ export default {
                 '6x4in-3-per-page',
                 '57x32mm-1-per-page',
             ],
-            templateSelected: this.getUrlParameter('template-selected', helpers.getCookie('templateSelected', this.templates[0])),
+            templateSelected: '',
             pdfUrl: '',
             previewLimited: false,
             downloadInProgress: false,
         }
     },
-    created() {
-        this.loadPdfIntoIframe();
-    },
-    methods: {
 
+    mounted() {
+        this.templateSelected = this.getUrlParameter('template-selected', helpers.getCookie('templateSelected', this.templates[0]));
+    },
+
+    methods: {
         setCustomLabelText(text) {
             this.customLabelText = text;
             this.loadPdfIntoIframe();
