@@ -2,6 +2,7 @@
 
 namespace Tests\Browser;
 
+use App\Models\Configuration;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
@@ -48,6 +49,8 @@ class PagesWalktroughTest extends DuskTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        Configuration::query()->update(['ecommerce_connected' => true]);
 
         InventoryTotalsServiceProvider::enableModule();
         InventoryMovementsServiceProvider::enableModule();
