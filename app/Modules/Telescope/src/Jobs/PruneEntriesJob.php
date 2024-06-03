@@ -2,6 +2,7 @@
 
 namespace App\Modules\Telescope\src\Jobs;
 
+use DB;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -19,7 +20,7 @@ class PruneEntriesJob implements ShouldQueue
 
     public function handle(): bool
     {
-        Artisan::call('telescope:prune', ['--hours' => config('telescope.hours')]);
+        DB::table('telescope_entries')->where('created_at', '<', now()->subHours(config('telescope.hours')))->delete();
 
         Log::info('Telescope pruned');
 
