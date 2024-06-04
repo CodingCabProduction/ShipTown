@@ -19,7 +19,7 @@ class StoreTest extends TestCase
             'data' => [
                 'labels'  => ['label1', 'label2'],
             ],
-            'template'  => 'shelf-labels/6x4-1-per-page',
+            'template'  => '6x4-1-per-page',
         ]);
 
         $response->assertOk();
