@@ -150,7 +150,7 @@ class PagesWalktroughTest extends DuskTestCase
             ->pause($this->shortDelay)->mouseover('#tools_link')
             ->pause($this->shortDelay)->click('#tools_link')
             ->pause($this->shortDelay)->mouseover('#data_collector_link')
-            ->pause($this->shortDelay)->clickLink('Barcode Scanner')
+            ->pause($this->shortDelay)->clickLink('Data Collector')
             ->pause($this->shortDelay)->click('#new_data_collection')
             ->pause($this->shortDelay)->typeSlowly('@collection_name_input', 'Stock delivery', 20)
             ->pause($this->shortDelay)->keys('@collection_name_input', '{enter}')

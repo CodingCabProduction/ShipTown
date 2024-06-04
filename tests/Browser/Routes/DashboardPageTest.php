@@ -2,6 +2,7 @@
 
 namespace Tests\Browser\Routes;
 
+use App\Models\Configuration;
 use App\User;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
@@ -10,6 +11,13 @@ use Throwable;
 class DashboardPageTest extends DuskTestCase
 {
     private string $uri = '/dashboard';
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Configuration::query()->update(['ecommerce_connected' => true]);
+    }
 
     /**
      * @throws Throwable
