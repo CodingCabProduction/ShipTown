@@ -41,7 +41,7 @@
                                 'is-invalid': errors.length > 0,
                             }"
                             id="create-warehouse_id">
-                            <option value=""></option>
+                            <option value=null key="0">---</option>
                             <option v-for="warehouse in warehouses" :key="warehouse.id" :value="warehouse">
                                 {{ warehouse.name }}
                             </option>
@@ -124,9 +124,9 @@ export default {
             this.apiPostUserUpdate(this.id, {
                     name: this.name,
                     role_id: this.roleId,
-                    warehouse_id: this.selectedWarehouse['id'],
-                    warehouse_code: this.selectedWarehouse['code'],
                     default_dashboard_uri: this.default_dashboard_uri,
+                    warehouse_id: this.selectedWarehouse === 'null' ?  null : ['id'],
+                    warehouse_code: this.selectedWarehouse === 'null' ?  null : ['code'],
                 })
                 .then(({ data }) => {
                     this.$snotify.success('User updated.');
