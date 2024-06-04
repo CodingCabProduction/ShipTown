@@ -3,6 +3,7 @@
         <div>
             <input :id="getInputId"
                    :placeholder="placeholder"
+                   :disabled="disabled"
                    type=text
                    class="form-control barcode-input"
                    autocomplete="off"
@@ -69,6 +70,10 @@
             input_id: null,
             url_param_name: null,
             placeholder: '',
+            disabled: {
+                type: Boolean,
+                default: false,
+            },
             autoFocusAfter: {
                 type: Number,
                 default: 100,

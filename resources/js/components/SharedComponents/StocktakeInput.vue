@@ -1,7 +1,10 @@
 <template>
     <div>
-        <barcode-input-field :input_id="input_id" placeholder="Enter sku or alias to stocktake"
-                             @barcodeScanned="showStocktakeModal"></barcode-input-field>
+        <barcode-input-field v-if="this.currentUser()['warehouse_id']"
+                             :input_id="input_id"
+                             :placeholder="this.currentUser()['warehouse_id'] === null ? 'Select warehouse to enable Stocktaking function' : 'Enter sku or alias to stocktake'"
+                             @barcodeScanned="showStocktakeModal">
+        </barcode-input-field>
 
         <b-modal :id="modal_name" scrollable no-fade hide-header
                  @ok="submitStocktake"
@@ -88,13 +91,6 @@
             }
         },
 
-        mounted() {
-            if (! this.currentUser()['warehouse_id']) {
-                this.$snotify.error('You do not have warehouse assigned. Please contact administrator', {timeout: 50000});
-                this.$bvModal.hide(this.modal_name);
-            }
-        },
-
         watch: {
             adjustByQuantity() {
                 let adjustByValue = 0;
@@ -142,34 +138,6 @@
         },
 
         methods: {
-            focusAndOpenKeyboard(el, timeout) {
-                if(!timeout) {
-                    timeout = 100;
-                }
-                if(el) {
-                    // Align temp input element approximately where the input element is
-                    // so the cursor doesn't jump around
-                    var __tempEl__ = document.createElement('input');
-                    __tempEl__.style.position = 'absolute';
-                    __tempEl__.style.top = (el.offsetTop + 7) + 'px';
-                    __tempEl__.style.left = el.offsetLeft + 'px';
-                    __tempEl__.style.height = 0;
-                    __tempEl__.style.opacity = 0;
-                    // Put this temp element as a child of the page <body> and focus on it
-                    document.body.appendChild(__tempEl__);
-                    __tempEl__.focus();
-                    console.log('test');
-
-                    // The keyboard is open. Now do a delayed focus on the target element
-                    setTimeout(function() {
-                        el.focus();
-                        el.click();
-                        // Remove the temp element
-                        document.body.removeChild(__tempEl__);
-                    }, timeout);
-                }
-            },
-
             isCountedRecently(last_counted_at, days) {
                 const minDateAllowed = moment().subtract(days, 'days');
 
