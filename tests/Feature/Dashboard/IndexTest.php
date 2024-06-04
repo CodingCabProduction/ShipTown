@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Dashboard;
 
+use App\Models\Configuration;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -30,6 +31,8 @@ class IndexTest extends TestCase
     {
         parent::setUp();
         $this->user = User::factory()->create();
+
+        Configuration::query()->update(['ecommerce_connected' => true]);
     }
 
     /** @test */
@@ -46,6 +49,8 @@ class IndexTest extends TestCase
         $this->actingAs($this->user, 'web');
 
         $response = $this->get($this->uri);
+
+        ray($response->content());
 
         $response->assertSuccessful();
     }
