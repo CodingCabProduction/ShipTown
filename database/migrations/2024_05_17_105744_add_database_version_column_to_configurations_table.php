@@ -13,7 +13,7 @@ return new class extends Migration
         }
 
         Schema::table('configurations', function (Blueprint $table) {
-            $table->string('database_version')->default('0.0.0');
+            $table->string('database_version')->default('0.0.0')->after('disable_2fa');
         });
     }
 };
