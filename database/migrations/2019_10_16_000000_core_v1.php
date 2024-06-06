@@ -15,40 +15,6 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->integer('printer_id')->nullable();
-            $table->string('address_label_template')->nullable();
-            $table->boolean('ask_for_shipping_number')->default(true);
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->foreignId('warehouse_id')->nullable(true);
-            $table->foreignId('location_id')->nullable(true);
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->string('two_factor_code')->nullable();
-            $table->dateTime('two_factor_expires_at')->nullable();
-            $table->string('default_dashboard_uri')->nullable();
-            $table->rememberToken();
-            $table->softDeletes();
-            $table->timestamps();
-        });
-
-        Schema::create('sessions', function (Blueprint $table) {
-            $table->string('id')->unique();
-            $table->foreignId('user_id')->nullable();
-            $table->string('ip_address', 45)->nullable();
-            $table->text('user_agent')->nullable();
-            $table->text('payload');
-            $table->integer('last_activity');
-            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->nullOnDelete();
-        });
-
         Schema::create('oauth_auth_codes', function (Blueprint $table) {
             $table->string('id', 100)->primary();
             $table->foreignId('user_id')->index();
@@ -633,14 +599,6 @@ return new class extends Migration
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->timestamps();
-        });
-
-        Schema::create('navigation_menu', function (Blueprint $table) {
-            $table->id();
-            $table->string('name', 100);
-            $table->string('url', 999)->default('');
-            $table->string('group', 100);
             $table->timestamps();
         });
 
