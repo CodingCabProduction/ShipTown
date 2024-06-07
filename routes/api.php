@@ -26,6 +26,7 @@ Route::name('api.')->group(function () {
     Route::apiResource('orders-statuses', Api\OrderStatusController::class)->except(['show']);
     Route::apiResource('picklist', Api\PicklistController::class)->only(['index']);
     Route::apiResource('products', Api\ProductController::class)->only(['index', 'store']);
+    Route::apiResource('products-aliases', Api\ProductAliasController::class)->only(['index', 'store']);
     Route::apiResource('shipments', Api\ShipmentController::class)->only(['store']);
     Route::apiResource('restocking', Api\RestockingController::class)->only(['index']);
     Route::apiResource('orders', Api\OrderController::class)->except('destroy');

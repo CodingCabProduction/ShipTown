@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductAliasStoreRequest;
 use App\Http\Resources\ProductAliasResource;
 use App\Models\ProductAlias;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -12,15 +13,17 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
  */
 class ProductAliasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return AnonymousResourceCollection
-     */
     public function index(): AnonymousResourceCollection
     {
         $query = ProductAlias::getSpatieQueryBuilder();
 
         return ProductAliasResource::collection($this->getPaginatedResult($query));
+    }
+
+    public function store(ProductAliasStoreRequest $request)
+    {
+        $product = ProductAlias::query()->updateOrCreate(['alias' => $request->validated('alias')], $request->validated());
+
+        return ProductAliasResource::make($product);
     }
 }

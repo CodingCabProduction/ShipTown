@@ -207,7 +207,7 @@
 
                         <template v-if="currentTab === 'aliases'">
                             <div class="container">
-
+                                <input id="newProductAliasInput" type="text" class="form-control small" @keyup.enter="addAliasToProduct">
                                 <div v-for="alias in product.aliases" :key="alias.id">
                                     <div class="badge mb-2">{{ alias.alias }}</div>
                                 </div>
@@ -429,6 +429,31 @@
 
             ifHasEnoughStock(orderProduct) {
                 return this.getProductQuantity(orderProduct) < Number(orderProduct['quantity_ordered']);
+            },
+
+            addAliasToProduct() {
+                const params = {
+                    'product_id': this.product['id'],
+                    'alias': document.getElementById('newProductAliasInput').value
+                };
+
+                this.apiPostProductsAliases(params)
+                    .then(() => {
+                        this.product.aliases.push({
+                            alias: document.getElementById('newProductAliasInput').value
+                        });
+                        document.getElementById('newProductAliasInput').value = '';
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        this.displayApiCallError(error);
+                    });
+
+                console.log(blue);
+                console.log(keyboardEvent);
+                console.log(document.getElementById(keyboardEvent.srcElement.id));
+                this.notifySuccess(document.getElementById(keyboardEvent.srcElement.id));
+                return null;
             }
         }
     }

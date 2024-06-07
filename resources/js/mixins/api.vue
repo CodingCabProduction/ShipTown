@@ -59,6 +59,10 @@ export default {
                 return axios.get('/api/products', {params: params});
             },
 
+            apiPostProductsAliases: function(data) {
+                return axios.post('/api/products-aliases', data);
+            },
+
             apiGetProductsPrices: function(params) {
                 return axios.get('/api/products-prices', {params: params});
             },
