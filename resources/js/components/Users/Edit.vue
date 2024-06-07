@@ -125,8 +125,8 @@ export default {
                     name: this.name,
                     role_id: this.roleId,
                     default_dashboard_uri: this.default_dashboard_uri,
-                    warehouse_id: this.selectedWarehouse === 'null' ?  null : ['id'],
-                    warehouse_code: this.selectedWarehouse === 'null' ?  null : ['code'],
+                    warehouse_id: this.selectedWarehouse === 'null' ?  null : this.selectedWarehouse['id'],
+                    warehouse_code: this.selectedWarehouse === 'null' ?  null : this.selectedWarehouse['code'],
                 })
                 .then(({ data }) => {
                     this.$snotify.success('User updated.');
