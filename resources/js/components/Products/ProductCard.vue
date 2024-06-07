@@ -71,7 +71,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link p-0 pl-1 pr-1 pr-lg-2"  @click.prevent="currentTab = 'aliases'" data-toggle="tab" href="#">
+                                    <a class="nav-link p-0 pl-1 pr-1 pr-lg-2"  @click.prevent="currentTab = 'aliases'; setFocusElementById('newProductAliasInput');" data-toggle="tab" href="#">
                                         Aliases
                                     </a>
                                 </li>
@@ -207,7 +207,9 @@
 
                         <template v-if="currentTab === 'aliases'">
                             <div class="container">
-                                <input id="newProductAliasInput" type="text" class="form-control small" @keyup.enter="addAliasToProduct">
+                                <input id="newProductAliasInput" type="text" class="form-control small newProductAliasInput mb-2"
+                                       placeholder="Add new alias here"
+                                       @keyup.enter="addAliasToProduct">
                                 <div v-for="alias in product.aliases" :key="alias.id">
                                     <div class="badge mb-2">{{ alias.alias }}</div>
                                 </div>
@@ -475,6 +477,10 @@ li {
     border-color:rgb(94, 79, 126);
     box-shadow: 0 1px 1px rgba(255, 255, 255, 0.075) inset, 0 0 8px rgba(114, 96, 153, 0.6);
     outline: 0 none;
+}
+
+.newProductAliasInput{
+    font-size: 8pt;
 }
 
 </style>
