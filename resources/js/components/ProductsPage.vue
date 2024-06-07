@@ -11,6 +11,7 @@
                 @barcodeScanned="findText"
             />
             <template v-slot:buttons>
+                <button @click="showNewProductModal" type="button" class="btn btn-primary ml-2"><font-awesome-icon icon="plus" class="fa-lg"></font-awesome-icon></button>
                 <button v-b-modal="'quick-actions-modal'" type="button" class="btn btn-primary ml-1 md:ml-2"><font-awesome-icon icon="cog" class="fa-lg"></font-awesome-icon></button>
             </template>
         </search-and-option-bar>
@@ -67,6 +68,7 @@
     import url from "../mixins/url";
     import api from "../mixins/api";
     import helpers from "../mixins/helpers";
+    import Modals from "../plugins/Modals";
 
     export default {
         mixins: [loadingOverlay, url, api, helpers],
@@ -88,6 +90,12 @@
 
         mounted() {
             window.onscroll = () => this.loadMore();
+
+            Modals.EventBus.$on('hide::modal::new-product-modal', (newProduct) => {
+                this.setUrlParameter('search', newProduct.sku);
+                this.reloadProductList();
+                this.setFocusElementById('barcode_input');
+            });
 
             this.reloadProductList();
         },
@@ -136,6 +144,11 @@
                         this.hideLoading();
                     });
                 return this;
+            },
+
+            showNewProductModal() {
+                console.log('showNewProductModal');
+                this.$modal.show('new-product-modal');
             },
 
             findProductsWithExactSku: function() {

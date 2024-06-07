@@ -33,4 +33,5 @@
 
     <recent-inventory-movements-modal></recent-inventory-movements-modal>
     <product-details-modal></product-details-modal>
+    <new-product-modal></new-product-modal>
 @endsection
