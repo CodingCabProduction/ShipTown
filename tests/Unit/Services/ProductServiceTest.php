@@ -29,7 +29,7 @@ class ProductServiceTest extends TestCase
     public function testIfReservesCorrectly()
     {
         Passport::actingAs(
-            User::factory()->create()
+            User::factory()->create()->assignRole('admin')
         );
 
         Event::fake();
@@ -63,7 +63,7 @@ class ProductServiceTest extends TestCase
     public function testIfReleasesQuantityCorrectly()
     {
         Passport::actingAs(
-            User::factory()->create()
+            User::factory()->create()->assignRole('admin')
         );
 
         Event::fake();
