@@ -71,6 +71,7 @@ export default {
             fromNumber: this.getUrlParameter('from-number', 1),
             toLetter: this.getUrlParameter('to-letter', 'B'),
             toNumber: this.getUrlParameter('to-number', 2),
+            viewDirectory: 'shelf-labels/',
             templates:[
                 '6x4in-1-per-page',
                 '4x6in-2-per-page',
@@ -100,7 +101,7 @@ export default {
 
             let data = {
                 data: { labels: this.getLabelArray() },
-                template: this.templateSelected,
+                template: this.viewDirectory + this.templateSelected,
             };
 
             this.apiPostPdfDownload(data).then(response => {
@@ -125,7 +126,7 @@ export default {
 
             let data = {
                 data: { labels: this.getLabelArray() },
-                template: this.templateSelected,
+                template: this.viewDirectory + this.templateSelected,
                 printer_id: this.currentUser().printer_id,
             };
 
@@ -156,9 +157,10 @@ export default {
                 labels = labels.slice(0, 25);
             }
 
+
             let data = {
                 data: { labels: labels },
-                template: 'shelf-labels/' + this.templateSelected,
+                template: this.viewDirectory + this.templateSelected,
             };
 
             this.apiPostPdfPreview(data)

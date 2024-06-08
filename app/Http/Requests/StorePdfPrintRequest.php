@@ -14,8 +14,9 @@ class StorePdfPrintRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'data' => 'required',
-            'data.labels' => 'required',
+            'data' => 'sometimes|array',
+            'data.labels' => 'sometimes|array',
+            'product_sku' => 'sometimes|string',
             'template' => 'required',
             'printer_id' => 'required | integer',
         ];

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\PDF;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePdfPrintRequest;
 use App\Modules\PrintNode\src\Models\PrintJob;
 use App\Modules\PrintNode\src\Resources\PrintJobResource;
 use App\Services\PdfService;
@@ -13,7 +14,7 @@ use Illuminate\Http\Request;
  */
 class PdfPrintController extends Controller
 {
-    public function update(Request $request)
+    public function update(StorePdfPrintRequest $request)
     {
         $pdfString = PdfService::fromView('pdf/'.$request->template, $request->data);
 
