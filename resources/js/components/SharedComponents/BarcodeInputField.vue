@@ -14,7 +14,7 @@
                    v-model.trim="barcode"
                    @keyup.enter="barcodeScanned(barcode)"
             />
-            <button @click="barcode = ''; setFocusElementById(getInputId)" type="button" class="btn text-secondary ml-1 md:ml-2">x</button>
+            <button @click="barcode = ''; setFocusElementById(getInputId, true)" type="button" class="btn text-secondary ml-1 md:ml-2">x</button>
         </div>
 
       <b-modal :id="getModalID" scrollable no-fade hide-header
