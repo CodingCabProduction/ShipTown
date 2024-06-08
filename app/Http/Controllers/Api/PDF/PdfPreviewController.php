@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Services\PdfService;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Class PrintOrderController.

@@ -1,30 +1,21 @@
 <template>
     <container>
         <search-and-option-bar>
-            <barcode-input-field :input_id="'barcode-input'" :url_param_name="'search'" @barcodeScanned="setCustomLabelText" placeholder="Enter custom label text" ref="barcode"/>
+            <barcode-input-field :input_id="'barcode-input'" :url_param_name="'search'" @barcodeScanned="loadPdfIntoIframe" placeholder="Enter product sku" ref="barcode"/>
             <template v-slot:buttons>
                 <top-nav-button v-b-modal="'quick-actions-modal'"/>
                 <top-nav-button @click.native="printPDF" icon="print"/>
             </template>
         </search-and-option-bar>
-        <div class="grid-col-12 pl-2 p-1">
-            <div class="col-span-6 md:col-span-4 xl:col-span-6 mb-2 mb-sm-0">
+        <div class="grid-col-12 p-2 mb-2 mr-2 mt-1">
+            <div class="col-span-7">
                 <header-upper>TOOLS > LABEL PRINTER</header-upper>
             </div>
-            <div class="col-span-6 md:col-span-4 xl:col-span-4">
-                <div class="col-span-8 d-flex justify-content-end justify-content-md-center justify-content-xl-end">
-                    <header-upper class="small sd-none xs:sd-block">FROM:</header-upper>
-                    <input type="text" v-model="fromLetter" @keyup="changeNonSearchValue" @focus="$selectAllInputText" class="form-control mx-1 inline-input-sm px-1 text-center"/>
-                    <input type="text" v-model.number="fromNumber" @keyup="changeNonSearchValue" @focus="$selectAllInputText" class="form-control mx-1 inline-input-sm px-1 text-center"/>
-                    <header-upper class="small">TO</header-upper>
-                    <input type="text" v-model="toLetter" @keyup="changeNonSearchValue" @focus="$selectAllInputText" class="form-control mx-1 inline-input-sm px-1 text-center"/>
-                    <input type="text" v-model.number="toNumber" @keydown.enter="setFocusElementById('barcode-input')" @keyup="changeNonSearchValue" @focus="$selectAllInputText" class="form-control mx-1 inline-input-sm px-1 text-center"/>
-                </div>
-            </div>
-            <div class="col-span-12 xs:col-span-12 md:col-span-4 xl:col-span-2 d-flex justify-content-end">
+            <div class="col-span-5 text-right">
                 <array-dropdown-select class="ml-0 ml-sm-2" :items="templates" :item-selected.sync="templateSelected" :align-menu-right="true"/>
             </div>
         </div>
+
         <card class="mt-sm-2 bg-dark">
             <vue-pdf-embed ref="pdfRef" :source="pdfUrl" :page="null"/>
             <div v-if="previewLimited" class="text-center text-white">Preview limited to 25 labels</div>
@@ -66,11 +57,6 @@ export default {
     },
     data() {
         return {
-            customLabelText: this.getUrlParameter('search', ''),
-            fromLetter: this.getUrlParameter('from-letter', 'A'),
-            fromNumber: this.getUrlParameter('from-number', 1),
-            toLetter: this.getUrlParameter('to-letter', 'B'),
-            toNumber: this.getUrlParameter('to-number', 2),
             viewDirectory: 'product-labels/',
             templates:[
                 '57x32mm-1-per-page',
@@ -87,17 +73,11 @@ export default {
     },
 
     methods: {
-        setCustomLabelText(text) {
-            this.customLabelText = text;
-            this.loadPdfIntoIframe();
-        },
-
         downloadPDF() {
             this.downloadInProgress = true;
-            this.buildUrl();
 
             let data = {
-                data: { labels: this.getLabelArray() },
+                data: { product_sku: this.getUrlParameter('search') },
                 template: this.templateSelected,
             };
 
@@ -119,10 +99,9 @@ export default {
             }
 
             this.showLoading();
-            this.buildUrl();
 
             let data = {
-                data: { labels: this.getLabelArray() },
+                data: { product_sku: this.getUrlParameter('search') },
                 template: this.templateSelected,
                 printer_id: this.currentUser().printer_id,
             };
@@ -137,14 +116,8 @@ export default {
             });
         },
 
-        changeNonSearchValue() {
-            this.customLabelText = '';
-            this.loadPdfIntoIframe();
-        },
-
         loadPdfIntoIframe() {
             this.showLoading();
-            this.buildUrl();
             this.previewLimited = false;
 
             // clone label array and limit label array to 25 labels
@@ -155,7 +128,7 @@ export default {
             }
 
             let data = {
-                data: { labels: labels },
+                data: { product_sku: this.getUrlParameter('search') },
                 template: this.viewDirectory + this.templateSelected,
             };
 
@@ -168,22 +141,6 @@ export default {
                 }).finally(() => {
                     this.hideLoading();
                 });
-        },
-
-        buildUrl() {
-            // for some reason, when we already have the search param in place it
-            // will not update it like the others, so we need to remove it first
-            this.removeUrlParameter('search');
-            const params = this.customLabelText ?
-                { 'search': this.customLabelText, 'template-selected': this.templateSelected } :
-                {
-                    'from-letter': this.fromLetter,
-                    'from-number': this.fromNumber,
-                    'to-letter': this.toLetter,
-                    'to-number': this.toNumber,
-                    'template-selected': this.templateSelected
-                };
-            this.updateUrl(params);
         },
 
         getLabelArray() {

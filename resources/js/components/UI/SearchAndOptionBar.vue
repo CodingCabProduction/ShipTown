@@ -1,5 +1,5 @@
 <template>
-    <div ref="stickyDiv" class="sticky-container row mb-2 pl-1 pr-1 bg-light d-flex flex-nowrap" :class="{ 'sticky-top': isStickable, 'py-2': isStuckToTop}">
+    <div ref="stickyDiv" class="sticky-container row mb-2 pl-1 pr-1 bg-white d-flex flex-nowrap" :class="{ 'sticky-top': isStickable, 'py-2': isStuckToTop}">
         <div class="flex-fill">
             <slot/>
         </div>

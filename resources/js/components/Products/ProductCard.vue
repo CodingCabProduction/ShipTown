@@ -58,8 +58,8 @@
                     </div>
 
                     <div class="row-col" v-if="showDetails">
-                        <div class="row-col tabs-container mb-2">
-                            <ul class="nav nav-tabs">
+                        <div class="row-col tabs-container mb-2 flex-nowrap">
+                            <ul class="nav nav-tabs flex-nowrap mr-0 small">
                                 <li class="nav-item">
                                     <a class="nav-link p-0 pl-1 pr-1 pr-lg-2 active"  @click.prevent="currentTab = 'inventory'" data-toggle="tab" href="#">
                                         Inventory
@@ -73,6 +73,11 @@
                                 <li class="nav-item">
                                     <a class="nav-link p-0 pl-1 pr-1 pr-lg-2"  @click.prevent="currentTab = 'aliases'; setFocusElementById('newProductAliasInput');" data-toggle="tab" href="#">
                                         Aliases
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link p-0 pl-1 pr-1 pr-lg-2"  @click.prevent="currentTab = 'labels'" data-toggle="tab" href="#">
+                                        Labels
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -216,6 +221,11 @@
                             </div>
                         </template>
 
+                        <template v-if="currentTab === 'labels'">
+                            <div class="container">
+                               <product-label-preview :product="product"></product-label-preview>
+                            </div>
+                        </template>
 
                         <template v-if="currentTab === 'activityLog'">
                             <div class="row small" v-for="activity in activityLog" :key="activity.id">
@@ -249,9 +259,12 @@
 <script>
     import api from "../../mixins/api";
     import helpers from "../../mixins/helpers";
+    import VuePdfEmbed from "vue-pdf-embed/dist/vue2-pdf-embed";
+    import ProductLabelPreview from "../Tools/LabelPrinter/ProductLabelPreview.vue";
 
     export default {
         name: "ProductCard",
+        components: {ProductLabelPreview, VuePdfEmbed},
 
         mixins: [api, helpers],
 
@@ -291,6 +304,7 @@
 
         data: function() {
             return {
+                pdfLabelBlob: null,
                 statusMessageOrder: '',
                 statusMessageActivity: '',
                 activityLog: [],
@@ -318,6 +332,21 @@
         },
 
         methods: {
+            loadPdfIntoIframe() {
+                let data = {
+                    data: { product_sku: this.product['sku'] },
+                    template: 'product-labels/' + this.templateSelected,
+                };
+
+                this.apiPostPdfPreview(data)
+                    .then(response => {
+                        let blob = new Blob([response.data], { type: 'application/pdf' });
+                        this.pdfLabelBlob = URL.createObjectURL(blob);
+                    }).catch(error => {
+                        this.displayApiCallError(error);
+                    });
+            },
+
             showInventoryMovementModal(inventory_id) {
                 this.$modal.showRecentInventoryMovementsModal(inventory_id);
             },
