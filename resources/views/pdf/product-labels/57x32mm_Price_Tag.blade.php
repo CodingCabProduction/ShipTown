@@ -16,13 +16,9 @@
     @foreach($products as $product)
         <div style="width: 100%; text-align: left">
             <div class="product_name">{{ $product['name'] }}</div>
-            <div class="product_price">{{ $product['prices'][$users_warehouse_code]['price'] }}</div>
-                <div style="position: absolute; left: 0; bottom: 0;">
-                    {{ $product['sku'] }}
-                </div>
-            <div class="product_barcode" style="position: absolute; right: 0; bottom: 0;">
-                <img src="data:image/svg,{{ DNS1D::getBarcodeSVG($product['sku'], 'C39', 0.60, 20, 'black', false) }}" alt="barcode"/>
-            </div>
+            <div class="product_price"><span class="euroSymbol">&euro;</span>{{ $product['prices'][$users_warehouse_code]['price'] }}</div>
+            <div class="product_sku">{{ $product['sku'] }}</div>
+            <div class="product_barcode"><img src="data:image/svg,{{ DNS1D::getBarcodeSVG($product['sku'], 'C39', 0.65, 20, 'black', false) }}" alt="barcode"/></div>
         </div>
     @endforeach
 
@@ -34,38 +30,41 @@
 
         .product_name {
             font-size: 14pt;
+            margin-top: 5px;
+            margin-left: 5px;
             text-align: left;
             word-wrap: anywhere;
         }
 
-        .product_price {
+        .euroSymbol {
+            margin-right: 10px;
+            font-size: 20pt;
             text-align: right;
             font-family: sans-serif;
-            font-size: 36pt;
             font-weight: bold;
             word-wrap: anywhere;
         }
 
+        .product_price {
+            font-size: 30pt;
+            margin-right: 5px;
+            text-align: right;
+            font-family: sans-serif;
+            font-weight: bold;
+            word-wrap: anywhere;
+        }
+
+        .product_sku {
+            position: absolute;
+            left: 5px;
+            bottom: 5px;
+            font-size: 12pt;
+        }
+
         .product_barcode {
-        }
-
-        .page-break {
-            page-break-after: always;
-        }
-
-        .half_first {
-            width: 49%;
-            float: right;
-        }
-
-        .half_second {
-            width: 49%;
-            float: left;
-        }
-
-        h1, p, img {
-            margin: 0;
-            padding: 0;
+            position: absolute;
+            right: 5px;
+            bottom: 5px;
         }
     </style>
 

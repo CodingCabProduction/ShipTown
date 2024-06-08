@@ -15,14 +15,10 @@
     @endif
     @foreach($products as $product)
         <div style="width: 100%; text-align: left">
-            <div class="product_name" style="font-size: 42pt; margin-top: 20px; margin-left: 20px;">{{ $product['name'] }}</div>
-            <div class="product_price" style="font-size: 110pt; margin-right: 20px;">{{ $product['prices'][$users_warehouse_code]['price'] }}</div>
-                <div style="position: absolute; left: 20px; bottom: 20px; font-size: 24pt;">
-                    {{ $product['sku'] }}
-                </div>
-            <div class="product_barcode" style="position: absolute; right: 20px; bottom: 20px;">
-                <img src="data:image/svg,{{ DNS1D::getBarcodeSVG($product['sku'], 'C39', 1.2, 60, 'black', false) }}" alt="barcode"/>
-            </div>
+            <div class="product_name">{{ $product['name'] }}</div>
+            <div class="product_price"><span class="euroSymbol">&euro;</span>{{ $product['prices'][$users_warehouse_code]['price'] }}</div>
+            <div class="product_sku">{{ $product['sku'] }}</div>
+            <div class="product_barcode"><img src="data:image/svg,{{ DNS1D::getBarcodeSVG($product['sku'], 'C39', 1.2, 60, 'black', false) }}" alt="barcode"/></div>
         </div>
     @endforeach
 
@@ -33,39 +29,42 @@
         }
 
         .product_name {
-            font-size: 14pt;
+            font-size: 42pt;
+            margin-top: 20px;
+            margin-left: 20px;
             text-align: left;
             word-wrap: anywhere;
         }
 
-        .product_price {
+        .euroSymbol {
+            margin-right: 30px;
+            font-size: 80pt;
             text-align: right;
             font-family: sans-serif;
-            font-size: 36pt;
             font-weight: bold;
             word-wrap: anywhere;
         }
 
+        .product_price {
+            font-size: 110pt;
+            margin-right: 20px;
+            text-align: right;
+            font-family: sans-serif;
+            font-weight: bold;
+            word-wrap: anywhere;
+        }
+
+        .product_sku {
+            position: absolute;
+            left: 20px;
+            bottom: 20px;
+            font-size: 24pt;
+        }
+
         .product_barcode {
-        }
-
-        .page-break {
-            page-break-after: always;
-        }
-
-        .half_first {
-            width: 49%;
-            float: right;
-        }
-
-        .half_second {
-            width: 49%;
-            float: left;
-        }
-
-        h1, p, img {
-            margin: 0;
-            padding: 0;
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
         }
     </style>
 
