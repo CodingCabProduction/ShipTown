@@ -50,6 +50,7 @@ Route::get('shipping-labels/{shipping_label}', [ShippingLabelController::class, 
 Route::view('autopilot/packlist', 'autopilot/packlist')->name('autopilot.packlist');
 Route::resource('order/packsheet', Order\PacksheetController::class)->only(['show']);
 Route::view('tools/printer', 'tools/printer')->name('tools.printer');
+Route::view('tools/label-printer/product-labels', 'tools/label-printer/product-labels')->name('tools.printer');
 
 Route::as('tools.')->group(function () {
     Route::view('tools/point-of-sale', 'tools/point-of-sale');
