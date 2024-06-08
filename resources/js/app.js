@@ -212,7 +212,6 @@ Vue.component('restocking-page', require('./components/RestockingPage.vue').defa
 Vue.component('restocking-record-card', require('./components/RestockingPage/RestockingRecordCard.vue').default);
 Vue.component('rmsapi-configuration', require('./components/Settings/RmsapiiConfiguration.vue').default);
 Vue.component('shelf-label-printing-page', require('./components/Tools/ShelfLabelPrintingPage.vue').default);
-Vue.component('product-labels-page', require('./components/Tools/LabelPrinter/ProductLabelsPage.vue').default);
 Vue.component('stocktake-input', require('./components/SharedComponents/StocktakeInput.vue').default);
 Vue.component('stocktaking-page', require('./components/StocktakingPage.vue').default);
 Vue.component('swiping-card', require('./components/SharedComponents/SwipingCard.vue').default);
