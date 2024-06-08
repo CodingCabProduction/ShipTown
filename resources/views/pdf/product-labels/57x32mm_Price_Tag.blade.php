@@ -2,10 +2,7 @@
 @section('content')
     @php
         $users_warehouse_code = auth()->user()->warehouse_code;
-        $products = [];
-        if (!empty($product_sku)) {
-            $products[] = \App\Models\Product::whereSku($product_sku)->with(['prices'])->first();
-        }
+        $products = \App\Models\Product::whereSku($product_sku)->with(['prices'])->get();
     @endphp
 
     @if(empty($products))
