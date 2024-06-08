@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div>
+        <div class="input-wrapper w-100">
             <input :id="getInputId"
                    :placeholder="placeholder"
                    :disabled="disabled"
@@ -14,6 +14,7 @@
                    v-model.trim="barcode"
                    @keyup.enter="barcodeScanned(barcode)"
             />
+            <button @click="barcode = ''; setFocusElementById(getInputId)" type="button" class="btn text-secondary ml-1 md:ml-2">x</button>
         </div>
 
       <b-modal :id="getModalID" scrollable no-fade hide-header
@@ -294,5 +295,24 @@
 .barcode-input::selection {
     color: black;
     background: #cce3ff;
+}
+
+.input-wrapper {
+    width: 100%;
+    position: relative;
+    display: inline-block;
+}
+
+.input-wrapper input {
+    padding-right: 30px;
+}
+
+.input-wrapper button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
 }
 </style>
