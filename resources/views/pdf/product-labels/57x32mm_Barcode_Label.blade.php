@@ -1,10 +1,9 @@
 @extends('pdf.template')
 @section('content')
     @php
-        $products = [];
-        if (!empty($product_sku)) {
-            $products[] = \App\Models\Product::whereSku($product_sku)->first();
-        }
+        $products = collect($product_sku)->map(function($sku) {
+            return \App\Models\Product::whereSku($sku)->with(['prices'])->first()->toArray();
+        })->toArray();
     @endphp
 
     @if(empty($products))
@@ -19,6 +18,10 @@
                 <img src="data:image/svg,{{ DNS1D::getBarcodeSVG($product['sku'], 'C39', 0.65, 50) }}" alt="barcode" />
             </div>
         </div>
+
+        @if(!$loop->last)
+            <div class="page-break"></div>
+        @endif
     @endforeach
 
     <style>
@@ -61,6 +64,10 @@
         h1, p, img{
             margin: 0;
             padding: 0;
+        }
+
+        .page-break {
+            page-break-after: always;
         }
     </style>
 

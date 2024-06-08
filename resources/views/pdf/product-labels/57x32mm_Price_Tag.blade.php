@@ -2,7 +2,10 @@
 @section('content')
     @php
         $users_warehouse_code = auth()->user()->warehouse_code;
-        $products = \App\Models\Product::whereSku($product_sku)->with(['prices'])->get();
+        $products = collect($product_sku)->map(function($sku) {
+            return \App\Models\Product::whereSku($sku)->with(['prices'])->first()->toArray();
+        })->toArray();
+
     @endphp
 
     @if(empty($products))
@@ -10,6 +13,7 @@
             <div class="product_name" style="height: 10mm; text-align: center;">Enter Product SKU</div>
         </div>
     @endif
+
     @foreach($products as $product)
         <div style="width: 100%; text-align: left">
             <div class="product_name">{{ $product['name'] }}</div>
@@ -17,6 +21,10 @@
             <div class="product_sku">{{ $product['sku'] }}</div>
             <div class="product_barcode"><img src="data:image/svg,{{ DNS1D::getBarcodeSVG($product['sku'], 'C39', 0.65, 20, 'black', false) }}" alt="barcode"/></div>
         </div>
+
+        @if(!$loop->last)
+            <div class="page-break"></div>
+        @endif
     @endforeach
 
     <style>
@@ -62,6 +70,10 @@
             position: absolute;
             right: 5px;
             bottom: 5px;
+        }
+
+        .page-break {
+            page-break-after: always;
         }
     </style>
 

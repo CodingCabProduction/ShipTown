@@ -4,6 +4,7 @@
             <array-dropdown-select class="pt-2 ml-0 ml-sm-2" :items="templates" :item-selected.sync="templateSelected" :align-menu-right="true"/>
             <template v-slot:buttons>
 <!--                <top-nav-button v-b-modal="'quick-actions-modal'"/>-->
+                <input type="number" class="form-control text-center align-content-center" v-model="labelCount" style="width: 50px;">
                 <top-nav-button @click.native="printPDF" icon="print"/>
             </template>
         </search-and-option-bar>
@@ -54,6 +55,7 @@ export default {
     data() {
         return {
             viewDirectory: 'product-labels/',
+            labelCount: 1,
             templates: [],
             templateSelected: '',
             pdfUrl: '',
@@ -77,20 +79,27 @@ export default {
         downloadPDF() {
             this.downloadInProgress = true;
 
+            let product_sku = [];
+
+            for (let i = 0; i < this.labelCount; i++) {
+                product_sku.push(this.product['sku']);
+            }
+
             let data = {
-                data: { product_sku: this.getUrlParameter('search') },
-                template: this.templateSelected,
+                data: { product_sku },
+                template: this.viewDirectory + this.templateSelected,
             };
 
-            this.apiPostPdfDownload(data).then(response => {
-                let url = window.URL.createObjectURL(new Blob([response.data]));
-                let filename = this.templateSelected.replace('/', '_') + '.pdf';
-                helpers.downloadFile(url, filename);
-            }).catch(error => {
-                this.displayApiCallError(error);
-            }).finally(() => {
-                this.downloadInProgress = false;
-            });
+            this.apiPostPdfDownload(data)
+                .then(response => {
+                    let url = window.URL.createObjectURL(new Blob([response.data]));
+                    let filename = this.templateSelected.replace('/', '_') + '.pdf';
+                    helpers.downloadFile(url, filename);
+                }).catch(error => {
+                    this.displayApiCallError(error);
+                }).finally(() => {
+                    this.downloadInProgress = false;
+                });
         },
 
         printPDF() {
@@ -99,8 +108,14 @@ export default {
                 return;
             }
 
+            let product_sku = [];
+
+            for (let i = 0; i < this.labelCount; i++) {
+                product_sku.push(this.product['sku']);
+            }
+
             let data = {
-                data: { product_sku: this.getUrlParameter('search') },
+                data: { product_sku },
                 template: this.viewDirectory + this.templateSelected,
                 printer_id: this.currentUser().printer_id,
             };
@@ -119,8 +134,14 @@ export default {
             this.showLoading();
             this.previewLimited = false;
 
+            let product_sku = [];
+
+            for (let i = 0; i < this.labelCount; i++) {
+                product_sku.push(this.product['sku']);
+            }
+
             let data = {
-                data: { product_sku: this.product['sku'] },
+                data: { product_sku },
                 template: this.viewDirectory + this.templateSelected,
             };
 
@@ -139,6 +160,10 @@ export default {
     watch: {
         templateSelected() {
             helpers.setCookie('productLabelsLastTemplateSelected', this.templateSelected);
+            this.loadPdfIntoIframe();
+        },
+
+        labelCount() {
             this.loadPdfIntoIframe();
         },
     },
