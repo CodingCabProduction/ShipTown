@@ -15,13 +15,13 @@
     @endif
     @foreach($products as $product)
         <div style="width: 100%; text-align: left">
-            <div class="product_name">{{ $product['name'] }}</div>
-            <div class="product_price">{{ $product['prices'][$users_warehouse_code]['price'] }}</div>
-                <div style="position: absolute; left: 0; bottom: 0;">
+            <div class="product_name" style="font-size: 42pt; margin-top: 20px; margin-left: 20px;">{{ $product['name'] }}</div>
+            <div class="product_price" style="font-size: 110pt; margin-right: 20px;">{{ $product['prices'][$users_warehouse_code]['price'] }}</div>
+                <div style="position: absolute; left: 20px; bottom: 20px; font-size: 24pt;">
                     {{ $product['sku'] }}
                 </div>
-            <div class="product_barcode" style="position: absolute; right: 0; bottom: 0;">
-                <img src="data:image/svg,{{ DNS1D::getBarcodeSVG($product['sku'], 'C39', 0.60, 20, 'black', false) }}" alt="barcode"/>
+            <div class="product_barcode" style="position: absolute; right: 20px; bottom: 20px;">
+                <img src="data:image/svg,{{ DNS1D::getBarcodeSVG($product['sku'], 'C39', 1.2, 60, 'black', false) }}" alt="barcode"/>
             </div>
         </div>
     @endforeach

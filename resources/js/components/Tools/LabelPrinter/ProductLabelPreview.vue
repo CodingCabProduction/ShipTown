@@ -70,7 +70,7 @@ export default {
             '4x6in_Barcode_Label',
         ];
 
-        this.templateSelected = this.getUrlParameter('template-selected', helpers.getCookie('templateSelected', this.templates[0]));
+        this.templateSelected = this.getUrlParameter('template-selected', helpers.getCookie('productLabelsLastTemplateSelected', this.templates[0]));
     },
 
     methods: {
@@ -119,13 +119,6 @@ export default {
             this.showLoading();
             this.previewLimited = false;
 
-            // clone label array and limit label array to 25 labels
-            let labels = _.cloneDeep(this.getLabelArray());
-            if (labels.length > 25) {
-                this.previewLimited = true;
-                labels = labels.slice(0, 25);
-            }
-
             let data = {
                 data: { product_sku: this.product['sku'] },
                 template: this.viewDirectory + this.templateSelected,
@@ -141,32 +134,11 @@ export default {
                     this.hideLoading();
                 });
         },
-
-        getLabelArray() {
-            if (!this.allNumbersAndLettersFilled) return [];
-            if (this.customLabelText) return [this.customLabelText];
-
-            let labels = [];
-            let fromLetter = this.fromLetter.toUpperCase().charCodeAt(0);
-            let toLetter = this.toLetter.toUpperCase().charCodeAt(0);
-
-            for (let i = fromLetter; i <= toLetter; i++) {
-                for (let j = i === fromLetter ? this.fromNumber : 1; j <= this.toNumber; j++) {
-                    labels.push(String.fromCharCode(i) + j);
-                }
-            }
-
-            return labels;
-        },
     },
-    computed: {
-        allNumbersAndLettersFilled() {
-            return this.fromLetter && this.fromNumber && this.toLetter && this.toNumber;
-        }
-    },
+
     watch: {
         templateSelected() {
-            helpers.setCookie('templateSelected', this.templateSelected);
+            helpers.setCookie('productLabelsLastTemplateSelected', this.templateSelected);
             this.loadPdfIntoIframe();
         },
     },
