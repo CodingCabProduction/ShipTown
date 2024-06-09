@@ -15,7 +15,7 @@
     @foreach($products as $product)
         <div style="width: 100%; text-align: left">
             <div class="product_name">{{ $product['name'] }}</div>
-            <div class="product_price"><span class="euroSymbol">&euro;</span>{{ $product['prices'][$users_warehouse_code]['price'] }}</div>
+            <div class="product_price"><span class="euroSymbol">&euro;</span>{{ $users_warehouse_code ? $product['prices'][$users_warehouse_code]['price'] : $product['price'] }}</div>
             <div class="product_sku">{{ $product['sku'] }}</div>
             <div class="product_barcode"><img src="data:image/svg,{{ DNS1D::getBarcodeSVG($product['sku'], 'C39', 1.2, 60, 'black', false) }}" alt="barcode"/></div>
         </div>
