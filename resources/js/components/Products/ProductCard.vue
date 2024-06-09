@@ -10,14 +10,14 @@
                         <table class="table table-borderless mb-0 w-100 text-right">
                             <thead>
                             <tr class="small font-weight-bold">
-                                <th class="text-left">Location</th>
-                                <th class="text-left">Shelf</th>
-                                <th class="text-right">Available</th>
-                                <th class="text-right d-none d-md-table-cell">Reserved</th>
-                                <th class="text-right pr-1">Incoming</th>
-                                <th class="text-right d-none d-md-table-cell pr-1">Required</th>
-                                <th class="text-right">Price</th>
-                                <th class="text-right">7 day</th>
+                                <th @click="toggleProductDetails" class="text-left">Location</th>
+                                <th @click="toggleProductDetails" class="text-left">Shelf</th>
+                                <th @click="toggleProductDetails" class="text-right">Available</th>
+                                <th @click="toggleProductDetails" class="text-right d-none d-md-table-cell">Reserved</th>
+                                <th @click="toggleProductDetails" class="text-right pr-1">Incoming</th>
+                                <th @click="toggleProductDetails" class="text-right d-none d-md-table-cell pr-1">Required</th>
+                                <th @click="toggleProductDetails" class="text-right">Price</th>
+                                <th @click="toggleProductDetails" class="text-right">7 day</th>
                             </tr>
                             </thead>
                             <tbody>
