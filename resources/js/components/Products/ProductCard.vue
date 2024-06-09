@@ -131,11 +131,8 @@
                                 <div class="row col d-block font-weight-bold pb-1 text-uppercase small text-secondary align-content-center text-center">ORDERS</div>
 
                                 <template>
-                                    <div>
-                                        {{ statusMessageOrder }}
-                                    </div>
                                     <div v-if="!orders.length" class="text-center text-secondary small">
-                                        No orders found
+                                        {{ statusMessageOrder ? statusMessageOrder : 'No orders found'}}
                                     </div>
                                     <div v-for="orderProduct in orders" :key="orderProduct.id">
                                         <div class="row text-left mb-2">
