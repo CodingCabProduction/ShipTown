@@ -136,6 +136,12 @@
 
                         this.scroll_percentage = (1 - this.per_page  / this.products.length) * 100;
                         this.scroll_percentage = Math.max(this.scroll_percentage, 70);
+
+
+                        // Remove duplicate product if there are two products with the same sku (possible because of exact search)
+                        if (this.products.length > 1  && this.products[0].sku === this.products[1].sku) {
+                            this.products.shift();
+                        }
                     })
                     .catch((error) => {
                         this.displayApiCallError(error);
@@ -164,6 +170,11 @@
                         }
 
                         this.products = this.products ? this.products.concat(data.data) : data.data
+
+                        // Remove duplicate product if there are two products with the same sku (possible because of exact search)
+                        if (this.products.length > 1  && this.products[0].sku === this.products[1].sku) {
+                            this.products.shift();
+                        }
                     })
                     .catch((error) => {
                         this.displayApiCallError(error);
