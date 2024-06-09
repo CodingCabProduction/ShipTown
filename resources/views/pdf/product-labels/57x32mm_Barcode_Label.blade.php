@@ -15,7 +15,7 @@
         <div style="width: 100%; text-align: center">
             <div class="product_name" style="height: 10mm; text-align: center">{{ $product['name'] }}</div>
             <div class="product_barcode" style="height: 15mm;">
-                <img src="data:image/svg,{{ DNS1D::getBarcodeSVG($product['sku'], 'C39', 0.65, 50) }}" alt="barcode" />
+                <img src="data:image/svg,{{ DNS1D::getBarcodeSVG($product['sku'], 'C39', 0.65, 45) }}" alt="barcode" />
             </div>
         </div>
 
@@ -45,6 +45,7 @@
         }
 
         .product_barcode {
+            margin-top: 1mm;
         }
 
         .page-break {

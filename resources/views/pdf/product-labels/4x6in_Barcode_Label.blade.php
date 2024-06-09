@@ -15,7 +15,7 @@
         <div style="width: 100%; text-align: center">
             <div class="product_name" style="height: 40mm; text-align: center">{{ $product['name'] }}</div>
             <div class="product_barcode" style="height: 45mm;">
-                <img src="data:image/svg,{{ DNS1D::getBarcodeSVG($product['sku'], 'C39', 1.2, 100, 'black', false) }}" alt="barcode" />
+                <img src="data:image/svg,{{ DNS1D::getBarcodeSVG($product['sku'], 'C39', 1.1, 100, 'black', false) }}" alt="barcode" />
                 <div style="font-size: 18pt">{{ $product['sku'] }}</div>
             </div>
         </div>
@@ -32,9 +32,10 @@
         }
 
         .product_name {
-            font-size: 48pt;
+            font-size: 38pt;
             text-align: left;
             word-wrap: anywhere;
+            margin-top: 5mm;
             margin-bottom: 2mm;
         }
 

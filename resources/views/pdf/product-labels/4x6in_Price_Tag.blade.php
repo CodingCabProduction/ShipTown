@@ -17,7 +17,7 @@
             <div class="product_name">{{ $product['name'] }}</div>
             <div class="product_price"><span class="euroSymbol">&euro;</span>{{ $users_warehouse_code ? $product['prices'][$users_warehouse_code]['price'] : $product['price'] }}</div>
             <div class="product_sku">{{ $product['sku'] }}</div>
-            <div class="product_barcode"><img src="data:image/svg,{{ DNS1D::getBarcodeSVG($product['sku'], 'C39', 1.2, 60, 'black', false) }}" alt="barcode"/></div>
+            <div class="product_barcode"><img src="data:image/svg,{{ DNS1D::getBarcodeSVG($product['sku'], 'C39', 1.2, 35, 'black', false) }}" alt="barcode"/></div>
         </div>
 
         @if(!$loop->last)
@@ -32,9 +32,10 @@
         }
 
         .product_name {
-            font-size: 42pt;
+            font-size: 32pt;
             margin-top: 20px;
             margin-left: 20px;
+            margin-right: 20px;
             text-align: left;
             word-wrap: anywhere;
         }
@@ -60,13 +61,13 @@
         .product_sku {
             position: absolute;
             left: 20px;
-            bottom: 20px;
-            font-size: 24pt;
+            bottom: 55px;
+            font-size: 16pt;
         }
 
         .product_barcode {
             position: absolute;
-            right: 20px;
+            left: 20px;
             bottom: 20px;
         }
 
