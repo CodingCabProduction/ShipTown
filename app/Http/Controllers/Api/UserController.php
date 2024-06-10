@@ -54,27 +54,13 @@ class UserController extends Controller
             Password::sendResetLink(['email' => $user->email]);
         })->afterResponse();
 
-        $role = Role::findById($request->validated()['role_id']);
+        $role = Role::findById($request->validated()['role_id'], 'web');
 
         $user->assignRole($role);
 
         return new UserResource($user);
     }
 
-    public function show(UserShowRequest $request, int $user_id): UserResource
-    {
-        $user = User::query()->with('roles')->findOrFail($user_id);
-
-        return new UserResource($user);
-    }
-
-    /**
-     * PUT api/admin/users.
-     *
-     * @param UserUpdateRequest $request
-     * @param int $user_id
-     * @return UserResource
-     */
     public function update(UserUpdateRequest $request, int $user_id): UserResource
     {
         $updatedUser = User::query()->findOrFail($user_id);
@@ -96,13 +82,6 @@ class UserController extends Controller
         return new UserResource($updatedUser);
     }
 
-    /**
-     * DELETE api/admin/users.
-     *
-     * @param UserDeleteRequest $request
-     * @param int $user_id_to_delete
-     * @return UserResource
-     */
     public function destroy(UserDeleteRequest $request, int $user_id_to_delete): UserResource
     {
         abort_if($user_id_to_delete === $request->user()->getKey(), 403, 'You can not delete yourself');
@@ -112,5 +91,12 @@ class UserController extends Controller
         $user->delete();
 
         return UserResource::make($user);
+    }
+
+    public function show(UserShowRequest $request, int $user_id): UserResource
+    {
+        $user = User::query()->with('roles')->findOrFail($user_id);
+
+        return new UserResource($user);
     }
 }
