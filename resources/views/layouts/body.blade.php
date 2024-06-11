@@ -27,6 +27,7 @@
     @yield('css')
 
     <link rel="manifest" href="{{ route('manifest.json') }}">
+    <script src="https://unpkg.com/html5-qrcode"></script>
 </head>
 <body>
 <div id="app">

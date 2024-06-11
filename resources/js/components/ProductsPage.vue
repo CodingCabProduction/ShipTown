@@ -1,5 +1,11 @@
 <template>
     <div>
+        <qrcode-scanner
+            :qrbox="250"
+            :fps="10"
+            style="width: 500px;"
+            @result="onScan"
+        />
         <search-and-option-bar-observer/>
         <search-and-option-bar :isStickable="true">
             <barcode-input-field
@@ -101,6 +107,12 @@
         },
 
         methods: {
+            onScan (decodedText, decodedResult) {
+                // handle the message here :)
+                this.notifySuccess(decodedText);
+                this.notifySuccess(decodedResult);
+            },
+
             findText(search) {
                 this.setUrlParameter('search', search);
                 this.reloadProductList();
