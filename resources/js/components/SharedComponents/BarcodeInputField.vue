@@ -16,7 +16,7 @@
             />
             <button @click="barcode = ''; setFocusElementById(getInputId, true)" type="button" class="btn text-secondary ml-1 md:ml-2">x</button>
         </div>
-        <div style="position: fixed; left: 0; bottom: 0; border-top: solid 1px;" class="bg-warning w-100 text-center">
+        <div style="position: fixed; left: 0; bottom: 0; border-top: solid 3px;" class="bg-warning w-100 text-center">
             <button @mousedown="startScanner" class="btn btn-outline-primary rounded-circle bg-warning" style="height: 50px; position: relative; top: -25px;">SCAN</button>
         </div>
             <div id="qr-code-full-region" ></div>
