@@ -16,8 +16,8 @@
             />
             <button @click="barcode = ''; setFocusElementById(getInputId, true)" type="button" class="btn text-secondary ml-1 md:ml-2">x</button>
         </div>
-        <div id="qr-code-full-region" ></div>
-            <button @click="startScanner">start</button>
+            <button @mousedown="startScanner" @mouseup="stopScanner">start</button>
+            <div id="qr-code-full-region" ></div>
 
       <b-modal :id="getModalID" scrollable no-fade hide-header
                @submit="updateShelfLocation"
@@ -153,6 +153,9 @@
                 this.html5QrcodeScanner.start({ facingMode: "user" }, config, this.onScanSuccess);
             },
 
+            stopScanner() {
+                this.html5QrcodeScanner.stop();
+            },
 
             onScanSuccess (decodedText, decodedResult) {
                 this.html5QrcodeScanner.stop();
