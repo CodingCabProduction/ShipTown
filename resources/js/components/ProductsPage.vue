@@ -3,7 +3,7 @@
         <qrcode-scanner
             :qrbox="250"
             :fps="10"
-            style="width: 500px;"
+            style="width: 300px; height: 200px"
             @result="onScan"
         />
         <search-and-option-bar-observer/>
