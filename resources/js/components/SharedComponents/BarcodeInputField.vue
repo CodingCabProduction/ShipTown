@@ -16,6 +16,8 @@
             />
             <button @click="barcode = ''; setFocusElementById(getInputId, true)" type="button" class="btn text-secondary ml-1 md:ml-2">x</button>
         </div>
+        <div id="qr-code-full-region" ></div>
+            <button @click="startScanner">start</button>
 
       <b-modal :id="getModalID" scrollable no-fade hide-header
                @submit="updateShelfLocation"
@@ -61,6 +63,7 @@
     import url from "../../mixins/url";
     import FiltersModal from "../Packlist/FiltersModal";
     import api from "../../mixins/api";
+    import {Html5Qrcode} from "html5-qrcode";
 
     export default {
         name: "BarcodeInputField",
@@ -96,6 +99,8 @@
 
         data: function() {
             return {
+                html5QrcodeScanner: null,
+
                 typedInText: '',
                 currentLocation: '',
                 barcode: '',
@@ -140,6 +145,23 @@
         },
 
         methods: {
+            startScanner() {
+                let config = { fps: 10, qrbox: { width: 100, height: 100 } };
+                this.html5QrcodeScanner = new Html5Qrcode('qr-code-full-region', config);
+                // this.html5QrcodeScanner = new Html5QrcodeScanner('qr-code-full-region', config);
+                // this.html5QrcodeScanner.render(this.onScanSuccess);
+                this.html5QrcodeScanner.start({ facingMode: "user" }, config, this.onScanSuccess);
+            },
+
+
+            onScanSuccess (decodedText, decodedResult) {
+                this.html5QrcodeScanner.stop();
+                this.barcode = decodedText;
+                this.barcodeScanned(decodedText);
+                this.notifySuccess(decodedText);
+                // this.html5QrcodeScanner.clear();
+            },
+
             barcodeScanned(barcode) {
                 if (barcode && barcode !== '') {
                     this.apiPostActivity({
