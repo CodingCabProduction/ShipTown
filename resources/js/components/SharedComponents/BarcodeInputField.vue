@@ -150,7 +150,7 @@
                 this.html5QrcodeScanner = new Html5Qrcode('qr-code-full-region', config);
                 // this.html5QrcodeScanner = new Html5QrcodeScanner('qr-code-full-region', config);
                 // this.html5QrcodeScanner.render(this.onScanSuccess);
-                this.html5QrcodeScanner.start({ facingMode: "user" }, config, this.onScanSuccess);
+                this.html5QrcodeScanner.start({ facingMode: { exact: "environment"} }, config, this.onScanSuccess);
             },
 
             stopScanner() {
