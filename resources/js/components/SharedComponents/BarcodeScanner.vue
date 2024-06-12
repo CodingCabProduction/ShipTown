@@ -1,8 +1,8 @@
 <template>
   <b-modal :id="getScannerModalID" @show="modalShown" @hide="stopScanner" hide-footer hide-header no-fade>
     <div id="qr-code-full-region" style="height: 250px; overflow: hidden"></div>
-    <select name="camera" id="cameraSelection" @change="changeCamera" class="mt-2">
-      <option v-for="camera in availableCameras" :value="camera['id']">{{ camera['label']}}</option>
+    <select name="camera" id="cameraSelection" @change="changeCamera" class="form-control mt-2">
+      <option v-for="camera in availableCameras" :value="camera['id']" :selected="camera['label'] === selectedCamera">{{ camera['label']}}</option>
     </select>
   </b-modal>
 </template>
@@ -17,7 +17,8 @@ export default {
             html5QrcodeScanner: null,
             availableCameras: [],
             getScannerModalID: 'barcode-scanner-modal',
-            onScanSuccess: null
+            onScanSuccess: null,
+            selectedCamera: null
         }
     },
 
@@ -35,6 +36,7 @@ export default {
                 Html5Qrcode.getCameras()
                     .then((cameras) => {
                         this.availableCameras = cameras;
+                        this.selectedCamera = this.availableCameras[cameras.length - 1]['id'];
                         this.startScanner(null);
                     });
             } else {
