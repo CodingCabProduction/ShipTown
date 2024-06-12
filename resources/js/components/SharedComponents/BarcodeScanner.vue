@@ -1,5 +1,5 @@
 <template>
-  <b-modal :id="getScannerModalID" @show="modalShown" @hide="stopScanner" hide-footer hide-header no-fade>
+  <b-modal :id="getScannerModalID" @show="modalShown" @hide="modalHidden" hide-footer hide-header no-fade>
       <div id="qr-code-full-region" style="height: 250px; overflow: hidden"></div>
 
       <div class="row mb-2 mt-2">
@@ -48,6 +48,10 @@ export default {
         toggleOnScreenScannerButton() {
             this.showOnScreenScannerButton = !this.showOnScreenScannerButton;
             this.$bvModal.hide(this.getScannerModalID);
+        },
+
+        modalHidden() {
+            this.stopScanner();
         },
 
         modalShown() {
