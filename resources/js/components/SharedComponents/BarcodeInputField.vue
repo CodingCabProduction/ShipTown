@@ -170,10 +170,7 @@
             startScanner(camera = null) {
                 if (this.html5QrcodeScanner.getState() === 2) {
                     this.stopScanner();
-                    return;
                 }
-
-                console.log(this.html5QrcodeScanner.getState());
 
                 let config = { fps: 10, qrbox: { width: 200, height: 200 } };
 
