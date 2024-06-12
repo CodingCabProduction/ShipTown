@@ -195,6 +195,7 @@
 
             onScanSuccess (decodedText, decodedResult) {
                 this.html5QrcodeScanner.stop();
+                this.$bvModal.hide(this.getScannerModalID);
                 this.barcode = decodedText;
                 this.barcodeScanned(decodedText);
                 this.notifySuccess(decodedText);
