@@ -476,11 +476,6 @@
                         console.log(error);
                         this.displayApiCallError(error);
                     });
-
-                console.log(blue);
-                console.log(keyboardEvent);
-                console.log(document.getElementById(keyboardEvent.srcElement.id));
-                this.notifySuccess(document.getElementById(keyboardEvent.srcElement.id));
                 return null;
             }
         }
