@@ -17,8 +17,8 @@
             <button @click="barcode = ''; setFocusElementById(getInputId, true)" type="button" class="btn text-secondary ml-1 md:ml-2">x</button>
         </div>
 
-        <div style="position: fixed; left: 0; bottom: 0; border-top: solid 3px; height: 50px;" class="bg-warning w-100 text-center">
-            <button @mousedown="scanBarcode" class="btn btn-outline-primary rounded-circle bg-warning" style="border: solid 3px black; height: 100px; width: 100px; position: relative; top: -50px;">SCAN</button>
+        <div style="position: fixed; left: 0; bottom: 0; border-top: solid 3px; height: 30px;" class="bg-warning w-100 text-center">
+            <button @mousedown="scanBarcode" class="btn btn-outline-primary rounded-circle bg-warning" style="border: solid 3px black; height: 100px; width: 100px; position: relative; top: -50px; font-size: 24pt; color: black;"><font-awesome-icon icon="barcode" class="fa-lg"></font-awesome-icon></button>
         </div>
 
         <barcode-scanner/>
