@@ -1,9 +1,10 @@
 <template>
   <b-modal :id="getScannerModalID" @show="modalShown" @hide="stopScanner" hide-footer hide-header no-fade>
-    <div id="qr-code-full-region" style="height: 250px; overflow: hidden"></div>
-    <select name="camera" id="cameraSelection" @change="changeCamera" class="form-control mt-2">
-      <option v-for="camera in availableCameras" :value="camera['id']" :selected="camera['label'] === selectedCamera">{{ camera['label']}}</option>
-    </select>
+        <div id="qr-code-full-region" style="height: 250px; overflow: hidden"></div>
+        <select name="camera" id="cameraSelection" @change="changeCamera" class="form-control mt-2">
+          <option v-for="camera in availableCameras" :value="camera['id']" :selected="camera['label'] === selectedCamera">{{ camera['label']}}</option>
+        </select>
+        <button @click="$bvModal.hide(getScannerModalID)" class="form-control btn">close</button>
   </b-modal>
 </template>
 <script>
