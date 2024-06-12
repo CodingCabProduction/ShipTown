@@ -17,6 +17,7 @@
             <button @click="barcode = ''; setFocusElementById(getInputId, true)" type="button" class="btn text-secondary ml-1 md:ml-2">x</button>
         </div>
 
+        <div>{{ availableCameras }}</div>
         <div id="qr-code-full-region" ></div>
 
         <div style="position: fixed; left: 0; bottom: 0; border-top: solid 3px;" class="bg-warning w-100 text-center">
@@ -108,6 +109,7 @@
         data: function() {
             return {
                 html5QrcodeScanner: null,
+                availableCameras: [],
 
                 typedInText: '',
                 currentLocation: '',
@@ -161,6 +163,7 @@
                 Html5Qrcode.getCameras().then((cameras) => {
                 this.html5QrcodeScanner.start(cameras[0]['id'], config, this.onScanSuccess);
                     this.showError(cameras[0]['id']);
+                    this.availableCameras = cameras;
                     console.log(cameras);
                 })
             },
