@@ -21,12 +21,7 @@
             <button @mousedown="$bvModal.show(getScannerModalID)" class="btn btn-outline-primary rounded-circle bg-warning" style="border: solid 3px black; height: 100px; width: 100px; position: relative; top: -50px;">SCAN</button>
         </div>
 
-        <b-modal :id="getScannerModalID" @show="startScanner(null)" hide-footer hide-header no-fade>
-            <div id="qr-code-full-region" style="height: 250px; overflow: hidden"></div>
-            <select name="camera" id="cameraSelection" @change="changeCamera" class="mt-2">
-                <option v-for="camera in availableCameras" :value="camera['id']">{{ camera['label']}}</option>
-            </select>
-        </b-modal>
+        <barcode-scanner :change-camera="changeCamera" :get-scanner-modal-i-d="getScannerModalID"/>
 
       <b-modal :id="getModalID" scrollable no-fade hide-header
                @submit="updateShelfLocation"
@@ -68,14 +63,16 @@
 </template>
 
 <script>
-    import helpers from "../../mixins/helpers";
-    import url from "../../mixins/url";
-    import FiltersModal from "../Packlist/FiltersModal";
-    import api from "../../mixins/api";
-    import {Html5Qrcode, Html5QrcodeScannerState} from "html5-qrcode";
+import helpers from "../../mixins/helpers";
+import url from "../../mixins/url";
+import FiltersModal from "../Packlist/FiltersModal";
+import api from "../../mixins/api";
+import {Html5Qrcode, Html5QrcodeScannerState} from "html5-qrcode";
+import BarcodeScanner from "./BarcodeScanner.vue";
 
-    export default {
+export default {
         name: "BarcodeInputField",
+    components: {BarcodeScanner},
 
         mixins: [helpers, url, FiltersModal, api],
 
@@ -113,9 +110,6 @@
 
         data: function() {
             return {
-                html5QrcodeScanner: null,
-                availableCameras: [],
-
                 typedInText: '',
                 currentLocation: '',
                 barcode: '',
@@ -128,11 +122,6 @@
         },
 
         mounted() {
-            // console.log(this.html5QrcodeScanner.getCameras());
-            Html5Qrcode.getCameras().then((cameras) => {
-                this.availableCameras = cameras;
-            });
-
             const isIos = () => !!window.navigator.userAgent.match(/iPad|iPhone/i);
 
             if (isIos()) {
@@ -170,38 +159,13 @@
                 this.startScanner(document.getElementById('cameraSelection').value);
             },
 
-            startScanner(camera = null) {
-                setTimeout(() => {
-                    if (this.html5QrcodeScanner === null) {
-                        this.html5QrcodeScanner = new Html5Qrcode('qr-code-full-region');
-                    }
-
-                    if (this.html5QrcodeScanner.getState() === Html5QrcodeScannerState.SCANNING) {
-                        this.stopScanner();
-                    }
-
-                    let config = {
-                        // aspectRatio: 2,
-                        fps: 10,
-                        qrbox: {width: 300, height: 300},
-                        useBarCodeDetectorIfSupported: true
-                    };
-
-                    const selectedCamera = camera ? camera : this.availableCameras[this.availableCameras.length - 1]['id'];
-                    this.html5QrcodeScanner.start(selectedCamera, config, this.onScanSuccess);
-                }, 10);
-            },
-
-            stopScanner() {
-                this.html5QrcodeScanner.stop();
-            },
-
             onScanSuccess (decodedText, decodedResult) {
+                document.activeElement.value = decodedText;
                 this.html5QrcodeScanner.stop();
                 this.$bvModal.hide(this.getScannerModalID);
-                this.barcode = decodedText;
-                this.barcodeScanned(decodedText);
-                this.notifySuccess(decodedText);
+                // this.barcode = decodedText;
+                // this.barcodeScanned(decodedText);
+                // this.notifySuccess(decodedText);
                 // this.html5QrcodeScanner.clear();
             },
 
