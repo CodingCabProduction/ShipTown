@@ -95,7 +95,7 @@ export default {
 
         computed: {
             showOnScreenScannerButton() {
-                return localStorage.showOnScreenScannerButton === 'true';
+                return (localStorage.showOnScreenScannerButton === 'true') || (localStorage.showOnScreenScannerButton === undefined);
             },
 
             getInputId() {
