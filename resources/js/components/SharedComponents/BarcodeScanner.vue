@@ -1,10 +1,4 @@
 <template>
-<!--    <div style="position: fixed; left: 0; bottom: 0; height: 30px;" class="w-100 text-center">-->
-<!--        <div class="btn btn-outline-primary rounded bg-warning" style="border: solid 2px black; height: 40px; width: 130px; position: relative; top: -40px; font-size: 24pt; color: black;">-->
-<!--            <img src="barcode-generator?barcode_type=C39&output_type=SVG&content=SCAN&color=dark gray" alt="" style="position: relative; top: -16px;">-->
-<!--        </div>-->
-<!--    </div>-->
-
   <b-modal :id="getScannerModalID" @show="modalShown" @hide="stopScanner" hide-footer hide-header no-fade>
     <div id="qr-code-full-region" style="height: 250px; overflow: hidden"></div>
     <select name="camera" id="cameraSelection" @change="changeCamera" class="mt-2">
