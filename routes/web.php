@@ -12,6 +12,7 @@
 */
 
 use App\Http\Controllers\Admin\Settings\Modules\Webhooks\SubscriptionController;
+use App\Http\Controllers\Api\BarcodeGeneratorController;
 use App\Http\Controllers\Auth;
 use App\Http\Controllers\Csv;
 use App\Http\Controllers\DashboardController;
@@ -33,6 +34,8 @@ Route::resource('verify', Auth\TwoFactorController::class)->only(['index', 'stor
 Route::view('quick-connect', 'quick-connect');
 Route::view('quick-connect/magento', 'quick-connect.magento');
 Route::view('quick-connect/shopify', 'quick-connect.shopify');
+
+Route::apiResource('barcode-generator', BarcodeGeneratorController::class)->only(['index']);
 
 Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('fulfillment-dashboard', [FulfillmentDashboardController::class, 'index'])->name('fulfillment-dashboard');
