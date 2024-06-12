@@ -17,10 +17,10 @@
             <button @click="barcode = ''; setFocusElementById(getInputId, true)" type="button" class="btn text-secondary ml-1 md:ml-2">x</button>
         </div>
 
-        <div>{{ availableCameras }}</div>
+<!--        <div>{{ availableCameras }}</div>-->
 
         <div v-for="camera in availableCameras">
-            <button @click="startScanner(camera)"></button>
+            <button @click="startScanner(camera)">{{ camera['label']}}</button>
         </div>
         <div id="qr-code-full-region" ></div>
 
@@ -129,6 +129,12 @@
         mounted() {
             this.html5QrcodeScanner = new Html5Qrcode('qr-code-full-region');
 
+
+            // console.log(this.html5QrcodeScanner.getCameras());
+            Html5Qrcode.getCameras().then((cameras) => {
+                this.availableCameras = cameras;
+            });
+
             const isIos = () => !!window.navigator.userAgent.match(/iPad|iPhone/i);
 
             if (isIos()) {
@@ -161,22 +167,14 @@
         },
 
         methods: {
-            startScanner(camera) {
+            startScanner(camera = null) {
                 let config = { fps: 10, qrbox: { width: 200, height: 200 } };
 
-                if (camera) {
-                    this.html5QrcodeScanner.stop();
+                if (camera != null) {
+                    // this.html5QrcodeScanner.stop();
                     this.html5QrcodeScanner.start(camera['id'], config, this.onScanSuccess);
                     return;
                 }
-
-                // console.log(this.html5QrcodeScanner.getCameras());
-                Html5Qrcode.getCameras().then((cameras) => {
-                    this.html5QrcodeScanner.start(cameras[0]['id'], config, this.onScanSuccess);
-                    this.showError(cameras[0]['id']);
-                    this.availableCameras = cameras;
-                    console.log(cameras);
-                })
             },
 
             stopScanner() {
