@@ -18,10 +18,10 @@
         </div>
 
         <div style="position: fixed; left: 0; bottom: 0; border-top: solid 3px; height: 50px;" class="bg-warning w-100 text-center">
-            <button @mousedown="$bvModal.show(getScannerModalID)" class="btn btn-outline-primary rounded-circle bg-warning" style="border: solid 3px black; height: 100px; width: 100px; position: relative; top: -50px;">SCAN</button>
+            <button @mousedown="scanBarcode" class="btn btn-outline-primary rounded-circle bg-warning" style="border: solid 3px black; height: 100px; width: 100px; position: relative; top: -50px;">SCAN</button>
         </div>
 
-        <barcode-scanner :get-scanner-modal-i-d="getScannerModalID"/>
+        <barcode-scanner/>
 
         <b-modal :id="getModalID" scrollable no-fade hide-header
                @submit="updateShelfLocation"
@@ -69,6 +69,7 @@ import FiltersModal from "../Packlist/FiltersModal";
 import api from "../../mixins/api";
 import {Html5Qrcode, Html5QrcodeScannerState} from "html5-qrcode";
 import BarcodeScanner from "./BarcodeScanner.vue";
+import Modals from "../../plugins/Modals";
 
 export default {
         name: "BarcodeInputField",
@@ -102,10 +103,6 @@ export default {
             getModalID() {
                 return `set-shelf-location-command-modal-${Math.floor(Math.random() * 10000000)}`;
             },
-
-            getScannerModalID() {
-                return `scanner-modal-${Math.floor(Math.random() * 10000000)}`;
-            }
         },
 
         data: function() {
@@ -154,6 +151,10 @@ export default {
         },
 
         methods: {
+            scanBarcode() {
+                this.$modal.showBarcodeScanner(this.barcodeScanned);
+            },
+
             onScanSuccess (decodedText, decodedResult) {
                 document.activeElement.value = decodedText;
                 this.html5QrcodeScanner.stop();

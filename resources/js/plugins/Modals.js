@@ -20,6 +20,10 @@ const Modals = {
 
             showProductDetailsModal(product_id) {
                 this.show('product-details-modal', {'product_id': product_id});
+            },
+
+            showBarcodeScanner(callback) {
+                this.show('barcode-scanner', {'callback': callback});
             }
         }
     }

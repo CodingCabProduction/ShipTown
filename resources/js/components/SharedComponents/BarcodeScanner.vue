@@ -8,19 +8,25 @@
 </template>
 <script>
 import {Html5Qrcode, Html5QrcodeScannerState} from "html5-qrcode";
+import Modals from "../../plugins/Modals";
 
 export default {
   name: 'barcode-scanner',
-    props: {
-        getScannerModalID: {},
-    },
-
     data() {
         return {
             html5QrcodeScanner: null,
             availableCameras: [],
             getScannerModalID: 'barcode-scanner-modal',
+            onScanSuccess: null
         }
+    },
+
+    beforeMount() {
+        Modals.EventBus.$on('show::modal::barcode-scanner', (data) => {
+            this.onScanSuccess = data.callback;
+
+            this.$bvModal.show(this.getScannerModalID);
+        })
     },
 
     methods: {
@@ -41,10 +47,13 @@ export default {
             this.startScanner(document.getElementById('cameraSelection').value);
         },
 
-        onScanSuccess(qrCodeMessage) {
-            this.$emit('onScanSuccess', qrCodeMessage);
+        onScanSuccessCallback(qrCodeMessage) {
+            // this.$emit('onScanSuccess', qrCodeMessage);
             this.stopScanner();
             this.$bvModal.hide(this.getScannerModalID);
+            this.$nextTick(() => {
+                this.onScanSuccess(qrCodeMessage);
+            });
         },
 
         stopScanner() {
@@ -67,7 +76,7 @@ export default {
                 };
 
                 const selectedCamera = camera ? camera : this.availableCameras[this.availableCameras.length - 1]['id'];
-                this.html5QrcodeScanner.start(selectedCamera, config, this.onScanSuccess);
+                this.html5QrcodeScanner.start(selectedCamera, config, this.onScanSuccessCallback);
             }, 10);
         },
   }
