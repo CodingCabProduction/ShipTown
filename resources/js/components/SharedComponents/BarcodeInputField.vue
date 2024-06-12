@@ -15,7 +15,7 @@
                    @keyup.enter="barcodeScanned(barcode)"
             />
             <button @click="scanBarcode" type="button" class="btn text-secondary ml-1 md:ml-2">
-                <img src="barcode-generator?barcode_type=C39&output_type=SVG&content=S&color=gray" alt="">
+                <img src="/barcode-generator?barcode_type=C39&output_type=SVG&content=S&color=gray" alt="">
             </button>
         </div>
 
@@ -23,10 +23,9 @@
 
         <div style="position: fixed; left: 0; bottom: 0; height: 30px;" class="w-100 text-center">
             <div @click="scanBarcode" class="btn btn-outline-primary rounded-circle bg-warning shadow " style="opacity: 85%; border: solid 2px black; height: 60px; width: 60px; position: relative; top: -40px; font-size: 24pt; color: black;">
-                <img src="barcode-generator?barcode_type=C39&output_type=SVG&content=S&color=dark gray" alt="" style="position: relative; top: -6px;">
+                <img src="/barcode-generator?barcode_type=C39&output_type=SVG&content=S&color=dark gray" alt="" style="position: relative; top: -6px;">
             </div>
         </div>
-
 
         <b-modal :id="getModalID" scrollable no-fade hide-header
                @submit="updateShelfLocation"
