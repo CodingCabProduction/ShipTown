@@ -20,12 +20,12 @@
 <!--        <div>{{ availableCameras }}</div>-->
 
         <div v-for="camera in availableCameras">
-            <button @click="startScanner(camera)">{{ camera['label']}}</button>
+            <button @click="startScanner(camera['id'])">{{ camera['label']}}</button>
         </div>
         <div id="qr-code-full-region" style="" ></div>
 
-        <div style="position: fixed; left: 0; bottom: 0; border-top: solid 3px;" class="bg-warning w-100 text-center">
-            <button @mousedown="startScanner" class="btn btn-outline-primary rounded-circle bg-warning" style="height: 50px; position: relative; top: -25px;">SCAN</button>
+        <div style="position: fixed; left: 0; bottom: 0; border-top: solid 3px; height: 50px;" class="bg-warning w-100 text-center">
+            <button @mousedown="startScanner(null)" class="btn btn-outline-primary rounded-circle bg-warning" style="border: solid 3px black; height: 100px; width: 100px; position: relative; top: -50px;">SCAN</button>
         </div>
 
         <b-modal>
@@ -168,6 +168,7 @@
 
         methods: {
             startScanner(camera = null) {
+                console.log(camera);
                 if (this.html5QrcodeScanner.getState() === Html5QrcodeScannerState.SCANNING) {
                     this.stopScanner();
                 }
@@ -176,9 +177,10 @@
                     aspectRatio: 3,
                     fps: 10,
                     qrbox: { width: 200, height: 200 },
-                    useBarCodeDetectorIfSupported: true,};
+                    useBarCodeDetectorIfSupported: true
+                };
 
-                const selectedCamera = camera ? camera : this.availableCameras[this.availableCameras.length - 1];
+                const selectedCamera = camera ? camera : this.availableCameras[this.availableCameras.length - 1]['id'];
                 this.html5QrcodeScanner.start(selectedCamera, config, this.onScanSuccess);
             },
 
