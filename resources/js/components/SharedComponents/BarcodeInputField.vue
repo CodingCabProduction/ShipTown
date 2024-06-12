@@ -156,7 +156,6 @@
 
         methods: {
             startScanner() {
-
                 let config = { fps: 10, qrbox: { width: 200, height: 200 } };
                 // console.log(this.html5QrcodeScanner.getCameras());
                 Html5Qrcode.getCameras().then((cameras) => {
