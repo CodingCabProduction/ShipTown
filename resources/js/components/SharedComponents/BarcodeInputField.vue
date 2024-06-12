@@ -17,18 +17,15 @@
             <button @click="barcode = ''; setFocusElementById(getInputId, true)" type="button" class="btn text-secondary ml-1 md:ml-2">x</button>
         </div>
 
-<!--        <div>{{ availableCameras }}</div>-->
-
-        <div v-for="camera in availableCameras">
-            <button @click="startScanner(camera['id'])">{{ camera['label']}}</button>
-        </div>
-
         <div style="position: fixed; left: 0; bottom: 0; border-top: solid 3px; height: 50px;" class="bg-warning w-100 text-center">
             <button @mousedown="$bvModal.show(getScannerModalID)" class="btn btn-outline-primary rounded-circle bg-warning" style="border: solid 3px black; height: 100px; width: 100px; position: relative; top: -50px;">SCAN</button>
         </div>
 
         <b-modal :id="getScannerModalID" @show="startScanner(null)" hide-footer hide-header no-fade>
             <div id="qr-code-full-region" style="height: 250px; overflow: hidden"></div>
+            <select name="camera" id="cameraSelection" @change="changeCamera" class="mt-2">
+                <option v-for="camera in availableCameras" :value="camera['id']">{{ camera['label']}}</option>
+            </select>
         </b-modal>
 
       <b-modal :id="getModalID" scrollable no-fade hide-header
@@ -168,6 +165,11 @@
         },
 
         methods: {
+            changeCamera() {
+                this.stopScanner();
+                this.startScanner(document.getElementById('cameraSelection').value);
+            },
+
             startScanner(camera = null) {
                 setTimeout(() => {
                     if (this.html5QrcodeScanner === null) {
@@ -187,7 +189,7 @@
 
                     const selectedCamera = camera ? camera : this.availableCameras[this.availableCameras.length - 1]['id'];
                     this.html5QrcodeScanner.start(selectedCamera, config, this.onScanSuccess);
-                }, 100);
+                }, 10);
             },
 
             stopScanner() {
