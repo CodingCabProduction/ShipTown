@@ -14,6 +14,9 @@
                    v-model.trim="barcode"
                    @keyup.enter="barcodeScanned(barcode)"
             />
+            <button @click="barcode = ''; setFocusElementById(getInputId, true)" type="button" class="btn text-secondary ml-1 md:ml-2">
+                <img src="barcode-generator?barcode_type=C39&output_type=SVG&content=S&color=dark gray" alt="">
+            </button>
             <button @click="barcode = ''; setFocusElementById(getInputId, true)" type="button" class="btn text-secondary ml-1 md:ml-2">x</button>
         </div>
 

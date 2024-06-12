@@ -1,16 +1,10 @@
 <template>
     <div>
-<!--        <qrcode-scanner-->
-<!--            :qrbox="250"-->
-<!--            :fps="10"-->
-<!--            style="width: 500px;"-->
-<!--            @result="onScan"-->
-<!--        />-->
         <search-and-option-bar-observer/>
         <search-and-option-bar :isStickable="true">
             <barcode-input-field
                 :input_id="'barcode_input'"
-                placeholder="Search products using name, sku, alias or command"
+                placeholder="Search"
                 ref="barcode"
                 :url_param_name="'search'"
                 @refreshRequest="reloadProductList"
