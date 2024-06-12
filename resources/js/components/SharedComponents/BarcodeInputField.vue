@@ -19,7 +19,7 @@
             </button>
         </div>
 
-        <barcode-scanner @hidden="setFocusElementById()"/>
+        <barcode-scanner @modalHidden="setFocusElementById"/>
 
         <div style="position: fixed; left: 0; bottom: 0; height: 30px;" class="w-100 text-center">
             <div @click="scanBarcode" class="btn btn-outline-primary rounded-circle bg-warning shadow " style="opacity: 85%; border: solid 2px black; height: 60px; width: 60px; position: relative; top: -40px; font-size: 24pt; color: black;">

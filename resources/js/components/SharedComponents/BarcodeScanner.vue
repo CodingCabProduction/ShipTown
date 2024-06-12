@@ -23,9 +23,11 @@
 <script>
 import {Html5Qrcode, Html5QrcodeScannerState} from "html5-qrcode";
 import Modals from "../../plugins/Modals";
+import helpers from "../../helpers";
 
 export default {
   name: 'barcode-scanner',
+    mixins: [helpers],
     data() {
         return {
             html5QrcodeScanner: null,
@@ -46,15 +48,20 @@ export default {
 
     methods: {
         toggleOnScreenScannerButton() {
+            this.stopScanner();
+            helpers.setCookie('showOnScreenScannerButton', this.showOnScreenScannerButton, 365);
             this.showOnScreenScannerButton = !this.showOnScreenScannerButton;
             this.$bvModal.hide(this.getScannerModalID);
         },
 
         modalHidden() {
+            this.$emit('modalHidden');
             this.stopScanner();
         },
 
         modalShown() {
+            this.showOnScreenScannerButton = helpers.getCookie('showOnScreenScannerButton', true);
+
             if (this.availableCameras.length === 0) {
                 Html5Qrcode.getCameras()
                     .then((cameras) => {
