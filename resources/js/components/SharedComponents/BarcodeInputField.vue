@@ -14,15 +14,15 @@
                    v-model.trim="barcode"
                    @keyup.enter="barcodeScanned(barcode)"
             />
-            <button @click="scanBarcode" type="button" class="btn text-secondary ml-1 md:ml-2">
+            <button @click="scanBarcode(barcodeScanned)" type="button" class="btn text-secondary ml-1 md:ml-2">
                 <img src="/barcode-generator?barcode_type=C39&output_type=SVG&content=S&color=gray" alt="">
             </button>
         </div>
 
-        <barcode-scanner @modalHidden="setFocusElementById"/>
+        <barcode-scanner @modalHidden="setFocusOnBarcodeInput"/>
 
-        <div style="position: fixed; left: 0; bottom: 0; height: 30px;" class="w-100 text-center">
-            <div @click="scanBarcode" class="btn btn-outline-primary rounded-circle bg-warning shadow " style="opacity: 85%; border: solid 2px black; height: 60px; width: 60px; position: relative; top: -40px; font-size: 24pt; color: black;">
+        <div style="position: fixed; left: 0; bottom: 0; height: 30px;" class="w-100 text-center" v-if="showOnScreenScannerButton">
+            <div @click="scanBarcode(barcodeScanned)" class="btn btn-outline-primary rounded-circle bg-warning shadow" style="opacity: 85%; border: solid 2px black; height: 60px; width: 60px; position: relative; top: -40px; font-size: 24pt; color: black;">
                 <img src="/barcode-generator?barcode_type=C39&output_type=SVG&content=S&color=dark gray" alt="" style="position: relative; top: -6px;">
             </div>
         </div>
@@ -67,13 +67,11 @@
 </template>
 
 <script>
-import helpers from "../../mixins/helpers";
 import url from "../../mixins/url";
 import FiltersModal from "../Packlist/FiltersModal";
 import api from "../../mixins/api";
-import {Html5Qrcode, Html5QrcodeScannerState} from "html5-qrcode";
 import BarcodeScanner from "./BarcodeScanner.vue";
-import Modals from "../../plugins/Modals";
+import helpers from "../../helpers";
 
 export default {
         name: "BarcodeInputField",
@@ -96,6 +94,10 @@ export default {
         },
 
         computed: {
+            showOnScreenScannerButton() {
+                return localStorage.showOnScreenScannerButton === 'true';
+            },
+
             getInputId() {
                 if (this.input_id) {
                     return this.input_id;
@@ -155,8 +157,10 @@ export default {
         },
 
         methods: {
-            scanBarcode() {
-                this.$modal.showBarcodeScanner(this.barcodeScanned);
+
+
+            scanBarcode(barcodeScanned) {
+                this.$modal.showBarcodeScanner(barcodeScanned);
             },
 
             onScanSuccess (decodedText, decodedResult) {
@@ -314,6 +318,7 @@ export default {
             },
 
             setFocusOnBarcodeInput(showKeyboard = false, autoSelectAll = true, delay = 100) {
+                this.showOnScreenScannerButton = false;
                 this.setFocusElementById(this.getInputId, showKeyboard, autoSelectAll, delay)
             },
         }

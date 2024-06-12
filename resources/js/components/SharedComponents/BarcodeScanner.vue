@@ -8,8 +8,8 @@
               <div class="setting-desc">Shows camera barcode scanner helper button</div>
           </div>
           <div class="custom-control custom-switch m-auto text-right align-content-center float-right w-auto">
-              <input type="checkbox" @change="toggleOnScreenScannerButton" class="custom-control-input" id="singleScanToggle" v-model="showOnScreenScannerButton">
-              <label class="custom-control-label" for="singleScanToggle"></label>
+              <input type="checkbox" @change="toggleOnScreenScannerButton" class="custom-control-input" id="toggleOnScreenScannerButton" v-model="showOnScreenScannerButton">
+              <label class="custom-control-label" for="toggleOnScreenScannerButton"></label>
           </div>
       </div>
 
@@ -48,10 +48,11 @@ export default {
 
     methods: {
         toggleOnScreenScannerButton() {
-            this.stopScanner();
-            helpers.setCookie('showOnScreenScannerButton', this.showOnScreenScannerButton, 365);
+            localStorage.showOnScreenScannerButton = this.showOnScreenScannerButton;
+            // this.stopScanner();
             this.showOnScreenScannerButton = !this.showOnScreenScannerButton;
-            this.$bvModal.hide(this.getScannerModalID);
+            helpers.setCookie('showOnScreenScannerButton', this.showOnScreenScannerButton, 365);
+            // this.$bvModal.hide(this.getScannerModalID);
         },
 
         modalHidden() {
@@ -60,7 +61,9 @@ export default {
         },
 
         modalShown() {
-            this.showOnScreenScannerButton = helpers.getCookie('showOnScreenScannerButton', true);
+            if (localStorage.showOnScreenScannerButton) {
+                this.showOnScreenScannerButton = localStorage.showOnScreenScannerButton === 'true';
+            }
 
             if (this.availableCameras.length === 0) {
                 Html5Qrcode.getCameras()
