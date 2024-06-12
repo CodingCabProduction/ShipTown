@@ -22,7 +22,7 @@
         <div v-for="camera in availableCameras">
             <button @click="startScanner(camera)">{{ camera['label']}}</button>
         </div>
-        <div id="qr-code-full-region" ></div>
+        <div id="qr-code-full-region" style="" ></div>
 
         <div style="position: fixed; left: 0; bottom: 0; border-top: solid 3px;" class="bg-warning w-100 text-center">
             <button @mousedown="startScanner" class="btn btn-outline-primary rounded-circle bg-warning" style="height: 50px; position: relative; top: -25px;">SCAN</button>
@@ -76,7 +76,7 @@
     import url from "../../mixins/url";
     import FiltersModal from "../Packlist/FiltersModal";
     import api from "../../mixins/api";
-    import {Html5Qrcode} from "html5-qrcode";
+    import {Html5Qrcode, Html5QrcodeScannerState} from "html5-qrcode";
 
     export default {
         name: "BarcodeInputField",
@@ -168,17 +168,18 @@
 
         methods: {
             startScanner(camera = null) {
-                if (this.html5QrcodeScanner.getState() === 2) {
+                if (this.html5QrcodeScanner.getState() === Html5QrcodeScannerState.SCANNING) {
                     this.stopScanner();
                 }
 
-                let config = { fps: 10, qrbox: { width: 200, height: 200 } };
+                let config = {
+                    aspectRatio: 3,
+                    fps: 10,
+                    qrbox: { width: 200, height: 200 },
+                    useBarCodeDetectorIfSupported: true,};
 
-                if (camera != null) {
-                    // this.html5QrcodeScanner.stop();
-                    this.html5QrcodeScanner.start(camera['id'], config, this.onScanSuccess);
-                    return;
-                }
+                const selectedCamera = camera ? camera : this.availableCameras[this.availableCameras.length - 1];
+                this.html5QrcodeScanner.start(selectedCamera, config, this.onScanSuccess);
             },
 
             stopScanner() {
