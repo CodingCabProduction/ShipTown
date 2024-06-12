@@ -18,6 +18,10 @@
         </div>
 
         <div>{{ availableCameras }}</div>
+
+        <div v-for="camera in availableCameras">
+            <button @click="startScanner(camera)"></button>
+        </div>
         <div id="qr-code-full-region" ></div>
 
         <div style="position: fixed; left: 0; bottom: 0; border-top: solid 3px;" class="bg-warning w-100 text-center">
@@ -157,11 +161,18 @@
         },
 
         methods: {
-            startScanner() {
+            startScanner(camera) {
                 let config = { fps: 10, qrbox: { width: 200, height: 200 } };
+
+                if (camera) {
+                    this.html5QrcodeScanner.stop();
+                    this.html5QrcodeScanner.start(camera['id'], config, this.onScanSuccess);
+                    return;
+                }
+
                 // console.log(this.html5QrcodeScanner.getCameras());
                 Html5Qrcode.getCameras().then((cameras) => {
-                this.html5QrcodeScanner.start(cameras[0]['id'], config, this.onScanSuccess);
+                    this.html5QrcodeScanner.start(cameras[0]['id'], config, this.onScanSuccess);
                     this.showError(cameras[0]['id']);
                     this.availableCameras = cameras;
                     console.log(cameras);
