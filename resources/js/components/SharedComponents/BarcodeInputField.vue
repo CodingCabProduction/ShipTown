@@ -28,7 +28,7 @@
         </div>
 
         <b-modal :id="getScannerModalID" @show="startScanner(null)" hide-footer hide-header no-fade>
-            <div id="qr-code-full-region"></div>
+            <div id="qr-code-full-region" style="height: 200px;"></div>
         </b-modal>
 
       <b-modal :id="getModalID" scrollable no-fade hide-header
