@@ -1,10 +1,23 @@
 <template>
   <b-modal :id="getScannerModalID" @show="modalShown" @hide="stopScanner" hide-footer hide-header no-fade>
-        <div id="qr-code-full-region" style="height: 250px; overflow: hidden"></div>
-        <select name="camera" id="cameraSelection" @change="changeCamera" class="form-control mt-2">
+      <div id="qr-code-full-region" style="height: 250px; overflow: hidden"></div>
+
+      <div class="row mb-2 mt-2">
+          <div class="col">
+              <div class="setting-title">On Screen Button</div>
+              <div class="setting-desc">Shows camera barcode scanner helper button</div>
+          </div>
+          <div class="custom-control custom-switch m-auto text-right align-content-center float-right w-auto">
+              <input type="checkbox" @change="toggleOnScreenScannerButton" class="custom-control-input" id="singleScanToggle" v-model="showOnScreenScannerButton">
+              <label class="custom-control-label" for="singleScanToggle"></label>
+          </div>
+      </div>
+
+      <select name="camera" id="cameraSelection" @change="changeCamera" class="form-control mt-2">
           <option v-for="camera in availableCameras" :value="camera['id']" :selected="camera['label'] === selectedCamera">{{ camera['label']}}</option>
-        </select>
-        <button @click="$bvModal.hide(getScannerModalID)" class="form-control btn">close</button>
+      </select>
+
+      <button @click="$bvModal.hide(getScannerModalID)" class="form-control btn">close</button>
   </b-modal>
 </template>
 <script>
@@ -19,19 +32,24 @@ export default {
             availableCameras: [],
             getScannerModalID: 'barcode-scanner-modal',
             onScanSuccess: null,
-            selectedCamera: null
+            selectedCamera: null,
+            showOnScreenScannerButton: true,
         }
     },
 
     beforeMount() {
         Modals.EventBus.$on('show::modal::barcode-scanner', (data) => {
             this.onScanSuccess = data.callback;
-
             this.$bvModal.show(this.getScannerModalID);
         })
     },
 
     methods: {
+        toggleOnScreenScannerButton() {
+            this.showOnScreenScannerButton = !this.showOnScreenScannerButton;
+            this.$bvModal.hide(this.getScannerModalID);
+        },
+
         modalShown() {
             if (this.availableCameras.length === 0) {
                 Html5Qrcode.getCameras()
