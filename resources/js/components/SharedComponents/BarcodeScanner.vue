@@ -12,7 +12,6 @@ import {Html5Qrcode, Html5QrcodeScannerState} from "html5-qrcode";
 export default {
   name: 'barcode-scanner',
     props: {
-        changeCamera: {},
         getScannerModalID: {},
     },
 
@@ -32,9 +31,15 @@ export default {
     },
 
     methods: {
+        changeCamera() {
+            this.stopScanner();
+            this.startScanner(document.getElementById('cameraSelection').value);
+        },
+
         onScanSuccess(qrCodeMessage) {
             this.$emit('onScanSuccess', qrCodeMessage);
             this.stopScanner();
+            this.$bvModal.hide(this.getScannerModalID);
         },
 
         stopScanner() {

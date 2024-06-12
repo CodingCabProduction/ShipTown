@@ -21,9 +21,9 @@
             <button @mousedown="$bvModal.show(getScannerModalID)" class="btn btn-outline-primary rounded-circle bg-warning" style="border: solid 3px black; height: 100px; width: 100px; position: relative; top: -50px;">SCAN</button>
         </div>
 
-        <barcode-scanner :change-camera="changeCamera" :get-scanner-modal-i-d="getScannerModalID"/>
+        <barcode-scanner :get-scanner-modal-i-d="getScannerModalID"/>
 
-      <b-modal :id="getModalID" scrollable no-fade hide-header
+        <b-modal :id="getModalID" scrollable no-fade hide-header
                @submit="updateShelfLocation"
                @shown="updateShelfLocationShown"
                @hidden="updateShelfLocationHidden">
@@ -154,11 +154,6 @@ export default {
         },
 
         methods: {
-            changeCamera() {
-                this.stopScanner();
-                this.startScanner(document.getElementById('cameraSelection').value);
-            },
-
             onScanSuccess (decodedText, decodedResult) {
                 document.activeElement.value = decodedText;
                 this.html5QrcodeScanner.stop();
