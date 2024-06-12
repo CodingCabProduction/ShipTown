@@ -28,7 +28,7 @@
         </div>
 
         <b-modal :id="getScannerModalID" @show="startScanner(null)" hide-footer hide-header no-fade>
-            <div id="qr-code-full-region" style="height: 200px;"></div>
+            <div id="qr-code-full-region" style="height: 250px; overflow: hidden"></div>
         </b-modal>
 
       <b-modal :id="getModalID" scrollable no-fade hide-header
@@ -179,8 +179,9 @@
                     }
 
                     let config = {
-                        aspectRatio: 2.5,
+                        // aspectRatio: 2,
                         fps: 10,
+                        qrbox: {width: 300, height: 300},
                         useBarCodeDetectorIfSupported: true
                     };
 
