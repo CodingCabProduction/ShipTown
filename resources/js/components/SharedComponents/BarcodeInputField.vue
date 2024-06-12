@@ -94,10 +94,6 @@ export default {
         },
 
         computed: {
-            showOnScreenScannerButton() {
-                return (localStorage.showOnScreenScannerButton === 'true') || (localStorage.showOnScreenScannerButton === undefined);
-            },
-
             getInputId() {
                 if (this.input_id) {
                     return this.input_id;
@@ -118,6 +114,8 @@ export default {
                 barcode: '',
                 command: ['',''],
 
+                showOnScreenScannerButton: true,
+
                 shelfLocationModalCommandScanCount: 0,
                 shelfLocationModalShowing: false,
                 shelfLocationModalContinuesScan: false,
@@ -125,6 +123,8 @@ export default {
         },
 
         mounted() {
+            this.showOnScreenScannerButton = localStorage.showOnScreenScannerButton === 'true' || localStorage.showOnScreenScannerButton === undefined;
+
             const isIos = () => !!window.navigator.userAgent.match(/iPad|iPhone/i);
 
             if (isIos()) {
@@ -318,7 +318,7 @@ export default {
             },
 
             setFocusOnBarcodeInput(showKeyboard = false, autoSelectAll = true, delay = 100) {
-                this.showOnScreenScannerButton = false;
+                this.showOnScreenScannerButton = (localStorage.showOnScreenScannerButton === 'true') || (localStorage.showOnScreenScannerButton === undefined);
                 this.setFocusElementById(this.getInputId, showKeyboard, autoSelectAll, delay)
             },
         }

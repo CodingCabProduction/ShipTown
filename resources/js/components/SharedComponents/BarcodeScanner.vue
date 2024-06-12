@@ -47,12 +47,12 @@ export default {
     },
 
     methods: {
-        toggleOnScreenScannerButton() {
+        toggleOnScreenScannerButton(newValue) {
+            this.stopScanner();
             localStorage.showOnScreenScannerButton = this.showOnScreenScannerButton;
-            // this.stopScanner();
-            this.showOnScreenScannerButton = !this.showOnScreenScannerButton;
-            helpers.setCookie('showOnScreenScannerButton', this.showOnScreenScannerButton, 365);
-            // this.$bvModal.hide(this.getScannerModalID);
+            setTimeout(() => {
+                this.$bvModal.hide(this.getScannerModalID);
+            }, 10);
         },
 
         modalHidden() {
@@ -61,9 +61,7 @@ export default {
         },
 
         modalShown() {
-            if (localStorage.showOnScreenScannerButton) {
-                this.showOnScreenScannerButton = localStorage.showOnScreenScannerButton === 'true';
-            }
+            this.showOnScreenScannerButton = localStorage.showOnScreenScannerButton === 'true' || localStorage.showOnScreenScannerButton === undefined;
 
             if (this.availableCameras.length === 0) {
                 Html5Qrcode.getCameras()
