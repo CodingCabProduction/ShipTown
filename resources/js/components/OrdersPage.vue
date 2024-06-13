@@ -2,7 +2,7 @@
     <div>
         <search-and-option-bar-observer/>
         <search-and-option-bar :isStickable="true">
-            <barcode-input-field :input_id="'barcode-input'"  :url_param_name="'search'" @barcodeScanned="findText" placeholder="Search orders using number, sku, alias or command" ref="barcode"/>
+            <barcode-input-field :input_id="'barcode-input'"  :url_param_name="'search'" @barcodeScanned="findText" placeholder="Search" ref="barcode"/>
             <template v-slot:buttons>
                 <button v-b-modal="'quick-actions-modal'" type="button" class="btn btn-primary ml-1 md:ml-2"><font-awesome-icon icon="cog" class="fa-lg"></font-awesome-icon></button>
             </template>
