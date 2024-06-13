@@ -10,6 +10,7 @@ use Barryvdh\LaravelIdeHelper\Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -46,6 +47,7 @@ class Warehouse extends BaseModel
 
     use LogsActivityTrait;
     use HasTagsTrait;
+    use SoftDeletes;
 
     protected $fillable = [
         'code',

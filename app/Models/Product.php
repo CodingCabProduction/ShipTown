@@ -303,6 +303,7 @@ class Product extends BaseModel
     public function inventory(string $warehouse_code = null): HasMany
     {
         return $this->hasMany(Inventory::class)
+            ->whereNull('deleted_at')
             ->when($warehouse_code, function ($query) use ($warehouse_code) {
                 $query->where(['warehouse_code' => $warehouse_code]);
             })
