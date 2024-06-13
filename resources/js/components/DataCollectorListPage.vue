@@ -4,7 +4,7 @@
         <search-and-option-bar :isStickable="true">
             <barcode-input-field placeholder="Search" :url_param_name="'filter[name_contains]'" @barcodeScanned="loadData(1)"></barcode-input-field>
             <template v-slot:buttons>
-                <b-dropdown dropleft no-caret variant="primary" class="ml-2">
+                <b-dropdown dropleft no-caret variant="primary" class="ml-2" dusk="new_data_collection" id="new_data_collection">
                     <template #button-content>
                         <font-awesome-icon icon="plus" class="fa-lg"></font-awesome-icon>
                     </template>
@@ -12,9 +12,9 @@
                     <b-dropdown-item @click="createTransferOut">Transfer Out</b-dropdown-item>
                     <b-dropdown-item @click="createStocktake">Stocktake</b-dropdown-item>
                     <b-dropdown-divider></b-dropdown-divider>
-                    <b-dropdown-item @click="createBlankCollection">Blank</b-dropdown-item>
+                    <b-dropdown-item @click="createBlankCollection" name="create_blank_collection_button" dusk="create_blank_collection_button"  id="create_blank_collection_button" >Blank</b-dropdown-item>
                 </b-dropdown>
-<!--                <button id="new_data_collection" dusk="new_data_collection" v-b-modal="'new-collection-modal'" type="button" class="btn btn-primary ml-2"></button>-->
+                <button id="new_data_collection" dusk="new_data_collection" v-b-modal="'new-collection-modal'" type="button" class="btn btn-primary ml-2"></button>
             </template>
         </search-and-option-bar>
 
