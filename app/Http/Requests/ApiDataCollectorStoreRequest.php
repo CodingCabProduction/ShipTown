@@ -6,26 +6,18 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ApiDataCollectorStoreRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
         return [
             'warehouse_id' => ['required', 'exists:warehouses,id'],
             'name' => ['required', 'string'],
+            'type' => ['sometimes', 'string', 'in:App\\Models\\DataCollectionTransferIn'],
+            'destination_warehouse_id' => ['sometimes', 'required',  'integer', 'exists:warehouses,id'],
         ];
     }
 }

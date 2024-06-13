@@ -41,7 +41,7 @@ class RecalculateInventoryQuantityIncomingJob implements ShouldQueue
                     MAX(inventory.product_id) as product_id,
                     MAX(inventory.warehouse_id) as warehouse_id,
                     MAX(inventory.quantity_incoming) as actual_quantity_incoming,
-                    SUM(IFNULL(data_collection_records.quantity_requested - data_collection_records.total_transferred_in, 0)) as expected_quantity_incoming
+                    SUM(IFNULL(data_collection_records.quantity_to_scan + data_collection_records.quantity_scanned, 0)) as expected_quantity_incoming
 
             FROM inventory
 
@@ -67,7 +67,7 @@ class RecalculateInventoryQuantityIncomingJob implements ShouldQueue
                 Inventory::query()
                     ->where('id', $incorrectRecord->id)
                     ->get()
-                    ->each(function ($inventory) use ($incorrectRecord) {
+                    ->each(function (Inventory $inventory) use ($incorrectRecord) {
                         $inventory->quantity_incoming = $incorrectRecord->expected_quantity_incoming;
                         $inventory->save();
                     });

@@ -8,7 +8,7 @@ use App\Modules\InventoryQuantityIncoming\src\Jobs\RecalculateInventoryQuantityI
 
 class DataCollectionRecordCreatedEventListener
 {
-    public function handle(DataCollectionRecordCreatedEvent $event)
+    public function handle(DataCollectionRecordCreatedEvent $event): void
     {
         $record = $event->dataCollectionRecord;
 

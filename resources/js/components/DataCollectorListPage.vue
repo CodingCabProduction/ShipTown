@@ -4,7 +4,17 @@
         <search-and-option-bar :isStickable="true">
             <barcode-input-field placeholder="Search" :url_param_name="'filter[name_contains]'" @barcodeScanned="loadData(1)"></barcode-input-field>
             <template v-slot:buttons>
-                <button id="new_data_collection" dusk="new_data_collection" v-b-modal="'new-collection-modal'" type="button" class="btn btn-primary ml-2"><font-awesome-icon icon="plus" class="fa-lg"></font-awesome-icon></button>
+                <b-dropdown dropleft no-caret variant="primary" class="ml-2">
+                    <template #button-content>
+                        <font-awesome-icon icon="plus" class="fa-lg"></font-awesome-icon>
+                    </template>
+                    <b-dropdown-item @click="createTransferIn">Transfer In</b-dropdown-item>
+                    <b-dropdown-item>Transfer Out</b-dropdown-item>
+                    <b-dropdown-item>Stocktake</b-dropdown-item>
+                    <b-dropdown-divider></b-dropdown-divider>
+                    <b-dropdown-item>Blank</b-dropdown-item>
+                </b-dropdown>
+<!--                <button id="new_data_collection" dusk="new_data_collection" v-b-modal="'new-collection-modal'" type="button" class="btn btn-primary ml-2"></button>-->
             </template>
         </search-and-option-bar>
 
@@ -32,6 +42,7 @@
                         <div class="col-sm-12 col-lg-6">
                             <div class="text-primary">{{ record['name'] }}</div>
                             <div class="text-secondary small">{{ formatDateTime(record['created_at'], 'dddd - MMM D HH:mm') }}</div>
+                            <div class="text-secondary small">{{ collectionTypes[record['type']] }}</div>
                         </div>
                         <div class="col-cols col-sm-12 col-lg-6 bottom text-right">
                             <text-card v-if="record['deleted_at'] !== null" :label="formatDateTime(record['deleted_at'], 'dddd - MMM D HH:mm')" text="ARCHIVED" class="float-left text-left"></text-card>
@@ -128,6 +139,11 @@
                     nextUrl: null,
                     page: 1,
                     newCollectionName: null,
+                    newCollectionType: null,
+                    newCollectionDestinationWarehouseID: null,
+                    collectionTypes: {
+                        'App\\Models\\DataCollectionTransferIn': 'Transfer In',
+                    },
                 };
             },
 
@@ -151,6 +167,12 @@
             },
 
             methods: {
+                createTransferIn() {
+                    this.newCollectionType = 'App\\Models\\DataCollectionTransferIn';
+                    this.newCollectionDestinationWarehouseID = this.currentUser()['warehouse_id'];
+                    this.$bvModal.show('new-collection-modal');
+                },
+
                 toggleArchivedFilter(event) {
                     this.setUrlParameter('filter[only_archived]', event.target.checked);
                     this.loadData();
@@ -193,6 +215,8 @@
                     const payload = {
                         'warehouse_id': this.currentUser()['warehouse_id'],
                         'name': this.newCollectionName,
+                        'type': this.newCollectionType,
+                        'destination_warehouse_id': this.newCollectionDestinationWarehouseID,
                     }
 
                     this.apiPostDataCollection(payload)
