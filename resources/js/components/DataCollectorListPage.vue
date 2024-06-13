@@ -9,10 +9,10 @@
                         <font-awesome-icon icon="plus" class="fa-lg"></font-awesome-icon>
                     </template>
                     <b-dropdown-item @click="createTransferIn">Transfer In</b-dropdown-item>
-                    <b-dropdown-item>Transfer Out</b-dropdown-item>
-                    <b-dropdown-item>Stocktake</b-dropdown-item>
+                    <b-dropdown-item @click="createTransferOut">Transfer Out</b-dropdown-item>
+                    <b-dropdown-item @click="createStocktake">Stocktake</b-dropdown-item>
                     <b-dropdown-divider></b-dropdown-divider>
-                    <b-dropdown-item>Blank</b-dropdown-item>
+                    <b-dropdown-item @click="createBlankCollection">Blank</b-dropdown-item>
                 </b-dropdown>
 <!--                <button id="new_data_collection" dusk="new_data_collection" v-b-modal="'new-collection-modal'" type="button" class="btn btn-primary ml-2"></button>-->
             </template>
@@ -143,6 +143,8 @@
                     newCollectionDestinationWarehouseID: null,
                     collectionTypes: {
                         'App\\Models\\DataCollectionTransferIn': 'Transfer In',
+                        'App\\Models\\DataCollectionTransferOut': 'Transfer Out',
+                        'App\\Models\\DataCollectionStocktake': 'Stocktake',
                     },
                 };
             },
@@ -170,6 +172,24 @@
                 createTransferIn() {
                     this.newCollectionType = 'App\\Models\\DataCollectionTransferIn';
                     this.newCollectionDestinationWarehouseID = this.currentUser()['warehouse_id'];
+                    this.$bvModal.show('new-collection-modal');
+                },
+
+                createTransferOut() {
+                    this.newCollectionType = 'App\\Models\\DataCollectionTransferOut';
+                    this.newCollectionDestinationWarehouseID = null;
+                    this.$bvModal.show('new-collection-modal');
+                },
+
+                createStocktake() {
+                    this.newCollectionType = 'App\\Models\\DataCollectionStocktake';
+                    this.newCollectionDestinationWarehouseID = null;
+                    this.$bvModal.show('new-collection-modal');
+                },
+
+                createBlankCollection() {
+                    this.newCollectionType = null;
+                    this.newCollectionDestinationWarehouseID = null;
                     this.$bvModal.show('new-collection-modal');
                 },
 

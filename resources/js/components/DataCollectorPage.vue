@@ -241,6 +241,8 @@
                 input_comment: '',
                 collectionTypes: {
                     'App\\Models\\DataCollectionTransferIn': 'Transfer In',
+                    'App\\Models\\DataCollectionTransferOut': 'Transfer Out',
+                    'App\\Models\\DataCollectionStocktake': 'Stocktake',
                 },
             };
         },
