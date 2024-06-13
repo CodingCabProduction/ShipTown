@@ -24,7 +24,7 @@ class StoreTest extends TestCase
     {
         $warehouse = Warehouse::factory()->create();
         $testData = User::factory()->make()->toArray();
-        $testData['role_id'] = Role::findOrCreate('user')->id;
+        $testData['role_id'] = Role::findOrCreate('user', 'web')->id;
 
         $response = $this->postJson(route('users.store'), $testData);
 
@@ -40,7 +40,7 @@ class StoreTest extends TestCase
         $response = $this->post(route('users.store'), [
             'name'      => $user->name,
             'email'     => $user->email,
-            'role_id'   => Role::findOrCreate('user')->id,
+            'role_id'   => Role::findOrCreate('user', 'web')->id,
         ]);
 
         $response->assertStatus(200);
