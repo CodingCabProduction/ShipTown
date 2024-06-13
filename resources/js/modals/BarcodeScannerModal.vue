@@ -22,8 +22,8 @@
 </template>
 <script>
 import {Html5Qrcode, Html5QrcodeScannerState} from "html5-qrcode";
-import Modals from "../../plugins/Modals";
-import helpers from "../../helpers";
+import Modals from "../plugins/Modals";
+import helpers from "../helpers";
 
 export default {
   name: 'barcode-scanner',

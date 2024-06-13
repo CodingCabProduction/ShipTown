@@ -70,7 +70,7 @@
 import url from "../../mixins/url";
 import FiltersModal from "../Packlist/FiltersModal";
 import api from "../../mixins/api";
-import BarcodeScanner from "./BarcodeScanner.vue";
+import BarcodeScanner from "../../modals/BarcodeScannerModal.vue";
 import helpers from "../../helpers";
 
 export default {
