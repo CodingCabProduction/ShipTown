@@ -26,7 +26,7 @@ class BarcodeGeneratorController extends Controller
             200,
             array(
                 'Content-Type'          => $content_type,
-                'Content-Disposition'   => 'attachment; filename="' . $filename . '"'
+                'Content-Disposition'   => 'inline; filename="' . $filename . '"'
             )
         );
     }
