@@ -14,7 +14,6 @@
                     <b-dropdown-divider></b-dropdown-divider>
                     <b-dropdown-item @click="createBlankCollection" name="create_blank_collection_button" dusk="create_blank_collection_button"  id="create_blank_collection_button" >Blank</b-dropdown-item>
                 </b-dropdown>
-                <button id="new_data_collection" dusk="new_data_collection" v-b-modal="'new-collection-modal'" type="button" class="btn btn-primary ml-2"></button>
             </template>
         </search-and-option-bar>
 
