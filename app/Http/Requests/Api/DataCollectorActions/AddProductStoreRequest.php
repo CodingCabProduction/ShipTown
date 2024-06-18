@@ -17,7 +17,8 @@ class AddProductStoreRequest extends FormRequest
         return [
             'data_collection_id' => ['required', Rule::exists('data_collections', 'id')->whereNull('deleted_at')],
             'sku_or_alias' => 'required|string|exists:products_aliases,alias',
-            'quantity_scanned' => 'required|numeric',
+            'quantity_scanned' => 'sometimes|numeric',
+            'quantity_requested' => 'sometimes|numeric',
         ];
     }
 }

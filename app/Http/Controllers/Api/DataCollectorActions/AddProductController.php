@@ -17,7 +17,8 @@ class AddProductController
     {
         $dataCollectionRecord = $this->findOrCreateRecord($request);
 
-        $dataCollectionRecord->increment('quantity_scanned', $request->validated('quantity_scanned', 0));
+        $field_name = $request->has('quantity_scanned') ? 'quantity_scanned' : 'quantity_requested';
+        $dataCollectionRecord->increment($field_name, $request->validated($field_name, 0));
 
         return JsonResource::collection(Arr::wrap($dataCollectionRecord));
     }
@@ -40,6 +41,7 @@ class AddProductController
                     'warehouse_id' => $inventory->warehouse_id,
                     'warehouse_code' => $inventory->warehouse_code,
                     'product_id' => $inventory->product_id,
+                    'quantity_requested' => 0,
                 ]);
             });
     }

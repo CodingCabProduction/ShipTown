@@ -74,6 +74,7 @@
                 sku_or_alias: null,
 
                 quantity_to_add: null,
+                field_name: 'quantity_scanned',
 
                 dataCollection: null,
                 product: null,
@@ -87,6 +88,8 @@
             Modals.EventBus.$on('show::modal::data-collector-quantity-request-modal', (data) => {
                 this.data_collection_id = data['data_collection_id'];
                 this.sku_or_alias = data['sku_or_alias'];
+                this.field_name = data['field_name'];
+
                 this.quantity_to_add = null;
                 this.dataCollection = null;
                 this.product = null;
@@ -182,11 +185,14 @@
                     return;
                 }
 
-                this.apiPostDataCollectorActionsAddProduct({
-                        'data_collection_id': this.dataCollection['id'],
-                        'sku_or_alias': this.sku_or_alias,
-                        'quantity_scanned': this.quantity_to_add,
-                    })
+                let data = {
+                    'data_collection_id': this.dataCollection['id'],
+                    'sku_or_alias': this.sku_or_alias,
+                };
+
+                data[this.field_name] = this.quantity_to_add;
+
+                this.apiPostDataCollectorActionsAddProduct(data)
                     .then(() => {
                         this.$bvModal.hide('data-collector-quantity-request-modal');
                         this.notifySuccess(this.quantity_to_add + ' x ' + this.sku_or_alias);

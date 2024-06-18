@@ -121,6 +121,16 @@
                             <label class="custom-control-label" for="singleScanToggle"></label>
                         </div>
                     </div>
+                    <div class="row mb-2">
+                        <div class="col">
+                            <div class="setting-title">Scan into Quantity Requested</div>
+                            <div class="setting-desc">When product scanned, quantity requested will be amended <br> instead of quantity scanned</div>
+                        </div>
+                        <div class="custom-control custom-switch m-auto text-right align-content-center float-right w-auto">
+                            <input type="checkbox" @change="toggleAddToRequested" class="custom-control-input" id="toggleAddToRequested" v-model="addToRequested">
+                            <label class="custom-control-label" for="toggleAddToRequested"></label>
+                        </div>
+                    </div>
                     <hr>
                     <button :disabled="! buttonsEnabled" @click.prevent="autoScanAll" v-b-toggle class="col btn mb-2 btn-primary">AutoScan ALL Records</button>
                     <br>
@@ -226,6 +236,7 @@
             return {
                 minShelfLocation: '',
                 singleScanEnabled: false,
+                addToRequested: false,
                 scannedDataCollectionRecord: null,
                 scannedProduct: null,
                 dataCollection: null,
@@ -263,6 +274,12 @@
         },
 
         methods: {
+            toggleAddToRequested() {
+                setTimeout(() => {
+                    this.hideBvModal('configuration-modal');
+                }, 200)
+            },
+
             showRecentInventoryMovementsModal(inventory_id) {
                 this.$modal.showRecentInventoryMovementsModal(inventory_id);
             },
@@ -293,23 +310,33 @@
                 }
 
                 if (this.singleScanEnabled) {
-                    this.apiPostDataCollectorActionsAddProduct({
-                            'data_collection_id': this.dataCollection['id'],
-                            'sku_or_alias': barcode,
-                            'quantity_scanned': 1,
-                        })
-                        .then(() => {
-                            this.notifySuccess('1 x ' + barcode);
-                            this.reloadDataCollection();
-                        })
-                        .catch((error) => {
-                            this.displayApiCallError(error);
-                        });
+                    this.addSinglePiece(this);
+                } else {
+                    this.$modal.showDataCollectorQuantityRequestModal(this.dataCollection['id'], barcode, this.addToRequested ? 'quantity_requested' : 'quantity_scanned');
+                }
+            },
 
-                    return;
+            addSinglePiece() {
+                let data = {
+                    'data_collection_id': this.dataCollection['id'],
+                    'sku_or_alias': barcode,
+                    'quantity_scanned': 1,
+                };
+
+                if (this.addToRequested) {
+                    data['quantity_requested'] = 1;
+                } else {
+                    data['quantity_scanned'] = 1;
                 }
 
-                this.$modal.showDataCollectorQuantityRequestModal(this.dataCollection['id'], barcode);
+                this.apiPostDataCollectorActionsAddProduct(data)
+                    .then(() => {
+                        this.notifySuccess('1 x ' + barcode);
+                        this.reloadDataCollection();
+                    })
+                    .catch((error) => {
+                        this.displayApiCallError(error);
+                    });
             },
 
             toggleSingleScanMode() {

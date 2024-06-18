@@ -46,7 +46,6 @@ class DataCollectionRecord extends Model
         'total_transferred_in',
         'total_transferred_out',
         'quantity_requested',
-        'quantity_requested',
         'quantity_scanned',
         'custom_uuid',
     ];

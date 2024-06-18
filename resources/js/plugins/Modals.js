@@ -11,10 +11,11 @@ const Modals = {
                 this.show('recent-inventory-movements-modal', {'inventory_id': inventory_id});
             },
 
-            showDataCollectorQuantityRequestModal(data_collection_id, sku_or_alias) {
+            showDataCollectorQuantityRequestModal(data_collection_id, sku_or_alias, field_name) {
                 this.show('data-collector-quantity-request-modal', {
                     'data_collection_id': data_collection_id,
                     'sku_or_alias': sku_or_alias,
+                    'field_name': field_name
                 });
             },
 
