@@ -5,9 +5,9 @@
         </template>
 
         <div class="container">
-            <input id="newProductSku" type="text" v-model="newProduct.sku" class="form-control mb-2" placeholder="Product SKU">
+            <input id="newProductSku" type="text" :disabled="product !== null" v-model="newProduct.sku" class="form-control mb-2" placeholder="Product SKU">
             <input id="newProductName" type="text" v-model="newProduct.name" class="form-control mb-2" placeholder="Product Name">
-            <input id="newProductPrice" type="number" v-model="newProduct.price" class="form-control" placeholder="Product Price">
+            <input id="newProductPrice" type="number" :disabled="product !== null"  v-model="newProduct.price" class="form-control" placeholder="Product Price">
         </div>
         <template #modal-footer>
             <b-button variant="secondary" class="float-right" @click="$bvModal.hide(modal_id);">
@@ -32,11 +32,19 @@ export default {
 
     beforeMount() {
         Modals.EventBus.$on('show::modal::'+ this.modal_id , (data) => {
+            this.product = data['product'];
+
             this.newProduct = {
                 sku: '',
                 name: '',
                 price: '0.00',
             };
+
+            if (this.product) {
+                this.newProduct.sku = this.product.sku;
+                this.newProduct.name = this.product.name;
+                this.newProduct.price = this.product.price;
+            }
 
             this.$bvModal.show(this.modal_id);
         })

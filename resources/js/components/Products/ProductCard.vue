@@ -86,6 +86,11 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link p-0 pl-1 pr-1 pr-lg-2"  @click.prevent="editProduct" data-toggle="tab" href="#">
+                                        Edit
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a v-if="sharingAvailable()" @click.prevent="shareLink" class="nav-link p-0 pl-1 pr-1 pr-lg-2" href="#">
                                         <font-awesome-icon icon="share-alt" class="fas fa-sm"></font-awesome-icon>
                                     </a>
@@ -329,6 +334,10 @@
         },
 
         methods: {
+            editProduct() {
+                this.$modal.showUpsertProductModal(this.product);
+            },
+
             loadPdfIntoIframe() {
                 let data = {
                     data: { product_sku: this.product['sku'] },

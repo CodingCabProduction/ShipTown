@@ -25,7 +25,11 @@ const Modals = {
 
             showBarcodeScanner(callback) {
                 this.show('barcode-scanner', {'callback': callback});
-            }
+            },
+
+            showUpsertProductModal(product) {
+                this.show('new-product-modal', {'product': product});
+            },
         }
     }
 }

@@ -159,8 +159,7 @@
             },
 
             showNewProductModal() {
-                console.log('showNewProductModal');
-                this.$modal.show('new-product-modal');
+                this.$modal.showUpsertProductModal();
             },
 
             findProductsWithExactSku: function() {
