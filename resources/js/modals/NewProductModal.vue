@@ -5,9 +5,9 @@
         </template>
 
         <div class="container">
-            <input id="newProductSku" type="text" :disabled="product !== null" v-model="newProduct.sku" class="form-control mb-2" placeholder="Product SKU">
+            <input id="newProductSku" type="text" :disabled="! isCreatingProduct" v-model="newProduct.sku" class="form-control mb-2" placeholder="Product SKU">
             <input id="newProductName" type="text" v-model="newProduct.name" class="form-control mb-2" placeholder="Product Name">
-            <input id="newProductPrice" type="number" :disabled="product !== null"  v-model="newProduct.price" class="form-control" placeholder="Product Price">
+            <input id="newProductPrice" type="number" :disabled="! isCreatingProduct" v-model="newProduct.price" class="form-control" placeholder="Product Price">
         </div>
         <template #modal-footer>
             <b-button variant="secondary" class="float-right" @click="$bvModal.hide(modal_id);">
@@ -58,7 +58,13 @@ export default {
                 price: '',
             },
             modal_id: 'new-product-modal',
-            product: null
+            product: undefined
+        }
+    },
+
+    computed: {
+        isCreatingProduct() {
+            return this.product === null || (this.product === undefined);
         }
     },
 
