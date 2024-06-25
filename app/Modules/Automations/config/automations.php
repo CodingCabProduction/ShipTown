@@ -88,6 +88,10 @@ return [
             'description' => 'Order Number equals',
         ],
         [
+            'class' => \App\Modules\Automations\src\Conditions\Order\OrderNumberContainsCondition::class,
+            'description' => 'Order Number contains',
+        ],
+        [
             'class' => \App\Modules\Automations\src\Conditions\Order\HasTagsCondition::class,
             'description' => 'Has tags',
         ],
