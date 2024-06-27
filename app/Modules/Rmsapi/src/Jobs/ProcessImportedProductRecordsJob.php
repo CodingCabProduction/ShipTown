@@ -61,7 +61,7 @@ class ProcessImportedProductRecordsJob extends UniqueJob
             ->whereNotNull('inventory_id')
             ->whereNotNull('product_price_id')
             ->whereNull('processed_at')
-            ->orderBy('id')
+            ->inRandomOrder()
             ->limit($batch_size)
             ->get()
             ->each(function (RmsapiProductImport $productImport) use ($batch_size) {
