@@ -6,6 +6,7 @@ use App\Abstracts\UniqueJob;
 use App\Models\InventoryReservation;
 use App\Models\ProductAlias;
 use App\Modules\Rmsapi\src\Models\RmsapiProductImport;
+use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -64,11 +65,13 @@ class ProcessImportedProductRecordsJob extends UniqueJob
             ->limit($batch_size)
             ->get()
             ->each(function (RmsapiProductImport $productImport) use ($batch_size) {
-                $this->import($productImport);
-
-                Log::debug('RMSAPI ProcessImportedProductRecordsJob Processed imported product records', [
-                    'count' => $batch_size,
-                ]);
+                try {
+                    $this->import($productImport);
+                    Log::debug('RMSAPI ProcessImportedProductRecordsJob Processed imported product records', ['count' => $batch_size]);
+                } catch (Exception $exception) {
+                    report($exception);
+                    return false;
+                }
             });
     }
 
