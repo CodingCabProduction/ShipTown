@@ -40,22 +40,6 @@ class ProcessImportedProductRecordsJob extends UniqueJob
 
         $this->fillProductPricesIds();
 
-        do {
-            $this->processImportedProducts();
-
-            $hasRecordsToProcess = RmsapiProductImport::query()
-                ->whereNotNull('inventory_id')
-                ->whereNotNull('product_price_id')
-                ->whereNull('processed_at')
-                ->exists();
-
-            usleep(100000); // 0.1 sec
-        } while ($hasRecordsToProcess);
-
-        return true;
-    }
-    private function processImportedProducts(): void
-    {
         $batch_size = 10;
 
         RmsapiProductImport::query()
@@ -72,7 +56,11 @@ class ProcessImportedProductRecordsJob extends UniqueJob
                         report($exception);
                     }
                 });
+
+                usleep(100000); // 0.1 sec
             });
+
+        return true;
     }
 
     private function import(RmsapiProductImport $importedProduct): void
