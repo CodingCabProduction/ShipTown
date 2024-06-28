@@ -8,6 +8,7 @@ use App\Models\ProductAlias;
 use App\Modules\Rmsapi\src\Models\RmsapiProductImport;
 use Exception;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -57,21 +58,20 @@ class ProcessImportedProductRecordsJob extends UniqueJob
     {
         $batch_size = 10;
 
-        RmsapiProductImport::query()->with(['product', 'inventory', 'prices'])
+        RmsapiProductImport::query()
+            ->with(['product', 'inventory', 'prices'])
             ->whereNotNull('inventory_id')
             ->whereNotNull('product_price_id')
             ->whereNull('processed_at')
-            ->orderBy('id')
-            ->limit($batch_size)
-            ->get()
-            ->each(function (RmsapiProductImport $productImport) use ($batch_size) {
-                try {
-                    $this->import($productImport);
-                    Log::debug('RMSAPI ProcessImportedProductRecordsJob Processed imported product records', ['count' => $batch_size]);
-                } catch (Exception $exception) {
-                    report($exception);
-                    return false;
-                }
+            ->chunkById($batch_size, function (Collection $productImports) use ($batch_size) {
+                $productImports->each(function (RmsapiProductImport $productImport) use ($batch_size) {
+                    try {
+                        $this->import($productImport);
+                        Log::debug('RMSAPI ProcessImportedProductRecordsJob Processed imported product records', ['count' => $batch_size]);
+                    } catch (Exception $exception) {
+                        report($exception);
+                    }
+                });
             });
     }
 
