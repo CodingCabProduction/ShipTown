@@ -1,11 +1,17 @@
 <template>
     <div>
-        <div v-if="! order_id" class="row text-center mt-3" >
-            <div class="col">
-                <button dusk="startAutopilotButton" type="button"  class="btn btn-primary" @click.prevent="loadNextOrder">
-                    Start AutoPilot Packing
-                </button>
+        <div id="loading"></div>
+        <div v-if="! order && getUrlParameter('step', '')=== 'select'" class="row col text-center mt-3" >
+            <div v-for="bookmark in bookmarks" class="col-12 mt-1">
+                <a dusk="startAutopilotButton" type="button" class="btn btn-primary col" :href="bookmark['url']">
+                    {{ bookmark['name'] }}
+                </a>
             </div>
+<!--            <div class="col">-->
+<!--            <button dusk="startAutopilotButton" type="button"  class="btn btn-primary" @click.prevent="loadNextOrder">-->
+<!--                    Start AutoPilot Packing-->
+<!--            </button>-->
+<!--            </div>-->
         </div>
 
         <div v-if="finished" class="m-auto text-center">
@@ -13,7 +19,7 @@
             <span class="small">There are no more orders to pack with specified filters</span>
         </div>
 
-        <template v-for="order in orders">
+        <template v-if="order">
             <packsheet-page
                 :key="'order_id_' + order.id"
                 :order_id="order.id"
@@ -38,15 +44,28 @@
         data: function() {
             return {
                 finished: false,
-                orders: [],
+                order: null,
                 order_id: null,
                 previous_order_id: null,
+                bookmarks: [],
             };
         },
 
         mounted() {
             if(Vue.prototype.$currentUser['warehouse_id']) {
                 this.setUrlParameter('inventory_source_warehouse_id', Vue.prototype.$currentUser['warehouse_id']);
+            }
+
+            this.apiGetNavigationMenu({
+                'filter[group]': 'packlist'
+            })
+            .then((response) => {
+                this.bookmarks = response.data.data;
+                console.log(this.bookmarks);
+            })
+
+            if (this.getUrlParameter('step', '') === '') {
+                this.loadNextOrder();
             }
         },
 
@@ -59,8 +78,6 @@
 
                 this.showLoading();
 
-                this.orders = [];
-
                 let params = {
                     'filter[status]': this.getUrlParameter('status',''),
                     'filter[inventory_source_warehouse_id]': this.getUrlParameter('inventory_source_warehouse_id', this.currentUser()['warehouse_id']),
@@ -68,13 +85,12 @@
                 };
 
                 this.apiGetPacklistOrder(params)
-                    .then(({data}) => {
-                        this.previous_order_id = this.order_id;
+                    .then((response) => {
+                        this.previous_order_id = this.order ? this.order['id'] : null;
 
                         // we use array here so we can use v-for component
                         // and auto destroy when loading next order
-                        this.orders = [data.data];
-                        this.order_id = data.data['id'];
+                        this.order = response.data.data;
                         this.hideLoading();
                     })
                     .catch((error) => {

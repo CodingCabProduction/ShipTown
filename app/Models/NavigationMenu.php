@@ -18,6 +18,9 @@ class NavigationMenu extends Model
     public static function getSpatieQueryBuilder(): QueryBuilder
     {
         return QueryBuilder::for(NavigationMenu::class)
+            ->allowedFilters([
+                'group'
+            ])
             ->allowedSorts([
                 'id',
                 'group',

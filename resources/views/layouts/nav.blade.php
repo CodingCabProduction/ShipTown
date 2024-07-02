@@ -20,6 +20,7 @@
                                 <a class="dropdown-item text-white lightHover mt-1" id="restocking_link" href="{{ route('reports.restocking.index' , ['sort' => '-quantity_required', 'cache_name' => 'restocking_page']) }}">{{ __('Restocking') }}</a>
                                 <a class="dropdown-item text-white lightHover mt-1" id="inventory_movements_link" href="{{ route('reports.inventory-movements.index', ['view' => 'reports.inventory-movements']) }}">{{ __('Inventory Movements') }}</a>
                                 <a class="dropdown-item text-white lightHover mt-1 mb-1" id="shelf_label_printing" href="/tools/printer">{{ __('Label Printer') }}</a>
+                                <a class="dropdown-item text-white lightHover mt-1 mb-1" id="packlist" href="/autopilot/packlist?step=select">{{ __('Packlist') }}</a>
                             </div>
                         </div>
                     @endif
@@ -45,19 +46,6 @@
                         <div class="dropdown-menu dropdown-menu-left bg-primary border-0" aria-labelledby="navbarDropdown">
                            @foreach ($navigationMenuPicklist as $menu)
                                 <a id="picklistItem{{ $loop->index }}" class="dropdown-item text-white lightHover" href="{{ $menu->url }}">{{ $menu->name }}</a>
-                            @endforeach
-                        </div>
-                    </li>
-
-                    <!-- Packlist Dropdown -->
-                    <li class="nav-item dropdown">
-                        <a id="packlists_link" class="dropdown-toggle btn btn-primary" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ __('Packlist') }}<span class="caret"></span>
-                        </a>
-
-                        <div class="dropdown-menu dropdown-menu-left bg-primary" aria-labelledby="navbarDropdown">
-                            @foreach ($navigationMenuPacklist as $menu)
-                                <a class="dropdown-item text-white lightHover" href="{{ $menu->url }}">{{ $menu->name }}</a>
                             @endforeach
                         </div>
                     </li>
