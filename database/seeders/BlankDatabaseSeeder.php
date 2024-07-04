@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 use App\Jobs\DispatchEveryHourEventJobs;
+use App\User;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class BlankDatabaseSeeder extends Seeder
 {
@@ -15,13 +17,10 @@ class BlankDatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            ConfigurationSeeder::class,
+            Demo\ConfigurationSeeder::class,
 
-            UsersSeeder::class,
-            WarehousesSeeder::class,
-
-            WebhooksTestSeeder::class,
-            RmsapiConnectionSeeder::class,
+//            WebhooksTestSeeder::class,
+//            RmsapiConnectionSeeder::class,
 
 
 //            AutomationsSeeder::class,
@@ -38,6 +37,15 @@ class BlankDatabaseSeeder extends Seeder
 //            PicksSeeder::class,
 //            OrderShipmentsSeeder::class,
         ]);
+
+        $admin = User::query()->firstOrCreate([
+            'email' => 'demo-admin@ship.town',
+        ], [
+            'name' => 'Artur Hanusek',
+            'password' => bcrypt('secret1144'),
+            'ask_for_shipping_number' => false,
+        ]);
+        $admin->assignRole(Role::findOrCreate('admin'));
 
         DispatchEveryHourEventJobs::dispatchSync();
     }
