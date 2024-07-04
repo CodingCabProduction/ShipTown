@@ -30,7 +30,7 @@
                         Reports
                     </a>
 
-                    <div class="dropdown-menu dropdown-menu-left bg-primary" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-menu dropdown-menu-right bg-primary" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item text-white lightHover" href="{{ route('inventory-dashboard') }}">{{ __('Inventory Dashboard') }}</a>
                         <a class="dropdown-item text-white lightHover" href="{{ route('fulfillment-dashboard') }}">{{ __('Fulfillment Dashboard') }}</a>
                         <a class="dropdown-item text-white lightHover" href="{{ route('fulfillment-statistics') .'?between_dates=-7days,now' }}">{{ __('Fulfillment Statistics') }}</a>
@@ -60,7 +60,7 @@
                 <!-- Menu -->
                 <div class="dropdown dropdown-menu-right">
                     <a style="height: 37px" id="dropdownMenu" class="btn btn-primary" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <font-awesome-icon icon="bars"></font-awesome-icon>
+                        <font-awesome-icon icon="bars" class="fa-lg"></font-awesome-icon>
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right w-auto text-left bg-primary" aria-labelledby="navbarDropdown" >
