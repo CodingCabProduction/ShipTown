@@ -5,6 +5,7 @@
                 :input_id="'product_search_input'"
                 placeholder="Search"
                 ref="barcode"
+                :showKeyboardOnFocus="true"
                 @barcodeScanned="findText"
             />
         </search-and-option-bar>

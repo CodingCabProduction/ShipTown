@@ -88,6 +88,10 @@ export default {
             input_id: null,
             url_param_name: null,
             placeholder: '',
+            showKeyboardOnFocus: {
+                type: Boolean,
+                default: false,
+            },
             disabled: {
                 type: Boolean,
                 default: false,
@@ -139,7 +143,7 @@ export default {
             this.importValueFromUrlParam();
 
             if (this.autoFocusAfter > 0) {
-                this.setFocusElementById(this.getInputId)
+                this.setFocusElementById(this.getInputId, showKeyboardOnFocus)
             }
 
             window.addEventListener('keydown', (e) => {
