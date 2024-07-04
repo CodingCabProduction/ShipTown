@@ -50,7 +50,6 @@ import {
     faArchive,
     faCopy,
     faCartPlus,
-    faAtom,
     faChartBar,
     faChartColumn,
     faChartLine,
@@ -59,7 +58,7 @@ import {
     faArrowRight,
     faFileDownload,
     faCaretDown,
-    faCaretUp
+    faCaretUp, faMagnifyingGlass
 } from '@fortawesome/free-solid-svg-icons';
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -110,6 +109,7 @@ library.add(faCaretDown);
 library.add(faCaretUp);
 library.add(faFileDownload);
 library.add(faAnglesUp);
+library.add(faMagnifyingGlass);
 
 Vue.config.productionTip = false;
 

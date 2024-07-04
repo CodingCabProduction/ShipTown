@@ -14,9 +14,14 @@
                    v-model.trim="barcode"
                    @keyup.enter="barcodeScanned(barcode)"
             />
-            <button @click="scanBarcode(barcodeScanned)" type="button" class="btn text-secondary ml-1 md:ml-2">
-                <img src="/barcode-generator?barcode_type=C39&output_type=SVG&content=S&color=gray" alt="">
-            </button>
+            <div class="">
+                <button @click="findProduct" type="button" class="btn button-search text-secondary ml-1 md:ml-2">
+                    <font-awesome-icon icon="magnifying-glass" class="text-secondary" />
+                </button>
+                <button @click="scanBarcode(barcodeScanned)" type="button" class="btn button-barcode text-secondary ml-5 md:ml-2">
+                    <img src="/barcode-generator?barcode_type=C39&output_type=SVG&content=S&color=gray" alt="">
+                </button>
+            </div>
         </div>
 
         <barcode-scanner @modalHidden="setFocusOnBarcodeInput"/>
@@ -75,7 +80,7 @@ import helpers from "../../helpers";
 
 export default {
         name: "BarcodeInputField",
-    components: {BarcodeScanner},
+        components: {BarcodeScanner},
 
         mixins: [helpers, url, FiltersModal, api],
 
@@ -157,20 +162,18 @@ export default {
         },
 
         methods: {
+            findProduct() {
 
-
-            scanBarcode(barcodeScanned) {
-                this.$modal.showBarcodeScanner(barcodeScanned);
             },
 
-            onScanSuccess (decodedText, decodedResult) {
+            scanBarcode(atBarcodeScannedCallback) {
+                this.$modal.showBarcodeScanner(atBarcodeScannedCallback);
+            },
+
+            onScanSuccess (decodedText) {
                 document.activeElement.value = decodedText;
                 this.html5QrcodeScanner.stop();
                 this.$bvModal.hide(this.getScannerModalID);
-                // this.barcode = decodedText;
-                // this.barcodeScanned(decodedText);
-                // this.notifySuccess(decodedText);
-                // this.html5QrcodeScanner.clear();
             },
 
             barcodeScanned(barcode) {
@@ -338,15 +341,23 @@ export default {
 }
 
 .input-wrapper input {
-    padding-right: 30px;
+    padding-right: 80px;
 }
 
 .input-wrapper button {
     position: absolute;
-    top: 0;
-    right: 0;
     border: none;
     background-color: transparent;
     cursor: pointer;
+}
+
+.button-barcode {
+    right: 0;
+    top: 0;
+}
+
+.button-search {
+    right: 42px;
+    top: 1px;
 }
 </style>
