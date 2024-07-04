@@ -1,9 +1,8 @@
 <template>
     <b-modal body-class="ml-0 mr-0 pl-1 pr-1" id="find-product-modal" size="xl" scrollable no-fade hide-header>
-        <search-and-option-bar-observer/>
         <search-and-option-bar >
             <barcode-input-field
-                :input_id="'barcode_input'"
+                :input_id="'product_search_input'"
                 placeholder="Search"
                 ref="barcode"
                 @barcodeScanned="findText"
@@ -61,7 +60,6 @@ export default {
         },
 
         findText(searchText) {
-            console.log(searchText);
             this.searchText = searchText;
             this.findProductsContainingSearchText();
         },
