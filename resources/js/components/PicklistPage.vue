@@ -1,60 +1,70 @@
  <template>
     <div>
-        <search-and-option-bar-observer/>
-        <search-and-option-bar :isStickable="true">
-            <div class="d-flex flex-nowrap">
-                <div class="flex-fill">
-                    <barcode-input-field
-                        placeholder="Enter sku or alias to pick products"
-                        ref="barcode"
-                        :url_param_name="'search'"
-                        @barcodeScanned="pickByBarcode"
-                    />
-                </div>
-                <div>
-                    <input
-                        ref="current_location"
-                        class="form-control w-100"
-                        placeholder="Current shelf"
-                        v-model="current_shelf_location"
-                        @keyup.enter="reloadPicks()"
-                    />
-                </div>
-            </div>
-            <template v-slot:buttons>
-                <button v-b-modal="'quick-actions-modal'" type="button" class="btn btn-primary ml-2"><font-awesome-icon icon="cog" class="fa-lg"></font-awesome-icon></button>
-            </template>
-        </search-and-option-bar>
-
-
-        <div class="row pl-2 p-1 font-weight-bold text-uppercase small text-secondary">
-            <div class="col-6 text-left text-nowrap">
-                TOOLS > PICKLIST
-            </div>
-            <div class="col-6 text-right text-nowrap">
-                <!--                        -->
-            </div>
-        </div>
-        <div v-if="picklist !== null && picklist.length === 0" class="row" >
-            <div class="col">
-                <div class="alert alert-info" role="alert">
-                    No picks found
-                </div>
+        <div v-if="getUrlParameter('step', '')=== 'select'">
+            <div v-for="bookmark in bookmarks" class="col-12 mt-1">
+                <a dusk="startAutopilotButton" type="button" class="btn btn-primary col" :href="bookmark['url']">
+                    {{ bookmark['name'] }}
+                </a>
             </div>
         </div>
 
         <div v-else>
-            <template v-for="pick in picklist">
-                <pick-card :pick="pick" :id="`pick-card-${ picklist.indexOf(pick)}`" @swipeRight="pickAll" @swipeLeft="partialPickSwiped"/>
-            </template>
-        </div>
+            <search-and-option-bar-observer/>
+            <search-and-option-bar :isStickable="true">
+                <div class="d-flex flex-nowrap">
+                    <div class="flex-fill">
+                        <barcode-input-field
+                            placeholder="Enter sku or alias"
+                            ref="barcode"
+                            :url_param_name="'search'"
+                            @barcodeScanned="pickByBarcode"
+                        />
+                    </div>
+                    <div style="width: 60px" class="ml-2">
+                        <input
+                            ref="current_location"
+                            class="form-control w-100"
+                            placeholder="Shelf"
+                            v-model="current_shelf_location"
+                            @keyup.enter="reloadPicks()"
+                        />
+                    </div>
+                </div>
+                <template v-slot:buttons>
+                    <button v-b-modal="'quick-actions-modal'" type="button" class="btn btn-primary ml-2"><font-awesome-icon icon="cog" class="fa-lg"></font-awesome-icon></button>
+                </template>
+            </search-and-option-bar>
 
-        <div class="row" v-if="isLoading">
-            <div class="col">
-                <div ref="loadingContainerOverride" style="height: 32px"></div>
+
+            <div class="row pl-2 p-1 font-weight-bold text-uppercase small text-secondary">
+                <div class="col-6 text-left text-nowrap">
+                    TOOLS > PICKLIST
+                </div>
+                <div class="col-6 text-right text-nowrap">
+                    <!--                        -->
+                </div>
             </div>
-        </div>
+            <div v-if="picklist !== null && picklist.length === 0" class="row" >
+                <div class="col">
+                    <div class="alert alert-info" role="alert">
+                        No picks found
+                    </div>
+                </div>
+            </div>
 
+            <div v-else>
+                <template v-for="pick in picklist">
+                    <pick-card :pick="pick" :id="`pick-card-${ picklist.indexOf(pick)}`" @swipeRight="pickAll" @swipeLeft="partialPickSwiped"/>
+                </template>
+            </div>
+
+            <div class="row" v-if="isLoading">
+                <div class="col">
+                    <div ref="loadingContainerOverride" style="height: 32px"></div>
+                </div>
+            </div>
+
+        </div>
         <b-modal id="quick-actions-modal" no-fade hide-header @shown="setFocusElementById('stocktake-input',)" @hidden="setFocusOnBarcodeInput">
             <stocktake-input></stocktake-input>
             <template #modal-footer>
@@ -94,13 +104,25 @@ export default {
     },
 
     mounted() {
-        if (Vue.prototype.$currentUser['warehouse_id']) {
-            this.setUrlParameter('warehouse_id', Vue.prototype.$currentUser['warehouse_id']);
-            this.reloadPicks();
+        if (Vue.prototype.$currentUser['warehouse_id'] === null) {
+            this.$snotify.error('You do not have warehouse assigned. Please contact administrator', {timeout: 50000});
             return;
         }
 
-        this.$snotify.error('You do not have warehouse assigned. Please contact administrator', {timeout: 50000});
+        this.setUrlParameter('warehouse_id', Vue.prototype.$currentUser['warehouse_id']);
+
+        this.reloadPicks();
+
+        this.apiGetNavigationMenu({
+            'filter[group]': 'picklist'
+        })
+            .then((response) => {
+                this.bookmarks = response.data.data;
+            })
+
+        if (this.getUrlParameter('step', '') === '') {
+            this.loadNextOrder();
+        }
     },
 
     watch: {
@@ -121,7 +143,8 @@ export default {
     data: function() {
         return {
             picklist: null,
-            current_shelf_location: ''
+            current_shelf_location: '',
+            bookmarks: [],
         };
     },
 

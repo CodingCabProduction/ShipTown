@@ -59,10 +59,9 @@
             this.apiGetNavigationMenu({
                 'filter[group]': 'packlist'
             })
-            .then((response) => {
-                this.bookmarks = response.data.data;
-                console.log(this.bookmarks);
-            })
+                .then((response) => {
+                    this.bookmarks = response.data.data;
+                })
 
             if (this.getUrlParameter('step', '') === '') {
                 this.loadNextOrder();

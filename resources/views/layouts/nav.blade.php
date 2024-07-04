@@ -24,24 +24,9 @@
                     </div>
                 @endif
 
-
-                <!-- Picklist Dropdown -->
-                <div class="dropdown">
-                    <a id="picklists_link" class="dropdown-toggle btn btn-primary" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ __('Picklist') }}<span class="caret"></span>
-                    </a>
-
-                    <div class="dropdown-menu dropdown-menu-left bg-primary border-0" aria-labelledby="dropdown" id="dropdown">
-                        @foreach ($navigationMenuPicklist as $menu)
-                            <a id="picklistItem{{ $loop->index }}" class="dropdown-item text-white lightHover" href="{{ $menu->url }}">{{ $menu->name }}</a>
-                        @endforeach
-                    </div>
-                </div>
-
                 <!-- Reports Dropdown -->
                 <div class="dropdown">
                     <a id="navbarDropdown3" class="dropdown-toggle btn btn-primary" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{--                        <font-awesome-icon icon="chart-column" class="fa-lg"></font-awesome-icon>--}}
                         Reports
                     </a>
 
