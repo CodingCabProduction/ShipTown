@@ -30,6 +30,10 @@ const Modals = {
             showUpsertProductModal(product = null) {
                 this.show('new-product-modal', {'product': product});
             },
+
+            showFindProductModal(callback) {
+                this.show('find-product-modal', {'callback': callback});
+            },
         }
     }
 }

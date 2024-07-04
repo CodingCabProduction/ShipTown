@@ -163,7 +163,12 @@ export default {
 
         methods: {
             findProduct() {
+                this.$modal.showFindProductModal(this.barcodeFoundManuallyCallback);
+            },
 
+            barcodeFoundManuallyCallback(product) {
+                this.barcode = product['sku'];
+                this.barcodeScanned(product['sku']);
             },
 
             scanBarcode(atBarcodeScannedCallback) {
