@@ -10,7 +10,7 @@
             />
         </search-and-option-bar>
         <div v-for="product in products">
-            {{ product['id'] }} <button @click="selectProduct(product)">select</button>
+            {{ product['sku'] }} - {{ product['name'] }} <button @click="selectProduct(product)">select</button>
         </div>
         <template #modal-footer>
             <b-button variant="secondary" class="float-right" @click="$bvModal.hide('find-product-modal');">

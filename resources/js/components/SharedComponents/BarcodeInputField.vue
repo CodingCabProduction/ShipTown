@@ -143,7 +143,7 @@ export default {
             this.importValueFromUrlParam();
 
             if (this.autoFocusAfter > 0) {
-                this.setFocusElementById(this.getInputId, showKeyboardOnFocus)
+                this.setFocusElementById(this.getInputId, this.showKeyboardOnFocus)
             }
 
             window.addEventListener('keydown', (e) => {
