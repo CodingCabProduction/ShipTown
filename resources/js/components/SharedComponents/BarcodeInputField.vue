@@ -15,7 +15,7 @@
                    @keyup.enter="barcodeScanned(barcode)"
             />
             <div class="">
-                <button @click="findProduct" type="button" class="btn button-search text-secondary ml-1 md:ml-2">
+                <button v-if="showManualSearchButton" @click="findProduct" type="button" class="btn button-search text-secondary ml-1 md:ml-2">
                     <font-awesome-icon icon="magnifying-glass" class="text-secondary" />
                 </button>
                 <button @click="scanBarcode(barcodeScanned)" type="button" class="btn button-barcode text-secondary ml-5 md:ml-2">
@@ -88,6 +88,10 @@ export default {
             input_id: null,
             url_param_name: null,
             placeholder: '',
+            showManualSearchButton: {
+                type: Boolean,
+                default: false,
+            },
             showKeyboardOnFocus: {
                 type: Boolean,
                 default: false,

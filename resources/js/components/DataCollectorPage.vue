@@ -24,6 +24,7 @@
             <div class="d-flex flex-nowrap">
                 <div class="flex-fill">
                     <barcode-input-field :input_id="'barcode_input'"
+                                         :showManualSearchButton="true"
                                          @barcodeScanned="onBarcodeScanned"
                                          @findBarcodeManually="onBarcodeScanned"
                                          placeholder="Scan sku or alias"
