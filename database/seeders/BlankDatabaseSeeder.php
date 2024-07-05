@@ -38,15 +38,6 @@ class BlankDatabaseSeeder extends Seeder
 //            OrderShipmentsSeeder::class,
         ]);
 
-        $admin = User::query()->firstOrCreate([
-            'email' => 'demo-admin@ship.town',
-        ], [
-            'name' => 'Artur Hanusek',
-            'password' => bcrypt('secret1144'),
-            'ask_for_shipping_number' => false,
-        ]);
-        $admin->assignRole(Role::findOrCreate('admin'));
-
         DispatchEveryHourEventJobs::dispatchSync();
     }
 }
