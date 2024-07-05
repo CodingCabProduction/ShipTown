@@ -2,7 +2,22 @@
     <nav class="navbar navbar-expand-md navbar-light mb-2 p-0 bg-primary" style="z-index: 1021">
         <div class="container text-white text-nowrap flex-nowrap">
             <div class="d-flex mb-0 navbar-dark w-100 text-nowrap flex-nowrap">
-                <a id="products_link" class="btn btn-primary" href="{{ route('products') }}">{{ __('Products') }}</a>
+{{--                <a id="products_link" class="btn btn-primary" href="{{ route('products') }}">{{ __('Products') }}</a>--}}
+
+
+                <!-- Tools -->
+                <div class="dropdown">
+                    <a id="tools_link" class="dropdown-toggle btn btn-primary" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        {{ __('Inventory') }}
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-left w-auto text-left bg-primary " aria-labelledby="navbarDropdown" >
+                        <a class="dropdown-item text-white lightHover mt-1" id="data_collector_link" href="{{ route('products') }}">{{ __('Products') }}</a>
+                        <a class="dropdown-item text-white lightHover mt-1" id="stocktaking_link" href="{{ route('stocktaking') }}">{{ __('Purchase Orders') }}</a>
+                        <a class="dropdown-item text-white lightHover mt-1" id="stocktaking_link" href="{{ route('stocktaking') }}">{{ __('Transfers') }}</a>
+                    </div>
+                </div>
+
                 <a id="orders_link" class="btn btn-primary" href="{{ route('orders') }}">{{ __('Orders') }}</a>
 
                 @if(Auth::user()->warehouse_id)
