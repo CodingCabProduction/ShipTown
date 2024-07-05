@@ -169,6 +169,8 @@ class AppInstall extends Command
 
         Configuration::query()->firstOrCreate();
 
+        Warehouse::query()->firstOrCreate(['code' => 'WH'], ['name' => 'Warehouse']);
+
         StocktakeSuggestionsServiceProvider::installModule();
         AutoRestockLevelsServiceProvider::installModule();
         InventoryQuantityIncomingServiceProvider::installModule();

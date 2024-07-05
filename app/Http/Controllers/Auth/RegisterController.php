@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Warehouse;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -28,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected string $redirectTo = '/quick-connect/magento';
+    protected string $redirectTo = '/quick-connect';
 
     /**
      * Create a new controller instance.
@@ -73,6 +74,11 @@ class RegisterController extends Controller
 
         if (User::get()->count() == 1) {
             $user->assignRole('admin');
+            $warehouse = Warehouse::first();
+            $user->update([
+                'warehouse_id' => $warehouse->id,
+                'warehouse_code' => $warehouse->code,
+            ]);
         }
 
         return $user;
