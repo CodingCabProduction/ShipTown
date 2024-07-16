@@ -71,8 +71,8 @@
 
                 <!-- Menu -->
                 <div class="dropdown dropdown-menu-right">
-                    <a style="height: 37px" id="dropdownMenu" class="btn btn-primary" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <font-awesome-icon icon="bars" class="fa-lg"></font-awesome-icon>
+                    <a style="height: 37px; width: 40px; position: relative; top: -2px; right: 2px" id="dropdownMenu" class="btn btn-primary" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="20" width="16" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right w-auto text-left bg-primary" aria-labelledby="navbarDropdown" >
