@@ -5,7 +5,7 @@
     <search-and-option-bar :isStickable="true">
         <barcode-input-field @barcodeScanned="searchForProductSku" url_param_name="filter[product_sku]" ref="barcode" placeholder="Search"/>
         <template v-slot:buttons>
-            <button type="button" v-b-modal="'quick-actions-modal'" class="btn btn-primary ml-2"><font-awesome-icon icon="cog" class="fa-lg"></font-awesome-icon></button>
+            <top-nav-button v-b-modal="'quick-actions-modal'"/>
         </template>
     </search-and-option-bar>
 

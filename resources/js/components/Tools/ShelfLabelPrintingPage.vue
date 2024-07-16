@@ -3,8 +3,8 @@
         <search-and-option-bar>
             <barcode-input-field :input_id="'barcode-input'" :url_param_name="'search'" @barcodeScanned="setCustomLabelText" placeholder="Enter custom label text" ref="barcode"/>
             <template v-slot:buttons>
-                <top-nav-button v-b-modal="'quick-actions-modal'"/>
                 <top-nav-button @click.native="printPDF" icon="print"/>
+                <top-nav-button v-b-modal="'quick-actions-modal'"/>
             </template>
         </search-and-option-bar>
         <div class="grid-col-12 pl-2 p-1">

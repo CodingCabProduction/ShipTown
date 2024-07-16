@@ -12,7 +12,7 @@
             />
             <template v-slot:buttons>
                 <button @click="showNewProductModal" type="button" class="btn btn-primary ml-2"><font-awesome-icon icon="plus" class="fa-lg"></font-awesome-icon></button>
-                <button v-b-modal="'quick-actions-modal'" type="button" class="btn btn-primary ml-1 md:ml-2"><font-awesome-icon icon="cog" class="fa-lg"></font-awesome-icon></button>
+                <top-nav-button v-b-modal="'quick-actions-modal'"/>
             </template>
         </search-and-option-bar>
 
