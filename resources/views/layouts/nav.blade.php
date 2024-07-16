@@ -2,19 +2,17 @@
     <nav class="navbar navbar-expand-md navbar-light mb-2 p-0 bg-primary" style="z-index: 1021">
         <div class="container text-white text-nowrap flex-nowrap">
             <div class="d-flex mb-0 navbar-dark w-100 text-nowrap flex-nowrap">
-{{--                <a id="products_link" class="btn btn-primary" href="{{ route('products') }}">{{ __('Products') }}</a>--}}
-
-
-                <!-- Tools -->
+                <!-- Products -->
                 <div class="dropdown">
-                    <a id="tools_link" class="dropdown-toggle btn btn-primary" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ __('Inventory') }}
+                    <a id="tools_link" class="dropdown-toggle btn btn-primary pl-md-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        {{ __('Products') }}
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-left w-auto text-left bg-primary " aria-labelledby="navbarDropdown" >
-                        <a class="dropdown-item text-white lightHover mt-1" id="data_collector_link" href="{{ route('products') }}">{{ __('Products') }}</a>
-                        <a class="dropdown-item text-white lightHover mt-1" id="stocktaking_link" href="{{ route('stocktaking') }}">{{ __('Purchase Orders') }}</a>
-                        <a class="dropdown-item text-white lightHover mt-1" id="stocktaking_link" href="{{ route('stocktaking') }}">{{ __('Transfers') }}</a>
+                        <a class="dropdown-item text-white lightHover mt-1" id="data_collector_link" href="{{ route('products') }}">{{ __('Inventory') }}</a>
+                        <a class="dropdown-item text-white lightHover mt-1" id="stocktaking_link" href="{{ route('data-collector', ['filter[type]' => 'App\\Models\\DataCollectionTransferIn']) }}">{{ __('Transfers In') }}</a>
+                        <a class="dropdown-item text-white lightHover mt-1" id="stocktaking_link" href="{{ route('data-collector', ['filter[type]' => 'App\\Models\\DataCollectionTransferOut']) }}">{{ __('Transfers Out') }}</a>
+                        <a class="dropdown-item text-white lightHover mt-1" id="stocktaking_link" href="{{ route('stocktaking') }}">{{ __('Stocktaking') }}</a>
                     </div>
                 </div>
 
@@ -28,14 +26,17 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-left w-auto text-left bg-primary " aria-labelledby="navbarDropdown" >
-                            <a class="dropdown-item text-white lightHover mt-1" id="data_collector_link" href="{{ route('data-collector') }}">{{ __('Data Collector') }}</a>
-                            <a class="dropdown-item text-white lightHover mt-1" id="stocktaking_link" href="{{ route('stocktaking') }}">{{ __('Stocktaking') }}</a>
+                            <a class="dropdown-item text-white lightHover mt-1" id="data_collector_link" href="{{ route('data-collector', ['filter[type]' => 'App\\Models\\DataCollectionTransferIn']) }}">{{ __('Data Collector') }}</a>
                             <a class="dropdown-item text-white lightHover mt-1" id="restocking_link" href="{{ route('reports.restocking.index' , ['sort' => '-quantity_required', 'cache_name' => 'restocking_page']) }}">{{ __('Restocking') }}</a>
                             <a class="dropdown-item text-white lightHover mt-1 mb-1" id="packlist" href="/autopilot/packlist?step=select">{{ __('Packlist') }}</a>
                             <a class="dropdown-item text-white lightHover mt-1 mb-1" id="packlist" href="/picklist?step=select">{{ __('Picklist') }}</a>
+                            <a class="dropdown-item text-white lightHover mt-1 mb-1" id="shelf_label_printing" href="/tools/printer">{{ __('Shelf Labels') }}</a>
                         </div>
                     </div>
                 @endif
+
+                <!-- Middle empty fill -->
+                <div class="flex-fill"></div>
 
                 <!-- Reports Dropdown -->
                 <div class="dropdown">
@@ -68,8 +69,6 @@
                     </div>
                 </div>
 
-                <div class="flex-fill"></div>
-
                 <!-- Menu -->
                 <div class="dropdown dropdown-menu-right">
                     <a style="height: 37px" id="dropdownMenu" class="btn btn-primary" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -86,7 +85,6 @@
 
                         <a class="dropdown-item text-white lightHover" href="https://ship.town/academy" target="_blank">{{ __('Academy') }}</a>
                         <a class="dropdown-item text-white lightHover" href="https://www.youtube.com/channel/UCl04S5dRXop1ZdZsOqY3OnA" target="_blank">{{ __('YouTube') }}</a>
-                        <a class="dropdown-item text-white lightHover mt-1 mb-1" id="shelf_label_printing" href="/tools/printer">{{ __('Shelf Labels') }}</a>
 
                         <!-- Logout -->
                         <a class="dropdown-item text-white lightHover" href="{{ route('logout') }}"
