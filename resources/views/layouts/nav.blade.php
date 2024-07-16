@@ -4,7 +4,7 @@
             <div class="d-flex mb-0 navbar-dark w-100 text-nowrap flex-nowrap">
                 <!-- Products -->
                 <div class="dropdown">
-                    <a id="tools_link" class="dropdown-toggle btn btn-primary pl-md-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    <a id="tools_link" class="dropdown-toggle btn btn-primary" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ __('Products') }}
                     </a>
 
