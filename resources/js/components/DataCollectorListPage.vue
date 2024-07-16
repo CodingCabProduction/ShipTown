@@ -135,7 +135,8 @@
                     map_fields: [],
                     csv: null,
                     data: null,
-                    nextUrl: null,
+                    reachedEnd: false,
+                    per_page: 50,
                     page: 1,
                     newCollectionName: null,
                     newCollectionType: null,
@@ -260,7 +261,7 @@
                         return;
                     }
 
-                    if (this.nextUrl === null) {
+                    if (this.reachedEnd === true) {
                         return;
                     }
 
@@ -272,17 +273,18 @@
 
                     const params = this.$router.currentRoute.query;
                     params['sort'] = this.getUrlParameter('sort', '-created_at');
+                    params['per_page'] = this.getUrlParameter('per_page', this.per_page);
                     params['page'] = page;
 
                     this.apiGetDataCollector(params)
                         .then((response) => {
+                            this.reachedEnd = response.data.data.length === 0;
+
                             if (page === 1) {
                                 this.data = response.data.data;
                             } else {
                                 this.data = this.data.concat(response.data.data);
                             }
-                            this.page = response.data['meta']['current_page'];
-                            this.nextUrl = response.data['links']['next'];
                         })
                         .catch((error) => {
                             this.displayApiCallError(error);

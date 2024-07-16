@@ -100,7 +100,7 @@ class ReportBase extends Model
         return [
             'report_name' => $this->report_name ?? $this->table,
             'pagination' => [
-                'per_page' => $this->perPage,
+                'per_page' => request('per_page', 50),
                 'page' => request('page', 1),
             ],
             'field_links' => collect(array_keys($this->fields))
