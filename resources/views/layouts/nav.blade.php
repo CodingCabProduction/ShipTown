@@ -4,7 +4,7 @@
             <div class="d-flex mb-0 navbar-dark w-100 text-nowrap flex-nowrap">
                 <!-- Products -->
                 <div class="dropdown">
-                    <a id="tools_link" class="dropdown-toggle btn btn-primary" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    <a id="tools_link" class="dropdown-toggle btn btn-primary px-2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ __('Products') }}
                     </a>
 
@@ -16,12 +16,12 @@
                     </div>
                 </div>
 
-                <a id="orders_link" class="btn btn-primary" href="{{ route('orders') }}">{{ __('Orders') }}</a>
+                <a id="orders_link" class="btn btn-primary px-1" href="{{ route('orders') }}">{{ __('Orders') }}</a>
 
                 @if(Auth::user()->warehouse_id)
                     <!-- Tools -->
                     <div class="dropdown">
-                        <a id="tools_link" class="dropdown-toggle btn btn-primary" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <a id="tools_link" class="dropdown-toggle btn btn-primary px-2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ __('Tools') }}
                         </a>
 
@@ -40,7 +40,7 @@
 
                 <!-- Reports Dropdown -->
                 <div class="dropdown">
-                    <a id="navbarDropdown3" class="dropdown-toggle btn btn-primary" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a id="navbarDropdown3" class="dropdown-toggle btn btn-primary px-2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Reports
                     </a>
 
@@ -71,7 +71,7 @@
 
                 <!-- Menu -->
                 <div class="dropdown dropdown-menu-right">
-                    <a style="height: 37px; width: 40px; position: relative; top: -2px; right: 2px" id="dropdownMenu" class="btn btn-primary" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a style="height: 37px; width: 40px; position: relative; top: -2px; right: 2px" id="dropdownMenu" class="btn btn-primary px-2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" height="20" width="16" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
                     </a>
 
