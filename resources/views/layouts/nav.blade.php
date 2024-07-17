@@ -16,7 +16,7 @@
                     </div>
                 </div>
 
-                <a id="orders_link" class="btn btn-primary px-1" href="{{ route('orders') }}">{{ __('Orders') }}</a>
+                <a id="orders_link" class="btn btn-primary px-2" href="{{ route('orders') }}">{{ __('Orders') }}</a>
 
                 @if(Auth::user()->warehouse_id)
                     <!-- Tools -->
