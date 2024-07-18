@@ -51,8 +51,8 @@
                         <a class="dropdown-item text-white lightHover" href="{{ route('reports.picks.index') }}">{{ __('Order Picks') }}</a>
                         <a class="dropdown-item text-white lightHover" href="{{ route('reports.shipments.index') }}">{{ __('Order Shipments') }}</a>
                         <a class="dropdown-item text-white lightHover" href="{{ route('reports.inventory.index', ['sort' => '-quantity']) }}">{{ __('Inventory') }}</a>
+                        <a class="dropdown-item text-white lightHover" href="{{ route('reports.inventory-movements.index', ['filter[warehouse_code]' =>  data_get(Auth::user(), 'warehouse.code')]) }}">{{ __('Inventory Movements') }}</a>
                         <a class="dropdown-item text-white lightHover" href="{{ route('reports.inventory-transfers.index', ['filter[warehouse_code]' =>  data_get(Auth::user(), 'warehouse.code'), 'sort' => '-updated_at']) }}">{{ __('Inventory Transfers') }}</a>
-                        <a class="dropdown-item text-white lightHover" href="{{ route('reports.inventory-movements.index') }}">{{ __('Inventory Movements') }}</a>
                         <a class="dropdown-item text-white lightHover" href="{{ route('reports.inventory-movements-summary.index', ['per_page' => '200', 'sort' => 'type']) }}">{{ __('Inventory Movements Summary') }}</a>
                         <a class="dropdown-item text-white lightHover" href="{{ route('reports.restocking.index') }}">{{ __('Restocking') }}</a>
                         <a class="dropdown-item text-white lightHover" href="{{ route('reports.stocktake-suggestions.index') }}">{{ __('Stocktake Suggestions') }}</a>

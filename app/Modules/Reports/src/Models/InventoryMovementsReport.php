@@ -26,15 +26,15 @@ class InventoryMovementsReport extends Report
         ];
 
         $this->fields = [
-            'occurred_at'                   => 'inventory_movements.occurred_at',
-            'warehouse_code'                => 'inventory_movements.warehouse_code',
             'product_sku'                   => 'products.sku',
             'product_name'                  => 'products.name',
-            'type'                          => 'inventory_movements.type',
             'quantity_delta'                => 'inventory_movements.quantity_delta',
-            'description'                   => 'inventory_movements.description',
+            'type'                          => 'inventory_movements.type',
             'quantity_before'               => 'inventory_movements.quantity_before',
             'quantity_after'                => 'inventory_movements.quantity_after',
+            'warehouse_code'                => 'inventory_movements.warehouse_code',
+            'occurred_at'                   => 'inventory_movements.occurred_at',
+            'description'                   => 'inventory_movements.description',
             'sequence_number'               => 'inventory_movements.sequence_number',
             'id'                            => 'inventory_movements.id',
             'user_id'                       => 'inventory_movements.user_id',

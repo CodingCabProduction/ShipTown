@@ -33,26 +33,26 @@ class InventoryTransferReport extends Report
         ];
 
         $this->defaultSelects = [
+            'product_sku',
+            'product_name',
+            'total_transferred_in',
+            'product_cost' ,
             'warehouse_code',
             'department',
             'category',
             'transfer_name',
-            'product_sku',
-            'product_name',
-            'product_cost' ,
-            'total_transferred_in',
             'updated_at'
         ];
 
         $this->fields = [
-            'warehouse_code'        => 'warehouses.code',
-            'department'            => 'products.department',
-            'category'              => 'products.category',
-            'transfer_name'         => 'data_collections.name',
             'product_sku'           => 'products.sku',
             'product_name'          => 'products.name',
-            'product_cost'          => 'products_prices.cost',
             'total_transferred_in'  => 'data_collection_records.total_transferred_in',
+            'product_cost'          => 'products_prices.cost',
+            'department'            => 'products.department',
+            'category'              => 'products.category',
+            'warehouse_code'        => 'warehouses.code',
+            'transfer_name'         => 'data_collections.name',
             'updated_at'            => 'data_collection_records.updated_at',
         ];
 

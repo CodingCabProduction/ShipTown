@@ -14,12 +14,12 @@ class StocktakeSuggestionReport extends Report
 
         $this->report_name = 'Stocktake Suggestions';
 
-        $this->addField('warehouse_code', 'inventory.warehouse_code', hidden: false);
         $this->addField('product_sku', 'products.sku', hidden: false);
         $this->addField('product_name', 'products.name', hidden: false);
-        $this->addField('quantity_in_stock', 'inventory.quantity', hidden: false);
-        $this->addField('reason', 'stocktake_suggestions.reason', hidden: false);
         $this->addField('points', 'stocktake_suggestions.points', hidden: false);
+        $this->addField('reason', 'stocktake_suggestions.reason', hidden: false);
+        $this->addField('quantity_in_stock', 'inventory.quantity', hidden: false);
+        $this->addField('warehouse_code', 'inventory.warehouse_code', hidden: false);
         $this->addField('last_movement_at', 'inventory.last_movement_at', 'datetime', hidden: false);
         $this->addField('last_counted_at', 'inventory.last_counted_at', 'datetime', hidden: false);
         $this->addField('last_sold_at', 'inventory.last_sold_at', 'datetime', hidden: false);

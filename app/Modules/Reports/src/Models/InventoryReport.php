@@ -21,7 +21,6 @@ class InventoryReport extends Report
                     ->on('inventory.warehouse_id', '=', 'product_prices.warehouse_id');
             });
 
-        $this->addField('warehouse_code', 'inventory.warehouse_code', hidden: false);
         $this->addField('product_sku', 'product.sku', hidden: false);
         $this->addField('product_name', 'product.name', hidden: false);
         $this->addField('quantity', 'inventory.quantity', 'float', hidden: false);
@@ -68,6 +67,8 @@ class InventoryReport extends Report
         $this->addField('product_id', 'inventory.product_id', 'integer');
         $this->addField('id', 'inventory.id', 'integer');
         $this->addField('warehouse_id', 'inventory.warehouse_id', 'integer');
+
+        $this->addField('warehouse_code', 'inventory.warehouse_code', hidden: false);
 
         $this->addFilter(
             AllowedFilter::callback('has_tags', function ($query, $value) {
