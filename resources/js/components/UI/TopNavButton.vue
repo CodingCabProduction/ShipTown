@@ -1,5 +1,5 @@
 <template>
-    <button type="button" class="btn btn-primary ml-2" style="width: 42px;">
+    <button type="button" class="btn btn-primary ml-2" style="width: 42px;" id="options-button">
         <font-awesome-icon :icon="icon" class="fa-lg"></font-awesome-icon>
     </button>
 </template>

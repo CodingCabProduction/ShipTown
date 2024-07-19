@@ -183,8 +183,8 @@ class PagesWalktroughTest extends DuskTestCase
             });
 
         $browser
-            ->pause($this->shortDelay)->mouseover('#showConfigurationButton')
-            ->pause($this->shortDelay)->click('#showConfigurationButton')
+            ->pause($this->shortDelay)->mouseover('#options-button')
+            ->pause($this->shortDelay)->click('#options-button')
             ->pause($this->longDelay)
             ->pause($this->shortDelay)->mouseover('#transferInButton')
             ->pause($this->shortDelay)->click('#transferInButton')
