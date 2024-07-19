@@ -4,14 +4,14 @@
             <div class="d-flex mb-0 navbar-dark w-100 text-nowrap flex-nowrap">
                 <!-- Products -->
                 <div class="dropdown">
-                    <a id="tools_link" class="dropdown-toggle btn btn-primary px-2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    <a id="products_link" class="dropdown-toggle btn btn-primary px-2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ __('Products') }}
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-left w-auto text-left bg-primary " aria-labelledby="navbarDropdown" >
-                        <a class="dropdown-item text-white lightHover mt-1" id="data_collector_link" href="{{ route('products') }}">{{ __('Inventory') }}</a>
-                        <a class="dropdown-item text-white lightHover mt-1" id="stocktaking_link" href="{{ route('data-collector', ['filter[type]' => 'App\\Models\\DataCollectionTransferIn']) }}">{{ __('Transfers In') }}</a>
-                        <a class="dropdown-item text-white lightHover mt-1" id="stocktaking_link" href="{{ route('data-collector', ['filter[type]' => 'App\\Models\\DataCollectionTransferOut']) }}">{{ __('Transfers Out') }}</a>
+                        <a class="dropdown-item text-white lightHover mt-1" id="inventory_link" href="{{ route('products') }}">{{ __('Inventory') }}</a>
+                        <a class="dropdown-item text-white lightHover mt-1" id="transfers_in_link" href="{{ route('data-collector', ['filter[type]' => 'App\\Models\\DataCollectionTransferIn']) }}">{{ __('Transfers In') }}</a>
+                        <a class="dropdown-item text-white lightHover mt-1" id="transfers_out_link" href="{{ route('data-collector', ['filter[type]' => 'App\\Models\\DataCollectionTransferOut']) }}">{{ __('Transfers Out') }}</a>
                         <a class="dropdown-item text-white lightHover mt-1" id="stocktaking_link" href="{{ route('stocktaking') }}">{{ __('Stocktaking') }}</a>
                     </div>
                 </div>

@@ -255,6 +255,7 @@ class PagesWalktroughTest extends DuskTestCase
     {
         return $browser->mouseover('#products_link')
             ->pause($this->shortDelay)->clickLink('Products')
+            ->pause($this->shortDelay)->clickLink('Inventory')
             ->pause($this->longDelay)
             ->pause($this->shortDelay)->keys('@barcode-input-field', Product::first('sku')['sku'], '{enter}')
             ->pause($this->longDelay);
