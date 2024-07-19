@@ -9,9 +9,7 @@
         </search-and-option-bar>
 
         <div class="row pl-2 p-0">
-            <div class="col-12 text-left align-bottom pb-0 m-0 font-weight-bold text-uppercase small text-secondary">
-                Orders
-            </div>
+            <breadcrumbs></breadcrumbs>
         </div>
 
         <div class="row" v-if="orders.length === 0 && !isLoading">
@@ -56,11 +54,13 @@
     import api from "../mixins/api";
     import helpers from "../mixins/helpers";
     import Vue from "vue";
+    import Breadcrumbs from "./Reports/Breadcrumbs.vue";
 
     export default {
         mixins: [loadingOverlay, url, api, helpers],
 
         components: {
+            Breadcrumbs,
             'order-card': OrderCard,
             'barcode-input-field': BarcodeInputField,
         },

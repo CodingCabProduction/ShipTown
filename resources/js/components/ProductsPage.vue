@@ -17,9 +17,7 @@
         </search-and-option-bar>
 
         <div class="row pl-2 p-0">
-            <div class="col-12 text-left align-bottom pb-0 m-0 font-weight-bold text-uppercase small text-secondary">
-                Products > Inventory
-            </div>
+            <breadcrumbs></breadcrumbs>
         </div>
 
         <template  v-if="isLoading === false && products !== null && products.length === 0" >
@@ -66,11 +64,13 @@
     import api from "../mixins/api";
     import helpers from "../mixins/helpers";
     import Modals from "../plugins/Modals";
+    import Breadcrumbs from "./Reports/Breadcrumbs.vue";
 
     export default {
         mixins: [loadingOverlay, url, api, helpers],
 
         components: {
+            Breadcrumbs,
             ProductCard,
             BarcodeInputField
         },

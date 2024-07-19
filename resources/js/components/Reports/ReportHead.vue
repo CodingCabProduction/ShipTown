@@ -1,7 +1,8 @@
 <template>
     <div>
         <div class="d-flex pl-1 pr-1">
-            <div class="d-inline font-weight-bold text-uppercase small text-secondary align-content-center">
+            <breadcrumbs v-if="reportName === ''"/>
+            <div v-else class="d-inline font-weight-bold text-uppercase small text-secondary align-content-center">
                 {{ reportName }}
             </div>
             <div class="flex-grow-1">
@@ -29,8 +30,10 @@
 <script>
 
 import url from "../../mixins/url.vue";
+import Breadcrumbs from "./Breadcrumbs.vue";
 
 export default {
+    components: {Breadcrumbs},
   mixins: [url],
 
     props: {
