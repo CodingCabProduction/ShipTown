@@ -10,7 +10,7 @@
 
         <div class="row pl-2 p-1 font-weight-bold text-uppercase small text-secondary">
             <div class="col-6 text-left text-nowrap">
-                TOOLS > STOCKTAKING
+                PRODUCTS > STOCKTAKING
             </div>
             <div class="col-6 text-right text-nowrap">
                 <a :href="'/reports/inventory-movements?filter[description]=stocktake'">SEE MORE</a>
