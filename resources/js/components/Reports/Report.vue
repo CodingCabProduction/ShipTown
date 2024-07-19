@@ -9,11 +9,12 @@
         </template>
     </search-and-option-bar>
 
-    <report-head :report-name="breadcrumbs"></report-head>
+    <report-head :report-name="breadcrumbs" :auto-expand-filters="records.length === 0"></report-head>
 
-    <div v-if="records === null || records.length === 0" class="text-secondary small text-center">
+    <div v-if="records === null || records.length === 0" class="text-secondary small text-center pt-2">
         No records found with filters specified
     </div>
+
     <template v-else>
         <card>
             <!--

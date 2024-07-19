@@ -38,12 +38,20 @@ export default {
 
     props: {
         reportName: String,
+        autoExpandFilters: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
         return {
             showFilters: false,
         }
+    },
+
+    mounted() {
+        this.showFilters = this.autoExpandFilters;
     },
 
     methods: {
