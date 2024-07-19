@@ -3,6 +3,7 @@
 namespace App\Modules\Reports\src\Models;
 
 use App\Models\DataCollectionRecord;
+use DB;
 use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\AllowedFilter;
 
@@ -24,6 +25,10 @@ class DataCollectionReport extends Report
             ->leftJoin('products_prices', function ($query) {
                 return $query->on('data_collection_records.product_id', '=', 'products_prices.product_id')
                     ->where('products_prices.warehouse_id', Auth::user()->warehouse_id);
+            })
+            ->leftJoin('inventory_movements_statistics', function ($query) {
+                return $query->on('inventory_movements_statistics.inventory_id', '=', 'inventory.id')
+                    ->where('inventory_movements_statistics.type', '=', 'sale');
             });
 
         $this->allowedIncludes = [
@@ -57,6 +62,9 @@ class DataCollectionReport extends Report
             'product_sale_price'            => 'products_prices.sale_price',
             'product_sale_price_start_date' => 'products_prices.sale_price_start_date',
             'product_sale_price_end_date'   => 'products_prices.sale_price_end_date',
+            'last7days_sales'               => DB::raw('-1 * inventory_movements_statistics.last7days_quantity_delta'),
+            'last14days_sales'              => DB::raw('-1 * inventory_movements_statistics.last14days_quantity_delta'),
+            'last28days_sales'              => DB::raw('-1 * inventory_movements_statistics.last28days_quantity_delta')
         ];
 
         $this->casts = [
