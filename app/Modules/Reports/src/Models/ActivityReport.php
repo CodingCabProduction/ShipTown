@@ -14,6 +14,7 @@ class ActivityReport extends Report
         parent::__construct($attributes);
 
         $this->report_name = 'Activity Log';
+        $this->defaultSort = '-id';
 
         $this->baseQuery = Activity::query();
 
