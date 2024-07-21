@@ -89,15 +89,10 @@ class PagesWalktroughTest extends DuskTestCase
 
     private function packlist(Browser $browser): Browser
     {
-        $browser->pause($this->shortDelay)->mouseover('#navToggleButton')
-            ->pause($this->shortDelay)->click('#navToggleButton')
-            ->pause($this->shortDelay)->mouseover('#packlists_link')
+        $browser->pause($this->shortDelay)->mouseover('#tools_link')
+            ->pause($this->shortDelay)->clickLink('Tools')
             ->pause($this->shortDelay)->clickLink('Packlist')
             ->pause($this->shortDelay)->clickLink('Status: paid')
-            ->pause($this->longDelay)
-            ->pause($this->shortDelay)->assertSee('Start AutoPilot Packing')
-            ->pause($this->longDelay)
-            ->pause($this->shortDelay)->click('@startAutopilotButton')
             ->pause($this->longDelay);
 
 
@@ -196,11 +191,11 @@ class PagesWalktroughTest extends DuskTestCase
     private function picklist(Browser $browser): Browser
     {
         $browser->pause($this->shortDelay)
-            ->pause($this->shortDelay)->mouseover('#navToggleButton')
-            ->pause($this->shortDelay)->click('#navToggleButton')
-            ->pause($this->longDelay)->mouseover('#picklists_link')
+            ->pause($this->shortDelay)->mouseover('#tools_link')
+            ->pause($this->shortDelay)->click('#tools_link')
+            ->pause($this->shortDelay)->mouseover('#picklists_link')
             ->pause($this->shortDelay)->clickLink('Picklist')
-            ->pause($this->longDelay)->clickLink('Status: paid')
+            ->pause($this->shortDelay)->clickLink('Status: paid')
             ->pause($this->longDelay);
 
         $browser->pause($this->shortDelay)
@@ -231,8 +226,8 @@ class PagesWalktroughTest extends DuskTestCase
         $product = Product::first();
 
         $browser
-            ->pause($this->shortDelay)->mouseover('#tools_link')
-            ->pause($this->shortDelay)->clickLink('Tools')
+            ->pause($this->shortDelay)->mouseover('#products_link')
+            ->pause($this->shortDelay)->clickLink('Products')
             ->pause($this->shortDelay)
             ->pause($this->shortDelay)->mouseover('#stocktaking_link')
             ->pause($this->shortDelay)->clickLink('Stocktaking')

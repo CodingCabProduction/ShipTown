@@ -28,8 +28,8 @@
                         <div class="dropdown-menu dropdown-menu-left w-auto text-left bg-primary " aria-labelledby="navbarDropdown" >
                             <a class="dropdown-item text-white lightHover mt-1" id="data_collector_link" href="{{ route('data-collector') }}">{{ __('Data Collector') }}</a>
                             <a class="dropdown-item text-white lightHover mt-1" id="restocking_link" href="{{ route('reports.restocking.index' , ['sort' => '-quantity_required', 'cache_name' => 'restocking_page']) }}">{{ __('Restocking') }}</a>
-                            <a class="dropdown-item text-white lightHover mt-1 mb-1" id="packlist" href="/autopilot/packlist?step=select">{{ __('Packlist') }}</a>
-                            <a class="dropdown-item text-white lightHover mt-1 mb-1" id="packlist" href="/picklist?step=select">{{ __('Picklist') }}</a>
+                            <a class="dropdown-item text-white lightHover mt-1 mb-1" id="packlist_link" href="/autopilot/packlist?step=select">{{ __('Packlist') }}</a>
+                            <a class="dropdown-item text-white lightHover mt-1 mb-1" id="picklist_link" href="/picklist?step=select">{{ __('Picklist') }}</a>
                             <a class="dropdown-item text-white lightHover mt-1 mb-1" id="shelf_label_printing" href="/tools/printer">{{ __('Shelf Labels') }}</a>
                         </div>
                     </div>

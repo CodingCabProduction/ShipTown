@@ -17,7 +17,7 @@ abstract class DuskTestCase extends BaseTestCase
     use ResetsDatabase;
 
     protected int $shortDelay = 300;
-    protected int $longDelay = 0;
+    protected int $longDelay = 1000;
 
     /**
      * Prepare for Dusk test execution.
