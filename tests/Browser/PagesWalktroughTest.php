@@ -41,8 +41,8 @@ class PagesWalktroughTest extends DuskTestCase
             $this->stocktaking($browser)->screenshot('stocktaking.png');
             $this->picklist($browser)->screenshot('picklist.png');
             $this->packlist($browser)->screenshot('packlist.png');
-            $this->dashboard($browser)->screenshot('dashboard.png');
             $this->restocking($browser)->screenshot('restocking.png');
+            $this->dashboard($browser)->screenshot('dashboard.png');
         });
     }
 
@@ -129,13 +129,11 @@ class PagesWalktroughTest extends DuskTestCase
     private function login(Browser $browser)
     {
         $browser->visit('/')
-            ->pause($this->shortDelay)
-            ->assertPathIs('/login')
-            ->type('email', $this->user->email)->pause($this->shortDelay)
-            ->type('password', 'password')->pause($this->shortDelay)
-            ->press('Login')->pause($this->longDelay)
-            ->assertPathBeginsWith('/dashboard')
-            ->pause($this->shortDelay)
+            ->pause($this->shortDelay)->assertPathIs('/login')
+            ->pause($this->shortDelay)->type('email', $this->user->email)
+            ->pause($this->shortDelay)->type('password', 'password')
+            ->pause($this->shortDelay)->press('Login')
+            ->pause($this->shortDelay)->assertPathBeginsWith('/dashboard')
             ->pause($this->longDelay);
     }
 
@@ -193,7 +191,7 @@ class PagesWalktroughTest extends DuskTestCase
         $browser->pause($this->shortDelay)
             ->pause($this->shortDelay)->mouseover('#tools_link')
             ->pause($this->shortDelay)->click('#tools_link')
-            ->pause($this->shortDelay)->mouseover('#picklists_link')
+            ->pause($this->shortDelay)->mouseover('#picklist_link')
             ->pause($this->shortDelay)->clickLink('Picklist')
             ->pause($this->shortDelay)->clickLink('Status: paid')
             ->pause($this->longDelay);
@@ -213,8 +211,13 @@ class PagesWalktroughTest extends DuskTestCase
 
     private function dashboard(Browser $browser): Browser
     {
-        $browser->mouseover('#dashboard_link')->pause($this->shortDelay)
-            ->click('#dashboard_link')->pause($this->longDelay)
+        $browser
+            ->pause($this->shortDelay)->mouseover('#reports_link')
+            ->pause($this->shortDelay)->clickLink('Reports')
+            ->pause($this->shortDelay)->clickLink('Inventory Dashboard')
+            ->pause($this->shortDelay)->mouseover('#reports_link')
+            ->pause($this->shortDelay)->clickLink('Reports')
+            ->pause($this->shortDelay)->clickLink('Fulfillment Dashboard')
             ->pause($this->longDelay);
 
         return $browser;
@@ -267,9 +270,10 @@ class PagesWalktroughTest extends DuskTestCase
 
     private function restocking(Browser $browser): Browser
     {
-        return $browser->mouseover('#tools_link')->pause($this->shortDelay)
-            ->clickLink('Tools')->pause($this->shortDelay)
-            ->mouseover('#restocking_link')->pause($this->shortDelay)
-            ->clickLink('Restocking')->pause($this->longDelay);
+        return $browser->mouseover('#tools_link')
+            ->pause($this->shortDelay)->clickLink('Tools')
+            ->pause($this->shortDelay)->mouseover('#restocking_link')
+            ->pause($this->shortDelay)->clickLink('Restocking')
+            ->pause($this->longDelay);
     }
 }

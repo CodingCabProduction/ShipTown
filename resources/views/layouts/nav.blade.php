@@ -40,7 +40,7 @@
 
                 <!-- Reports Dropdown -->
                 <div class="dropdown">
-                    <a id="navbarDropdown3" class="dropdown-toggle btn btn-primary px-2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a id="reports_link" class="dropdown-toggle btn btn-primary px-2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Reports
                     </a>
 
