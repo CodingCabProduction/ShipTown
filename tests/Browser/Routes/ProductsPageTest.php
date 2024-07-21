@@ -44,7 +44,7 @@ class ProductsPageTest extends DuskTestCase
                 ->loginAs($user)
                 ->visit($this->uri)
                 ->pause(300)
-                ->waitForText('No products found.')
+                ->waitForText('No records found')
                 ->type('@barcode-input-field', '')
                 ->keys('@barcode-input-field', [WebDriverKeys::ENTER])
                 ->pause(300)
