@@ -288,6 +288,10 @@ export default {
                 return axios.post('/api/jobs', data);
             },
 
+            apiPostPrintJob: function (data) {
+                return axios.post('/api/print-jobs', data);
+            },
+
             apiGetPrintNodePrinters: function () {
                 return axios.get('/api/modules/printnode/printers');
             },
@@ -423,6 +427,14 @@ export default {
 
             apiPostPdfDownload: function (data) {
                 return axios.post('/api/pdf/download', data, { responseType: 'blob' });
+            },
+
+            apiPostTransaction: function (data) {
+                return axios.post('/api/transactions/', data);
+            },
+
+            apiPutTransaction: function (id, data) {
+                return axios.put('/api/transactions/' + id, data);
             },
         }
     }

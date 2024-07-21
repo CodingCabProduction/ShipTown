@@ -9,31 +9,32 @@ use Spatie\Permission\Models\Role;
 
 class UsersSeeder extends Seeder
 {
-    public function run(): void
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
     {
         /** @var User $admin */
-        $warehouseDublin = Warehouse::query()->firstOrCreate(['code' => 'DUB'], ['name' => 'Dublin']);
-
         $admin = User::query()->firstOrCreate([
             'email' => 'demo-admin@ship.town',
         ], [
             'name' => 'Artur Hanusek',
-            'warehouse_id' => $warehouseDublin->getKey(),
-            'warehouse_code' => $warehouseDublin->code,
+            'warehouse_id' => Warehouse::firstOrCreate(['code' => 'DUB'], ['name' => 'Dublin'])->getKey(),
+            'warehouse_code' => Warehouse::firstOrCreate(['code' => 'DUB'], ['name' => 'Dublin'])->code,
             'password' => bcrypt('secret1144'),
             'ask_for_shipping_number' => false,
         ]);
         $admin->assignRole(Role::findOrCreate('admin'));
 
         /** @var User $user */
-        $warehouseGalway = Warehouse::query()->firstOrCreate(['code' => 'GAL'], ['name' => 'Galway']);
-
         $user = User::query()->firstOrCreate([
             'email' => 'demo-user@ship.town',
         ], [
             'name' => 'Joni Melabo',
-            'warehouse_id' => $warehouseGalway->getKey(),
-            'warehouse_code' => $warehouseGalway->code,
+            'warehouse_id' => Warehouse::firstOrCreate(['code' => 'GAL'], ['name' => 'Galway'])->getKey(),
+            'warehouse_code' => Warehouse::firstOrCreate(['code' => 'GAL'], ['name' => 'Galway'])->code,
             'password' => bcrypt('secret1144'),
         ]);
         $user->assignRole(Role::findOrCreate('user'));

@@ -57,6 +57,7 @@ use Thomasjohnkane\Snooze\Traits\SnoozeNotifiable;
  * @property-read int|null $tokens_count
  * @property-read Collection|Session[] $sessions
  * @property-read int|null $sessions_count
+ * @property mixed $active_transaction_id
  *
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
@@ -106,6 +107,7 @@ class User extends Authenticatable
         'ask_for_shipping_number',
         'two_factor_code',
         'two_factor_expires_at',
+        'active_transaction_id',
     ];
 
     protected $hidden = [

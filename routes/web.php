@@ -54,6 +54,10 @@ Route::view('autopilot/packlist', 'autopilot/packlist')->name('autopilot.packlis
 Route::resource('order/packsheet', Order\PacksheetController::class)->only(['show']);
 Route::view('tools/printer', 'tools/printer')->name('tools.printer');
 
+Route::as('tools.')->group(function () {
+    Route::view('tools/point-of-sale', 'tools/point-of-sale');
+});
+
 Route::as('reports.')->group(function () {
     Route::resource('reports/activity-log', Reports\ActivityLogController::class)->only('index');
     Route::resource('reports/inventory', Reports\InventoryController::class)->only('index');

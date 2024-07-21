@@ -81,7 +81,7 @@ class ClearDatabaseCommand extends Command
         App\Models\Session::query()->forceDelete();
         App\Models\Configuration::query()->forceDelete();
         App\Models\StocktakeSuggestion::query()->forceDelete();
-
+        App\Models\Transaction::query()->forceDelete();
 
         App\Modules\Automations\src\Models\Automation::query()->forceDelete();
         App\Modules\Automations\src\Models\Condition::query()->forceDelete();

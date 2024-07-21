@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::name('api.')->group(function () {
+    Route::apiResource('transactions', Api\TransactionController::class)->only(['index', 'store', 'update']);
     Route::apiResource('jobs', Api\JobsController::class)->only(['store','index']);
     Route::apiResource('configurations', Api\ConfigurationController::class)->only(['index', 'store']);
     Route::apiResource('heartbeats', Api\HeartbeatsController::class)->only(['index']);
@@ -42,7 +43,7 @@ Route::name('api.')->group(function () {
     Route::apiResource('stocktake-suggestions-details', Api\StocktakeSuggestionDetailController::class)->only(['index']);
     Route::apiResource('shipping-services', Api\ShippingServiceController::class)->only(['index']);
     Route::apiResource('shipping-labels', Api\ShippingLabelController::class)->only(['store']);
-
+    Route::apiResource('print-jobs', Api\PrintJobController::class)->only(['store']);
     Route::apiResource('reports/inventory', Api\Reports\InventoryController::class)->only(['index']);
     Route::apiResource('reports/inventory-transfers', Api\Reports\InventoryTransfersController::class)->only(['index']);
     Route::apiResource('reports/picks', Api\Reports\PicksController::class)->only(['index']);
