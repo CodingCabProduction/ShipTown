@@ -39,7 +39,7 @@ class StocktakingPageTest extends DuskTestCase
             $browser->loginAs($user)
                 ->visit($this->uri)
                 ->pause($this->shortDelay)
-                ->assertSee('TOOLS > STOCKTAKING')
+                ->assertSee('PRODUCTS > STOCKTAKING')
                 ->assertSee('SEE MORE')
                 ->assertSee('REPORTS > STOCKTAKE SUGGESTIONS')
                 ->assertSourceMissing('snotify-error')
