@@ -138,10 +138,6 @@ Modules are used to group related functionality together.
 - modules data tables should prefix with ___module____ and module name (e.g. modules_inventory_reservations_configuration)
 - deleting a module should not affect functionality of other parts of the application
 
-> Example: 
-> __InventoryReservations__ module is used to listen for events like __OrderUpdatedEvent__ or __OrderProductShippedEvent__ 
-> to ensure correct quantity_reserved is maintained in inventory table and stock is not oversold. 
-
 Each module has its own folder and might contains the following:
 
 - __ModuleServiceProvider__ (App\Modules\InventoryReservations\src\ModuleServiceProvider.php)
@@ -155,6 +151,24 @@ Each module has its own folder and might contains the following:
 - __Views__ (App\Modules\InventoryReservations\src\Views)
 - __Resources__ (App\Modules\InventoryReservations\src\Resources)
 - __Requests__ (App\Modules\InventoryReservations\src\Requests)
+
+### Module Installation
+Modules are installed using migrations
+
+```php
+<?php
+
+use App\Modules\Inventory\src\InventoryServiceProvider;
+use Illuminate\Database\Migrations\Migration;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        InventoryServiceProvider::installModule();
+    }
+};
+```
 
 ### ___Tests___ (/Tests)- `php artisan test`
 Helps us to make sure we didn't break anything accidentally
