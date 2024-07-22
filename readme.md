@@ -152,20 +152,63 @@ Each module has its own folder and might contains the following:
 - __Resources__ (App\Modules\InventoryReservations\src\Resources)
 - __Requests__ (App\Modules\InventoryReservations\src\Requests)
 
+### Module Configuration
+
+Modules Service Providers are used to register the module with the application and to load the module configuration.
+
+```php
+
+<?php
+
+namespace App\Modules\Magento2MSI\src;
+
+use App\Events\EveryFiveMinutesEvent;
+use App\Events\Product\ProductTagAttachedEvent;
+use App\Modules\BaseModuleServiceProvider;
+
+class Magento2MsiServiceProvider extends BaseModuleServiceProvider
+{
+    public static string $module_name = 'eCommerce - Magento 2 MSI';
+
+    public static string $module_description = 'Module provides connectivity to Magento 2 API - Multi Source Inventory';
+
+    public static string $settings_link = '/settings/modules/magento2msi';
+
+    public static bool $autoEnable = false;
+
+    protected $listen = [
+        EveryFiveMinutesEvent::class => [
+            Listeners\EveryFiveMinutesEventListener::class
+        ],
+
+        ProductTagAttachedEvent::class => [
+            Listeners\ProductTagAttachedEventListener::class,
+        ],
+    ];
+
+    public static function enabling(): bool
+    {
+        // Add your logic here
+        return parent::enabling();
+    }
+}
+
+```
+
 ### Module Installation
 Modules are installed using migrations
 
 ```php
 <?php
 
-use App\Modules\Inventory\src\InventoryServiceProvider;
+use App\Modules\Magento2MSI\src\Magento2MsiServiceProvider;
 use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
     public function up(): void
     {
-        InventoryServiceProvider::installModule();
+        Magento2MsiServiceProvider::installModule();
     }
 };
 ```
