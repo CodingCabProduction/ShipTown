@@ -10,7 +10,7 @@
 
         <div class="row pl-0 p-0">
             <div class="col-12 col-md-6 col-lg-6 text-nowrap text-left align-bottom pb-0 m-0 font-weight-bold text-uppercase small text-secondary">
-                REPORTS > ATIVITY LOG
+                REPORTS > ACTIVITY LOG
             </div>
             <div class="col-12 col-md-6 col-lg-6 text-nowrap">
                 <date-selector-widget :dates="{'url_param_name': 'filter[created_at_between]'}"></date-selector-widget>
