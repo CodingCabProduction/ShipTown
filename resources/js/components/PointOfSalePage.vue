@@ -9,14 +9,20 @@
             </div>
         </div>
 
-        <div class="row my-2">
-            <div class="flex-fill">
-                <barcode-input-field id="barcode_input" @barcodeScanned="addProductToTransaction" placeholder="Scan or type sku or product barcode" ref="barcode_input"/>
-            </div>
-
-            <button type="button" v-b-modal="'quick-actions-modal'" class="btn btn-primary ml-2"><font-awesome-icon icon="cog" class="fa-lg"></font-awesome-icon></button>
-            <button type="button" v-b-modal="'payments-modal'" class="btn btn-primary ml-2"><font-awesome-icon icon="credit-card" class="fa-lg"></font-awesome-icon></button>
-        </div>
+        <search-and-option-bar-observer/>
+        <search-and-option-bar :isStickable="true">
+            <barcode-input-field
+                :input_id="'barcode_input'"
+                placeholder="Enter SKU"
+                ref="barcode"
+                :url_param_name="'search'"
+                @barcodeScanned="addProductToTransaction"
+            />
+            <template v-slot:buttons>
+                <button v-b-modal="'payments-modal'" type="button" class="btn btn-primary ml-2"><font-awesome-icon icon="credit-card" class="fa-lg"></font-awesome-icon></button>
+                <top-nav-button v-b-modal="'quick-actions-modal'"/>
+            </template>
+        </search-and-option-bar>
 
         <div class="table-responsive">
             <table class="table-hover w-100">
