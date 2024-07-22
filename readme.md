@@ -134,6 +134,7 @@ For example, when an order is created, an event is dispatched to notify the ship
 
 ### Modules (App\Modules)
 Modules are used to group related functionality together.
+- modules should listen to events and take action when they occur
 - modules should be ideally maintaining their own data
 - modules data tables should prefix with ___module____ and module name (e.g. modules_inventory_reservations_configuration)
 - deleting a module should not affect functionality of other parts of the application
