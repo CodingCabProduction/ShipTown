@@ -99,37 +99,37 @@ export default {
         return {
             paymentAmount: 0,
             transaction: {
-                transaction_number: '#123378819',
+                transaction_number: '', //'#123378819',
                 entries: [
-                    {
-                        barcode: '593775',
-                        quantity: 2,
-                        cost_price: 50,
-                        full_price: 100,
-                        current_price: 90,
-                        sold_price: 90,
-                    },
-                    {
-                        barcode: '45',
-                        quantity: 1,
-                        cost_price: 50,
-                        full_price: 50,
-                        current_price: 45,
-                        sold_price: 45,
-                    }
+                    // {
+                    //     barcode: '593775',
+                    //     quantity: 2,
+                    //     cost_price: 50,
+                    //     full_price: 100,
+                    //     current_price: 90,
+                    //     sold_price: 90,
+                    // },
+                    // {
+                    //     barcode: '45',
+                    //     quantity: 1,
+                    //     cost_price: 50,
+                    //     full_price: 50,
+                    //     current_price: 45,
+                    //     sold_price: 45,
+                    // }
                 ],
                 payments: [
-                    {
-                        'payment_time': '202404120114',
-                        'name': 'cash',
-                        'amount': 100,
-                        'auth_id': '123456',
-                        'last_4_digits': '1234',
-                    }
+                    // {
+                    //     'payment_time': '202404120114',
+                    //     'name': 'cash',
+                    //     'amount': 100,
+                    //     'auth_id': '123456',
+                    //     'last_4_digits': '1234',
+                    // }
                 ],
-                total_to_pay: 135,
-                total_paid: 100,
-                total_outstanding: 35
+                total_to_pay: 0,
+                total_paid: 0,
+                total_outstanding: 0
             }
         }
     },
