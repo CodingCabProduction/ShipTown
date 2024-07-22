@@ -1,63 +1,78 @@
 <template>
-<div>
-    <card>
-        <text-card label="transaction number" :text="transaction['transaction_number']"></text-card>
-        <number-card label="total_to_pay" :number="transaction['total_to_pay']"></number-card>
-        <number-card label="total paid" :number="transaction['total_paid']"></number-card>
-        <number-card label="total_outstanding" :number="transaction['total_outstanding']"></number-card>
-    </card>
-    <card>
-        <template v-for="payment in transaction['payments']">
-            {{ payment['name'] }} {{ payment['amount'] }} <br>
-        </template>
-        <input id="payment_amount" class="form-control"  placeholder="Payment amount">
-        <button type="button" class="btn btn-primary fa-pull-right m-1 btn-sm" @click="addPaymentCash">Add Payment Cash</button>
-        <button type="button" class="btn btn-primary fa-pull-right m-1 btn-sm" @click="addPaymentCard">Add Payment Clover</button>
-    </card>
-    <div class="row mb-2 pl-1 pr-1">
-        <div class="flex-fill">
-            <barcode-input-field id="barcode_input" @barcodeScanned="addProductToTransaction" placeholder="Scan or type sku or product barcode" ref="barcode_input"/>
+    <div>
+        <div class="card my-1">
+            <div class="card-body m-auto p-0 row">
+                <!--            <text-card label="transaction number" :text="transaction['transaction_number']"></text-card>-->
+                <div class="col-4"><number-card label="total_to_pay" :number="transactionTotal"></number-card></div>
+                <div class="col-4"><number-card label="total paid" :number="transactionTotalPaid"></number-card></div>
+                <div class="col-4"><number-card label="total_outstanding" :number="transactionTotal - transactionTotalPaid"></number-card></div>
+            </div>
         </div>
 
-        <button type="button" v-b-modal="'quick-actions-modal'" class="btn btn-primary ml-2"><font-awesome-icon icon="cog" class="fa-lg"></font-awesome-icon></button>
+        <div class="row my-2">
+            <div class="flex-fill">
+                <barcode-input-field id="barcode_input" @barcodeScanned="addProductToTransaction" placeholder="Scan or type sku or product barcode" ref="barcode_input"/>
+            </div>
+
+            <button type="button" v-b-modal="'quick-actions-modal'" class="btn btn-primary ml-2"><font-awesome-icon icon="cog" class="fa-lg"></font-awesome-icon></button>
+            <button type="button" v-b-modal="'payments-modal'" class="btn btn-primary ml-2"><font-awesome-icon icon="credit-card" class="fa-lg"></font-awesome-icon></button>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table-hover w-100">
+                <thead>
+                <tr>
+                    <th>Barcode</th>
+                    <th>Quantity</th>
+                    <!--                    <th>Cost Price</th>-->
+                    <th>Full Price</th>
+                    <!--                    <th>Current Price</th>-->
+                    <th>Sold Price</th>
+                    <!--                    <th>Total Cost Price</th>-->
+                    <th>Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                <template v-for="transactionEntry in transaction['entries']" >
+                    <tr>
+                        <td>{{ transactionEntry['barcode'] }}</td>
+                        <td>{{ transactionEntry['quantity'] }}</td>
+                        <!--                        <td>{{ transactionEntry['cost_price'] }}</td>-->
+                        <td>{{ transactionEntry['full_price'] }}</td>
+                        <!--                        <td>{{ transactionEntry['current_price'] }}</td>-->
+                        <td>{{ transactionEntry['sold_price'] }}</td>
+                        <!--                        <td>{{ transactionEntry['total_cost_price'] }}</td>-->
+                        <td>{{ transactionEntry['total_sold_price'] }}</td>
+                    </tr>
+                </template>
+                </tbody>
+            </table>
+        </div>
+
+        <b-modal id="payments-modal" no-fade hide-header @hidden="setFocusElementById('barcode_input')">
+            <card>
+                <template v-for="payment in transaction['payments']">
+                    {{ payment['name'] }} {{ payment['amount'] }} <br>
+                </template>
+                <input id="payment_amount" class="form-control" placeholder="Payment amount" v-model="paymentAmount">
+                <button type="button" class="btn btn-primary fa-pull-right m-1 btn-sm" @click="addPaymentCash">Add Payment Cash</button>
+                <button type="button" class="btn btn-primary fa-pull-right m-1 btn-sm" @click="addPaymentCard">Add Payment Clover</button>
+            </card>
+        </b-modal>
+
+        <b-modal id="quick-actions-modal" no-fade hide-header @hidden="setFocusElementById('barcode_input')">
+            <stocktake-input v-bind:auto-focus-after="100" ></stocktake-input>
+            <hr>
+            <button type="button" class="btn btn-primary m-1 col" @click="printReceipt">Print Receipt</button>
+            <button type="button" class="btn btn-primary m-1 col" @click="saveTransaction">Save Transaction</button>
+            <button type="button" class="btn btn-primary m-1 col" @click="clearTransaction">Clear Transaction</button>
+            <button type="button" class="btn btn-primary m-1 col" @click="clearTransaction" disabled>Return</button>
+            <template #modal-footer>
+                <b-button variant="secondary" class="float-right" @click="$bvModal.hide('quick-actions-modal');">Cancel</b-button>
+                <b-button variant="primary" class="float-right" @click="$bvModal.hide('quick-actions-modal');">OK</b-button>
+            </template>
+        </b-modal>
     </div>
-
-    <table>
-        <tr>
-            <th>Barcode</th>
-            <th>Quantity</th>
-            <th>Full Price</th>
-            <th>Current Price</th>
-            <th>Total</th>
-        </tr>
-        <template v-for="transactionEntry in transaction['entries']" >
-            <tr>
-                <td>{{ transactionEntry['barcode'] }}</td>
-                <td>{{ transactionEntry['quantity'] }}</td>
-                <td>{{ transactionEntry['full_price'] }}</td>
-                <td>{{ transactionEntry['current_price'] }}</td>
-                <td>{{ transactionEntry['total'] }}</td>
-            </tr>
-        </template>
-    </table>
-
-
-    <b-modal id="quick-actions-modal" no-fade hide-header @hidden="setFocusElementById('barcode-input')">
-        <stocktake-input v-bind:auto-focus-after="100" ></stocktake-input>
-        <hr>
-        <button type="button" class="btn btn-primary fa-pull-right m-1 btn-sm" @click="printReceipt">Print Receipt</button>
-        <button type="button" class="btn btn-primary fa-pull-right m-1 col" @click="saveTransaction">Save Transaction</button>
-        <button type="button" class="btn btn-primary fa-pull-right m-1 col" @click="clearTransaction">Clear Transaction</button>
-        <template #modal-footer>
-            <b-button variant="secondary" class="float-right" @click="$bvModal.hide('quick-actions-modal');">
-                Cancel
-            </b-button>
-            <b-button variant="primary" class="float-right" @click="$bvModal.hide('quick-actions-modal');">
-                OK
-            </b-button>
-        </template>
-    </b-modal>
-</div>
 </template>
 
 <script>
@@ -67,33 +82,54 @@ import api from "../mixins/api.vue";
 export default {
     mixins: [helpers, api],
 
+    mounted() {
+        this.loadTransaction();
+    },
+
+    computed: {
+        transactionTotal() {
+            return this.transaction.entries.reduce((acc, entry) => acc + Number(entry.sold_price) * Number(entry.quantity), 0);
+        },
+        transactionTotalPaid() {
+            return this.transaction.payments.reduce((acc, payment) => acc + Number(payment.amount), 0);
+        },
+    },
+
     data() {
         return {
+            paymentAmount: 0,
             transaction: {
                 transaction_number: '#123378819',
                 entries: [
                     {
                         barcode: '593775',
                         quantity: 2,
+                        cost_price: 50,
                         full_price: 100,
-                        current_price: 90
+                        current_price: 90,
+                        sold_price: 90,
                     },
                     {
                         barcode: '45',
                         quantity: 1,
+                        cost_price: 50,
                         full_price: 50,
-                        current_price: 45
+                        current_price: 45,
+                        sold_price: 45,
                     }
                 ],
                 payments: [
                     {
+                        'payment_time': '202404120114',
                         'name': 'cash',
-                        'amount': 1251
+                        'amount': 100,
+                        'auth_id': '123456',
+                        'last_4_digits': '1234',
                     }
                 ],
-                total_to_pay: 12.51,
-                total_paid: 12.51,
-                total_outstanding: 3.45
+                total_to_pay: 135,
+                total_paid: 100,
+                total_outstanding: 35
             }
         }
     },
@@ -104,28 +140,55 @@ export default {
             },
             deep: true
         },
-        'transaction.entries': {
-            handler: function (val, oldVal) {
-                // this.notifyError('Implement update total functionality');
-            },
-            deep: true
-        }
     },
     methods: {
         addProductToTransaction(barcode) {
-            this.transaction['entries'].push({
-                barcode: barcode,
-                quantity: 2,
-                full_price: 100,
-                current_price: 90
+            if (barcode.trim() === '') {
+                return;
+            }
+
+            this.apiGetProducts({'filter[sku_or_alias]' : barcode, 'include': 'prices'})
+                .then(response => {
+                    if (response.data.data.length === 0) {
+                        this.notifyError('Product "'+ barcode +'" not found');
+                        return;
+                    }
+
+                    this.beep();
+
+                    const product = response.data.data[0];
+
+                    const productPrices = product['prices']['DUB'];
+
+                    let quantity = 1;
+
+                    this.transaction['entries'].unshift({
+                        barcode: product.sku,
+                        quantity: quantity,
+                        cost_price: productPrices['cost'],
+                        full_price: productPrices['price'],
+                        current_price: productPrices['current_price'],
+                        sold_price: productPrices['current_price'],
+                        total_cost_price: quantity * productPrices['current_price'],
+                        total_sold_price: quantity * productPrices['current_price'],
+                    });
+                }).catch(error => {
+                this.displayApiCallError(error);
             });
-
-            // this.notifyError('Implement add product to transaction functionality');
-
-            // this.notifyError('Implement update total functionality');
         },
 
         printReceipt() {
+            this.apiPostPrintJob({
+                'printer_id': this.currentUser().printer_id,
+                'content_type': 'raw_base64',
+                'content': JSON.stringify(this.transaction)
+            })
+                .then(() => {
+                    this.notifySuccess('Receipt printed', false);
+                })
+                .catch(error => {
+                    this.displayApiCallError(error);
+                })
             // Please use RAW PRINT from printnode for this functionality
             // this.notifyError('Implement print receipt functionality');
         },
@@ -135,19 +198,19 @@ export default {
 
             this.transaction['payments'].push({
                 'name': name,
-                'amount': amount
+                'amount': amount,
             });
         },
 
         addPaymentCash() {
-            this.addPayment('cash', 1251);
+            this.addPayment('cash', this.paymentAmount);
         },
 
         addPaymentCard() {
-            this.addPayment('clover', 1251);
-            this.addPayment('auth id:', 23721973912);
-            this.addPayment('las 4 digits:', 1234);
-            this.addPayment('transaction time:', 202404120114);
+            this.addPayment('clover',  this.paymentAmount);
+            // this.addPayment('auth id:', 23721973912);
+            // this.addPayment('card 4 digits:', 1234);
+            // this.addPayment('transaction time:', 202404120114);
         },
 
         clearTransaction() {
@@ -163,16 +226,52 @@ export default {
             this.$bvModal.hide('quick-actions-modal');
         },
 
+        loadTransaction() {
+            if (!this.currentUser().active_transaction_id) {
+                return;
+            }
+
+            this.apiGetTransactions({
+                'filter[id]' : this.currentUser().active_transaction_id
+            })
+                .then(response => {
+                    this.transaction = response.data.data[0]['raw_data'];
+                })
+                .catch(error => {
+                    this.displayApiCallError(error);
+                });
+        },
+
         saveTransaction() {
+            if (this.currentUser().active_transaction_id) {
+                this.apiPutTransaction(this.currentUser().active_transaction_id, {'raw_data': this.transaction})
+                    .catch(error => {
+                        this.displayApiCallError(error);
+                    });
+                return;
+            }
+
+            this.apiPostTransaction({'raw_data': this.transaction})
+                .then(response => {
+                    this.currentUser().active_transaction_id = response.data.data.id;
+
+                    this.apiPostUserUpdate(this.currentUser().id, {'active_transaction_id': response.data.data.id})
+                        .catch(error => {
+                            this.displayApiCallError(error);
+                        });
+                })
+                .catch(error => {
+                    this.displayApiCallError(error);
+                });
             // we should post the transaction to the server for immediate save only
-            // this should be best way to make a backup of the transaction in case of any failures
+            // this should be the best way to make a backup of the transaction in case of any failures
             // /api/transactions/in-progress ??
             // this.notifyError('Implement save transaction functionality');
 
             // we might develop a way to retrieve the transaction from the server later too
 
-           // $response =  this.apiPostTransaciotn(response->transaction_id, transaction);
-           // user->update(['active_transafgion_id' => response->transaction_id]);
+            // $response =  this.apiPostTransaction(response->transaction_id, transaction);
+            // user->update(['active_transaction_id' => response->transaction_id]);
         },
     }
 

@@ -58,7 +58,7 @@ import {
     faArrowRight,
     faFileDownload,
     faCaretDown,
-    faCaretUp, faMagnifyingGlass, faEllipsisVertical
+    faCaretUp, faMagnifyingGlass, faEllipsisVertical, faCreditCard
 } from '@fortawesome/free-solid-svg-icons';
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -111,6 +111,7 @@ library.add(faFileDownload);
 library.add(faAnglesUp);
 library.add(faMagnifyingGlass);
 library.add(faEllipsisVertical);
+library.add(faCreditCard);
 
 Vue.config.productionTip = false;
 
