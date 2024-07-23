@@ -105,4 +105,5 @@ Route::middleware(['role:admin'])->group(function () {
     Route::get('admin/settings/modules/webhooks/subscriptions', [SubscriptionController::class, 'index'])->name('webhooks::subscriptions');
     Route::view('admin/modules/slack/config', 'modules/slack/config')->name('modules.slack.config');
     Route::view('admin/settings/modules/magento-api', 'settings/magento-api')->name('settings.modules.magento-api');
+    Route::view('admin/settings/modules/quantity-discounts', 'settings/quantity-discounts')->name('settings.modules.quantity-discounts');
 });

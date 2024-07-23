@@ -43,7 +43,7 @@
         </div>
 
         <create-modal @onCreated="getConnections"></create-modal>
-        <edit-modal :connection="selectedConnection" id="editForm" @onUpdated="conncetionUpdatedEvent"></edit-modal>
+        <edit-modal :connection="selectedConnection" id="editForm" @onUpdated="connectionUpdatedEvent"></edit-modal>
     </div>
 </template>
 
@@ -105,7 +105,7 @@ export default {
             $('#editForm').modal('show');
         },
 
-        conncetionUpdatedEvent() {
+        connectionUpdatedEvent() {
             this.getConnections();
         },
     },
