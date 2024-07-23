@@ -48,6 +48,8 @@ class TransactionController extends Controller
                     'current_price' => $group->first()['current_price'],
                     'total_cost_price' => $group->sum('total_cost_price'),
                     'total_sold_price' => $group->sum('total_sold_price'),
+                    'price_source_id' => $group->first()['price_source_id'] ?? 0,
+                    'price_source' => $group->first()['price_source'] ?? '',
                 ];
             })
             ->values()

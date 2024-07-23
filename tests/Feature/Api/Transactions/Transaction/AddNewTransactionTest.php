@@ -28,6 +28,8 @@ class AddNewTransactionTest extends TestCase
                     'current_price' => 18.00,
                     'total_cost_price' => 20.00,
                     'total_sold_price' => 30.00,
+                    'price_source_id' => 0,
+                    'price_source' => 'SALE_PRICE'
                 ],
                 [
                     'barcode' => 'ABC123',
@@ -38,6 +40,8 @@ class AddNewTransactionTest extends TestCase
                     'current_price' => 18.00,
                     'total_cost_price' => 10.00,
                     'total_sold_price' => 15.00,
+                    'price_source_id' => 0,
+                    'price_source' => 'SALE_PRICE'
                 ],
                 [
                     'barcode' => 'XYZ789',
@@ -48,6 +52,8 @@ class AddNewTransactionTest extends TestCase
                     'current_price' => 9.00,
                     'total_cost_price' => 5.00,
                     'total_sold_price' => 8.00,
+                    'price_source_id' => 0,
+                    'price_source' => 'SALE_PRICE'
                 ],
             ]
         ];
@@ -72,6 +78,8 @@ class AddNewTransactionTest extends TestCase
                 'current_price' => 18.00,
                 'total_cost_price' => 30.00,
                 'total_sold_price' => 45.00,
+                'price_source_id' => 0,
+                'price_source' => 'SALE_PRICE'
             ],
             [
                 'barcode' => 'XYZ789',
@@ -82,6 +90,8 @@ class AddNewTransactionTest extends TestCase
                 'current_price' => 9.00,
                 'total_cost_price' => 5.00,
                 'total_sold_price' => 8.00,
+                'price_source_id' => 0,
+                'price_source' => 'SALE_PRICE'
             ]
         ], $updatedTransaction['raw_data']['entries']);
     }

@@ -45,6 +45,7 @@
                     <th>Sold Price</th>
                     <!--                    <th>Total Cost Price</th>-->
                     <th>Total</th>
+                    <th>Price Source</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -57,6 +58,7 @@
                     <td>{{ transactionEntry['sold_price'] }}</td>
                     <!--                        <td>{{ transactionEntry['total_cost_price'] }}</td>-->
                     <td>{{ transactionEntry['total_sold_price'] }}</td>
+                    <td>{{ transactionEntry['price_source'] }}</td>
                 </tr>
                 </tbody>
             </table>
@@ -188,8 +190,10 @@ export default {
                         entry['quantity'] += 1;
                         entry['total_cost_price'] = entry['quantity'] * productPrices['current_price'];
                         entry['total_sold_price'] = entry['quantity'] * productPrices['current_price'];
+
+                        this.setPriceSource(entry, productPrices);
                     } else {
-                        this.transaction['entries'].unshift({
+                        const entry = {
                             barcode: product.sku,
                             quantity: quantity,
                             cost_price: productPrices['cost'],
@@ -198,7 +202,11 @@ export default {
                             sold_price: productPrices['current_price'],
                             total_cost_price: quantity * productPrices['current_price'],
                             total_sold_price: quantity * productPrices['current_price'],
-                        });
+                            price_source_id: 0,
+                        };
+
+                        this.setPriceSource(entry, productPrices);
+                        this.transaction['entries'].unshift(entry);
                     }
                 }).catch(error => {
                 this.displayApiCallError(error);
@@ -301,6 +309,14 @@ export default {
             // $response =  this.apiPostTransaction(response->transaction_id, transaction);
             // user->update(['active_transaction_id' => response->transaction_id]);
         },
+
+        setPriceSource(entry, prices) {
+            if (prices['price'] > prices['current_price']) {
+                entry['price_source'] = 'SALE_PRICE';
+            } else {
+                entry['price_source'] = 'FULL_PRICE';
+            }
+        }
     }
 }
 </script>
