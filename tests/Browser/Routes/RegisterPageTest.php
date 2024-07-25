@@ -2,6 +2,7 @@
 
 namespace Tests\Browser\Routes;
 
+use App\User;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 use Throwable;
@@ -15,6 +16,8 @@ class RegisterPageTest extends DuskTestCase
      */
     public function testPage()
     {
+        User::query()->delete();
+
         $this->browse(function (Browser $browser) {
             $browser->disableFitOnFailure();
             $browser->visit($this->uri);
