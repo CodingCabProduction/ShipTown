@@ -51,6 +51,8 @@ class VerifyPageTest extends DuskTestCase
      */
     public function test_if_guest_not_allowed()
     {
+        User::query()->delete();
+
         $this->browse(function (Browser $browser) {
             $browser->disableFitOnFailure();
             $browser->visit($this->uri);
