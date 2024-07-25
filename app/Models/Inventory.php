@@ -48,6 +48,7 @@ use Spatie\QueryBuilder\QueryBuilder;
  * @property-read Product $product
  *
  * @property-read Warehouse $warehouse
+ * @property-read ProductPrice $prices
  *
  * @property-read Collection|Activity[] $activities
  * @property-read int|null $activities_count
@@ -286,6 +287,14 @@ class Inventory extends BaseModel
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function prices(): BelongsTo
+    {
+        return $this->belongsTo(ProductPrice::class, 'id', 'inventory_id');
     }
 
     /**

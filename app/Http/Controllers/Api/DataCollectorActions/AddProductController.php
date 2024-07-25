@@ -33,9 +33,16 @@ class AddProductController
             ])
             ->firstOr(function () use ($request, $product_id) {
                 $warehouse_id = DataCollection::query()->find($request->validated('data_collection_id'), ['warehouse_id'])->warehouse_id;
-                $inventory = Inventory::query()->where(['product_id' => $product_id, 'warehouse_id' => $warehouse_id])->first();
+                $inventory = Inventory::query()
+                    ->with('prices')
+                    ->where(['product_id' => $product_id, 'warehouse_id' => $warehouse_id])
+                    ->first();
 
                 return DataCollectionRecord::query()->create([
+                    'unit_cost' => data_get($inventory, 'prices.cost'),
+                    'unit_full_price' => data_get($inventory, 'prices.price'),
+                    'unit_sold_price' => data_get($inventory, 'prices.current_price'),
+                    'price_source' => data_get($inventory, 'prices.price') === data_get($inventory, 'prices.current_price') ? 'FULL_PRICE' : 'SALE_PRICE',
                     'data_collection_id' => $request->validated('data_collection_id'),
                     'inventory_id' => $inventory->id,
                     'warehouse_id' => $inventory->warehouse_id,

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -22,6 +24,12 @@ use Spatie\QueryBuilder\QueryBuilder;
  *  @property double $quantity_requested
  *  @property double $quantity_scanned
  *  @property double $quantity_to_scan
+ *  @property double $unit_cost
+ *  @property double $unit_sold_price
+ *  @property double $unit_discount
+ *  @property double $unit_full_price
+ *  @property string $price_source
+ *  @property string $custom_uuid
  *  @property bool   $is_scanned
  *  @property Carbon $created_at
  *  @property Carbon $updated_at
@@ -31,24 +39,31 @@ use Spatie\QueryBuilder\QueryBuilder;
  *  @property-read Product $product
  *  @property-read DataCollection $dataCollection
  *  @property-read Inventory $inventory
+ *  @property-read ProductPrice $prices
  */
 class DataCollectionRecord extends Model
 {
-    use HasFactory;
-
-    use SoftDeletes;
-
     protected $fillable = [
         'data_collection_id',
         'inventory_id',
-        'warehouse_id',
         'product_id',
+        'warehouse_code',
+        'warehouse_id',
         'total_transferred_in',
         'total_transferred_out',
         'quantity_requested',
         'quantity_scanned',
+        'unit_cost',
+        'unit_sold_price',
+        'unit_discount',
+        'unit_full_price',
+        'price_source',
         'custom_uuid',
     ];
+
+    use HasFactory;
+
+    use SoftDeletes;
 
     protected $casts = [
         'product_id'            => 'int',
@@ -57,6 +72,11 @@ class DataCollectionRecord extends Model
         'quantity_requested'    => 'double',
         'quantity_scanned'      => 'double',
         'quantity_to_scan'      => 'double',
+        'unit_cost'             => 'float',
+        'unit_sold_price'       => 'float',
+        'unit_discount'         => 'float',
+        'unit_full_price'       => 'float',
+        'price_source'          => 'string',
     ];
 
     public function product(): BelongsTo
@@ -72,6 +92,11 @@ class DataCollectionRecord extends Model
     public function inventory(): BelongsTo
     {
         return $this->belongsTo(Inventory::class);
+    }
+
+    public function prices(): BelongsTo
+    {
+        return $this->belongsTo(ProductPrice::class, 'inventory_id', 'inventory_id');
     }
 
     public static function getSpatieQueryBuilder(): QueryBuilder

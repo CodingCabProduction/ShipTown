@@ -45,6 +45,10 @@ class DataCollectorRecordController extends Controller
             ]);
 
         $collectionRecord->update([
+            'unit_cost' => data_get($collectionRecord, 'prices.cost'),
+            'unit_full_price' => data_get($collectionRecord, 'prices.price'),
+            'unit_sold_price' => data_get($collectionRecord, 'prices.current_price'),
+            'price_source' => data_get($collectionRecord, 'prices.price') === data_get($collectionRecord, 'prices.current_price') ? 'FULL_PRICE' : 'SALE_PRICE',
             'quantity_scanned' => $collectionRecord->quantity_scanned + $request->validated('quantity_scanned', 0),
             'quantity_requested' => $collectionRecord->quantity_requested + $request->validated('quantity_requested', 0),
         ]);

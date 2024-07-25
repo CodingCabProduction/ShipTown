@@ -75,10 +75,11 @@
                         </div>
                         <div class="col-12 col-md-3 text-left small">
                             <div>in stock: <strong>{{ dashIfZero(Number(record['inventory']['quantity'])) }}</strong></div>
+                            <div v-if="record['price_source'] !== 'FULL_PRICE'">full price: <strong>{{ dashIfZero(Number(record['unit_full_price'])) }}</strong></div>
                         </div>
                         <div class="col-12 col-md-5 text-right">
                             <number-card label="quantity" :number="record['quantity_scanned']" v-bind:class="{'bg-warning': record['quantity_scanned'] > 0 && record['quantity_requested'] &&  record['quantity_requested'] < record['quantity_scanned'] + record['total_transferred_out'] + record['total_transferred_in']}"></number-card>
-                            <number-card label="unit price" :number="record['unit_price']" v-bind:class="{'bg-warning': record['unit_price'] === 0 }"></number-card>
+                            <number-card label="unit price" :number="record['unit_sold_price']" v-bind:class="{'bg-warning': record['price_source'] !== 'FULL_PRICE' }"></number-card>
                             <number-card label="total price" :number="record['total_price']"></number-card>
                         </div>
                     </div>
@@ -126,8 +127,6 @@
                     <br>
                     <button id="transferInButton" :disabled="! buttonsEnabled" @click.prevent="transferStockIn" v-b-toggle class="col btn mb-2 btn-primary">Transfer In</button>
                     <button :disabled="! buttonsEnabled" @click.prevent="transferToWarehouseClick" v-b-toggle class="col btn mb-2 btn-primary">Transfer To...</button>
-                    <button :disabled="! buttonsEnabled" @click.prevent="importAsStocktake" v-b-toggle class="col btn mb-2 btn-primary">Import As Stocktake</button>
-                    <button :disabled="! buttonsEnabled" @click.prevent="transferStockOut" v-b-toggle class="col btn mb-2 btn-primary">Deduct From Stock</button>
                     <button :disabled="! buttonsEnabled" @click.prevent="archiveCollection" v-b-toggle class="col btn mb-2 btn-primary">Archive Collection</button>
                 </div>
                 <br>
@@ -529,7 +528,7 @@ export default {
 
             const params = this.$router.currentRoute.query;
             params['filter[data_collection_id]'] = this.data_collection_id;
-            params['include'] = 'product,inventory,product.tags,product.aliases';
+            params['include'] = 'product,inventory,product.tags,product.aliases,prices';
             params['per_page'] = this.per_page;
             params['page'] = page;
 

@@ -18,6 +18,7 @@ class StoreTest extends TestCase
         $dataCollection = DataCollection::factory()->create();
         $product = Product::factory()->create();
 
+
         $response = $this->actingAs($user, 'api')->postJson($this->uri, [
             'data_collection_id' => $dataCollection->id,
             'sku_or_alias' => $product->sku,
