@@ -21,14 +21,9 @@ trait ResetsDatabase
 
         Artisan::call('app:install');
 
-        User::where(['email' => 'demo-admin@ship.town', 'password' => 'secret1144'])->first();
-
-        if (empty($user)) {
-            User::factory()->create([
-                'email' => 'demo-admin@ship.town',
-                'password' => bcrypt('secret1144'),
-            ]);
-        }
-
+        User::factory()->create([
+            'email' => 'demo-admin@ship.town',
+            'password' => bcrypt('secret1144'),
+        ]);
     }
 }
