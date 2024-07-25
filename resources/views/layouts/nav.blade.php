@@ -26,6 +26,7 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-left w-auto text-left bg-primary " aria-labelledby="navbarDropdown" >
+                            <a class="dropdown-item text-white lightHover mt-1" id="point_of_sale_link" href="{{ route('tools.point_of_sale') }}">{{ __('Point Of Sale') }}</a>
                             <a class="dropdown-item text-white lightHover mt-1" id="data_collector_link" href="{{ route('data-collector') }}">{{ __('Data Collector') }}</a>
                             <a class="dropdown-item text-white lightHover mt-1" id="restocking_link" href="{{ route('reports.restocking.index' , ['sort' => '-quantity_required', 'cache_name' => 'restocking_page']) }}">{{ __('Restocking') }}</a>
                             <a class="dropdown-item text-white lightHover mt-1 mb-1" id="picklist_link" href="/picklist?step=select">{{ __('Picklist') }}</a>

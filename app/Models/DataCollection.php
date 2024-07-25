@@ -17,6 +17,7 @@ use Illuminate\Support\Carbon;
  * @property int $destination_warehouse_id
  * @property int $destination_collection_id
  * @property string $name
+ * @property string $custom_uuid
  * @property Carbon $deleted_at
  * @property Carbon $created_at
  * @property Carbon $updated_at
@@ -46,6 +47,7 @@ class DataCollection extends BaseModel
         'destination_warehouse_id',
         'destination_collection_id',
         'name',
+        'custom_uuid',
         'currently_running_task'
     ];
 

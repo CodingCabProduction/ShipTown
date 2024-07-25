@@ -6,7 +6,7 @@
             <product-sku-button :product_sku="product['sku']"/>
         </b><br>
         </div>
-        <div v-if="product">
+        <div v-if="showTags && product">
             <template v-for="tag in product['tags']">
                 <a class="badge text-uppercase btn btn-outline-primary" :key="tag.id" @click.prevent="setUrlParameterAngGo('filter[product_has_tags]', getTagName(tag))"> {{ getTagName(tag) }} </a>
             </template>
@@ -27,6 +27,10 @@ export default {
 
         props: {
             product: null,
+            showTags: {
+                type: Boolean,
+                default: true
+            }
         },
 
         methods: {

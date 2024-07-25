@@ -161,6 +161,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
  * Application mixins
  */
 Vue.component('point-of-sale-page', require('./components/PointOfSalePage.vue').default);
+Vue.component('tools-point-of-sale-page', require('./components/Tools/PointOfSalePage.vue').default);
 Vue.component('product-details-modal', require('./modals/ProductDetailsModal.vue').default);
 Vue.component('recent-inventory-movements-modal', require('./modals/RecentInventoryMovementsModal.vue').default);
 Vue.component('new-product-modal', require('./modals/NewProductModal.vue').default);
@@ -181,6 +182,7 @@ Vue.component('barcode-input-field', require('./components/SharedComponents/Barc
 Vue.component('configuration-section', require('./components/Settings/ConfigurationSection.vue').default);
 Vue.component('data-collector-list-page', require('./components/DataCollectorListPage.vue').default);
 Vue.component('data-collector-page', require('./components/DataCollectorPage.vue').default);
+Vue.component('data-collector-transaction-page', require('./components/Tools/DataCollector/TransactionPage.vue').default);
 Vue.component('data-collector-quantity-request-modal', require('./components/DataCollectionPage/DataCollectorQuantityRequestModal.vue').default);
 Vue.component('date-selector-widget', require('./components/Widgets/DateSelectorWidget.vue').default);
 Vue.component('dpd-configuration', require('./components/Settings/DpdConfiguration.vue').default);

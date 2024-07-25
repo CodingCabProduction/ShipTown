@@ -31,6 +31,7 @@ class DataCollectorListReport extends Report
             'warehouse_id'          => 'warehouse_id',
             'type'                  => 'data_collections.type',
             'name'                  => 'data_collections.name',
+            'custom_uuid'           => 'data_collections.custom_uuid',
             'differences_count'     =>  $differences_count_subquery,
             'created_at'            => 'data_collections.created_at',
             'updated_at'            => 'data_collections.updated_at',

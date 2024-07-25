@@ -316,13 +316,13 @@
                 }
 
                 if (this.singleScanEnabled) {
-                    this.addSinglePiece(this);
+                    this.addSinglePiece(barcode);
                 } else {
                     this.$modal.showDataCollectorQuantityRequestModal(this.dataCollection['id'], barcode, this.addToRequested ? 'quantity_requested' : 'quantity_scanned');
                 }
             },
 
-            addSinglePiece() {
+            addSinglePiece(barcode) {
                 let data = {
                     'data_collection_id': this.dataCollection['id'],
                     'sku_or_alias': barcode,
