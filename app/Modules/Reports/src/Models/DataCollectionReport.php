@@ -60,6 +60,7 @@ class DataCollectionReport extends Report
             'unit_full_price'               => 'data_collection_records.unit_full_price',
             'total_price'                   => 'data_collection_records.total_price',
             'price_source'                  => 'data_collection_records.price_source',
+            'price_source_id'               => 'data_collection_records.price_source_id',
             'inventory_quantity'            => 'inventory.quantity',
             'inventory_last_counted_at'     => 'inventory.last_counted_at',
             'last_movement_at'              => 'inventory.last_movement_at',

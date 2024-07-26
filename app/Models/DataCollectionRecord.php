@@ -29,6 +29,7 @@ use Spatie\QueryBuilder\QueryBuilder;
  *  @property double $unit_discount
  *  @property double $unit_full_price
  *  @property string $price_source
+ *  @property int    $price_source_id
  *  @property string $custom_uuid
  *  @property bool   $is_scanned
  *  @property Carbon $created_at
@@ -58,6 +59,7 @@ class DataCollectionRecord extends Model
         'unit_discount',
         'unit_full_price',
         'price_source',
+        'price_source_id',
         'custom_uuid',
     ];
 
