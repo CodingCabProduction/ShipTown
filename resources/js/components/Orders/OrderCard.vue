@@ -551,7 +551,7 @@ export default {
 
     mounted() {
         // we pre creating array of empty products so UI will display empty row for each orderProduct
-        // its simply more pleasant to eye and card doesnt "jump"
+        // its simply more pleasant to eye and card doesn't "jump"
         for (let i = 0; i < this.order['product_line_count']; i++)
             this.order_products.unshift([]);
     },
@@ -583,7 +583,7 @@ export default {
                 });
         },
 
-        loadOrderStatuses(){
+        loadOrderStatuses() {
             this.apiGetOrderStatus({
                 'filter[hidden]': 0,
                 'per_page': 999,

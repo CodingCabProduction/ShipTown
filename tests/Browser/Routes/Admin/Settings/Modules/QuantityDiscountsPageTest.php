@@ -9,7 +9,7 @@ use Throwable;
 
 class QuantityDiscountsPageTest extends DuskTestCase
 {
-    private string $uri = '/admin/settings/modules/magento-api';
+    private string $uri = '/admin/settings/modules/quantity-discounts';
 
     /**
      * @throws Throwable

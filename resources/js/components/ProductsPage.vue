@@ -52,7 +52,6 @@
                 </b-button>
             </template>
         </b-modal>
-
     </div>
 </template>
 

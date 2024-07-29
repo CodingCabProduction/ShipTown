@@ -71,7 +71,6 @@ export default {
 
         // Event will be fired after transition
         swiper.on('transitionEnd', function() {
-            console.log(this.activeIndex);
             if (this.activeIndex === swipedLeftIndex) {
                 self.$emit('swipeLeft', []);
 

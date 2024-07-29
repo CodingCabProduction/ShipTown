@@ -34,6 +34,10 @@ const Modals = {
             showFindProductModal(callback) {
                 this.show('find-product-modal', {'callback': callback});
             },
+
+            showAddNewQuantityDiscountModal(discount = null) {
+                this.show('new-quantity-discount-modal', {'discount': discount});
+            },
         }
     }
 }

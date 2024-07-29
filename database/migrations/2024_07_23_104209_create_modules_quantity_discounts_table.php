@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('modules_quantity_discounts', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->string('type', 15)->nullable();
+            $table->string('type', 50)->nullable();
             $table->json('configuration')->nullable();
             $table->timestamps();
             $table->softDeletes();

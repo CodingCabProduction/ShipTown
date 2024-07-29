@@ -18,7 +18,7 @@
         </search-and-option-bar>
 
         <div class="row pl-2 p-0 text-uppercase small text-secondary">
-            <div class="col-8 text-nowrap text-left align-bottom pb-0 m-0 font-weight-bold ">
+            <div class="col-8 text-nowrap text-left align-bottom pb-0 m-0 font-weight-bold">
                 Tools > Data Collector
             </div>
             <div class="col-4 text-nowrap">

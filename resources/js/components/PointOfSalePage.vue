@@ -181,7 +181,6 @@ export default {
                     this.beep();
 
                     const product = response.data.data[0];
-
                     const productPrices = product['prices'][this.currentUser().warehouse_code ?? 'DUB'];
 
                     let quantity = 1;
@@ -209,9 +208,10 @@ export default {
                         this.setPriceSource(entry, productPrices);
                         this.transaction['entries'].unshift(entry);
                     }
-                }).catch(error => {
-                this.displayApiCallError(error);
-            });
+                })
+                .catch(error => {
+                    this.displayApiCallError(error);
+                });
         },
 
         printReceipt() {

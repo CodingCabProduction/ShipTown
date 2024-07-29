@@ -82,7 +82,7 @@
                 <template v-slot:content>
                     <div class="row">
                         <div class="col-12 col-md-4">
-                            <product-info-card :product= "record['product']"></product-info-card>
+                            <product-info-card :product="record['product']"></product-info-card>
                         </div>
                         <div class="col-12 col-md-3 text-left small">
                             <div>in stock: <strong>{{ dashIfZero(Number(record['inventory']['quantity'])) }}</strong></div>

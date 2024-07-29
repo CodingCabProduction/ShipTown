@@ -31,8 +31,11 @@
 
     <vue-snotify></vue-snotify>
 
-    <recent-inventory-movements-modal></recent-inventory-movements-modal>
-    <product-details-modal></product-details-modal>
-    <new-product-modal></new-product-modal>
-    <find-product-modal></find-product-modal>
+    @auth
+        <recent-inventory-movements-modal></recent-inventory-movements-modal>
+        <product-details-modal></product-details-modal>
+        <new-product-modal></new-product-modal>
+        <find-product-modal></find-product-modal>
+        <new-quantity-discount-modal></new-quantity-discount-modal>
+    @endauth
 @endsection

@@ -53,6 +53,10 @@ export default {
                 return (value && value !== 0) ? value : '-';
             },
 
+            dashIfEmpty(value) {
+                return value ? value : '-';
+            },
+
             setFocusElementById(elementId, showKeyboard = false, autoSelectAll = true, delay = 100) {
                 process.nextTick(() => {
                     const element = document.getElementById(elementId);
