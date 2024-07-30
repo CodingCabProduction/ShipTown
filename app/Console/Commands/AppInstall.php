@@ -29,6 +29,7 @@ use App\Modules\QueueMonitor\src\QueueMonitorServiceProvider;
 use App\Modules\Slack\src\SlackServiceProvider;
 use App\Modules\StocktakeSuggestions\src\StocktakeSuggestionsServiceProvider;
 use App\Modules\Telescope\src\TelescopeModuleServiceProvider;
+use Artisan;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission;
@@ -58,7 +59,7 @@ class AppInstall extends Command
         $configuration = Configuration::query()->firstOrCreate([], ['database_version' => '0.0.0']);
 
         if (version_compare($configuration->database_version, '0.0.0', '=')) {
-            $this->ensureAppKeysGenerated();
+            self::ensureAppKeysGenerated();
             $this->preconfigureDatabase();
             $configuration->update(['database_version' => '2.1.0']);
         }
@@ -68,7 +69,7 @@ class AppInstall extends Command
         return 0;
     }
 
-    private function setVariable(string $key, string $value): void
+    private static function setVariable(string $key, string $value): void
     {
         $path = base_path('.env');
 
@@ -81,18 +82,18 @@ class AppInstall extends Command
         }
     }
 
-    private function createPassportKeys(): void
+    private static function createPassportKeys(): void
     {
-        $this->call('passport:keys', [
+        Artisan::call('passport:keys', [
             '--force' => true,
         ]);
 
-        $this->setVariable('PASSPORT_PRIVATE_KEY', implode('', ['"', Storage::get('oauth-private.key'), '"']));
-        $this->setVariable('PASSPORT_PUBLIC_KEY', implode('', ['"', Storage::get('oauth-public.key'), '"']));
+        self::setVariable('PASSPORT_PRIVATE_KEY', implode('', ['"', Storage::get('oauth-private.key'), '"']));
+        self::setVariable('PASSPORT_PUBLIC_KEY', implode('', ['"', Storage::get('oauth-public.key'), '"']));
         unlink(storage_path('oauth-private.key'));
         unlink(storage_path('oauth-public.key'));
 
-        $this->info("Passport encryption keys generated successfully");
+        info("Passport encryption keys generated successfully");
     }
 
     private function createDefaultNavigationLinks(): void
@@ -229,16 +230,16 @@ class AppInstall extends Command
     /**
      * @return void
      */
-    public function ensureAppKeysGenerated(): void
+    public static function ensureAppKeysGenerated(): void
     {
         if (env('PASSPORT_PRIVATE_KEY', '') === '') {
-            $this->info('Generating passport keys');
-            $this->createPassportKeys();
+            info('Generating passport keys');
+            self::createPassportKeys();
         }
 
         if (env('APP_KEY', '') === '') {
-            $this->info('Generating application key');
-            $this->call('key:generate');
+            info('Generating application key');
+            Artisan::call('key:generate');
         }
     }
 
