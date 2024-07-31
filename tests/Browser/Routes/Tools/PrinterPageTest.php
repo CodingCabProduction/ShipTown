@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Browser\Routes\Reports;
+namespace Tests\Browser\Routes\Tools;
 
 use App\User;
 use Laravel\Dusk\Browser;
