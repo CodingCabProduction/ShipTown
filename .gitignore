@@ -9,8 +9,8 @@
 /.idea
 /.idea/*
 .env
-.env.dusk.local
-.env.testing
+.env.*
+!.end.example
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
@@ -25,3 +25,4 @@ _ide_helper_models.php
 .DS_Store
 /.phpunit.cache
 /.phpunit.cache/*
+ .phpunit.cache/*
