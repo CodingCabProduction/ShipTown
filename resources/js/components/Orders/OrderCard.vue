@@ -439,6 +439,14 @@
                                                     <td class="text-right"><b> {{ toNumberOrDash(order['total_paid']) }} </b></td>
                                                 </tr>
                                                 <tr>
+                                                    <td class="text-nowrap"> payments:</td>
+                                                    <td class="text-right">
+                                                        <div v-for="payment in order_payments" :key="payment.id">
+                                                            <b>{{ payment.name }} {{ toNumberOrDash(payment.amount) }}</b>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
                                                     <td class="text-nowrap"> total outstanding:</td>
                                                     <td class="text-right"><b> {{ toNumberOrDash(order['total_outstanding']) }} </b></td>
                                                 </tr>
@@ -552,6 +560,7 @@ export default {
             order_activities: null,
             order_shipments: null,
             order_statuses: null,
+            order_payments: null,
         }
     },
 
@@ -633,6 +642,7 @@ export default {
             this.loadOrderActivities();
             this.loadOrderShipments();
             this.loadOrderStatuses();
+            this.loadOrderPayments();
 
             this.orderDetailsVisible = true;
         },
@@ -746,7 +756,26 @@ export default {
 
         ifHasEnoughStock(orderProduct) {
             return this.getProductQuantity(orderProduct) < Number(orderProduct['quantity_to_ship']);
-        }
+        },
+
+        loadOrderPayments() {
+            if (this.order_payments) {
+                return this;
+            }
+
+            let params = {
+                'filter[order_id]': this.order['id'],
+                'sort': '-id',
+                'per_page': '999',
+            };
+
+            this.apiGetOrderPayments(params)
+                .then(({data}) => {
+                    this.order_payments = data.data;
+                })
+
+            return this;
+        },
     },
 }
 </script>

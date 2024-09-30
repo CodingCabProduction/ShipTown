@@ -6,6 +6,7 @@ use App\Events\Order\OrderCreatedEvent;
 use App\Models\Inventory;
 use App\Models\Order;
 use App\Models\OrderAddress;
+use App\Models\OrderPayment;
 use App\Models\OrderProduct;
 use Exception;
 use Illuminate\Support\Arr;
@@ -62,6 +63,8 @@ class OrderService
         }
 
         $order = self::syncOrderProducts($attributes['order_products'], $order);
+
+        $order = self::syncOrderPayments($attributes['payments'], $order);
 
         OrderCreatedEvent::dispatch($order);
 
@@ -147,6 +150,42 @@ class OrderService
         OrderProduct::query()
             ->where(['order_id' => $order->id])
             ->whereNotIn('id', $orderProductIdsToKeep)
+            ->delete();
+
+        return $order->refresh();
+    }
+
+    /**
+     * @throws Exception
+     */
+    private static function syncOrderPayments($payments, Order $order): Order
+    {
+        $storedOrderPayments = OrderPayment::where('order_id', $order->getKey())->get();
+
+        $orderPaymentIdsToKeep = [];
+        foreach ($payments as $payment) {
+            $orderPayment = $storedOrderPayments->where('additional_fields.id', $payment['additional_fields']['id'])->first();
+
+            if (!$orderPayment) {
+                $orderPayment = new OrderPayment();
+            }
+
+            $orderPayment->fill([
+                'order_id' => $order->getKey(),
+                'paid_at' => $payment['paid_at'],
+                'name' => $payment['name'],
+                'amount' => $payment['amount'],
+                'additional_fields' => $payment['additional_fields'],
+            ]);
+
+            $orderPayment->save();
+
+            $orderPaymentIdsToKeep[] = $orderPayment->id;
+        }
+
+        OrderPayment::query()
+            ->where(['order_id' => $order->id])
+            ->whereNotIn('id', $orderPaymentIdsToKeep)
             ->delete();
 
         return $order->refresh();

@@ -5,6 +5,7 @@ namespace Tests\Unit\Services;
 use App\Models\Inventory;
 use App\Models\Order;
 use App\Models\OrderAddress;
+use App\Models\OrderPayment;
 use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\Warehouse;
@@ -33,6 +34,7 @@ class OrderServiceTest extends TestCase
             'total_paid' => 12.40,
             'order_products' => OrderProduct::factory()->count(2)->make()->toArray(),
             'shipping_address' => OrderAddress::factory()->make()->toArray(),
+            'payments' => OrderPayment::factory()->count(2)->make()->toArray(),
         ];
 
         $quantityExpected = collect($attributes['order_products'])->sum(function ($orderProduct) {
@@ -72,6 +74,7 @@ class OrderServiceTest extends TestCase
             'total_paid' => 12.40,
             'order_products' => OrderProduct::factory()->count(2)->make()->toArray(),
             'shipping_address' => OrderAddress::factory()->make()->toArray(),
+            'payments' => OrderPayment::factory()->count(2)->make()->toArray(),
         ];
 
         $order = OrderService::updateOrCreate($attributes);
@@ -111,6 +114,7 @@ class OrderServiceTest extends TestCase
             'total_paid' => 12.40,
             'order_products' => OrderProduct::factory()->count(2)->make()->toArray(),
             'shipping_address' => OrderAddress::factory()->make()->toArray(),
+            'payments' => OrderPayment::factory()->count(2)->make()->toArray(),
         ];
 
         $order = OrderService::updateOrCreate($attributes);
@@ -135,6 +139,7 @@ class OrderServiceTest extends TestCase
             'order_number' => $order->order_number,
             'order_products' => [],
             'shipping_address' => [],
+            'payments' => [],
         ];
 
         $order = OrderService::updateOrCreate($attributes);

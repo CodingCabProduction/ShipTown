@@ -58,6 +58,7 @@ class OrderResource extends JsonResource
             'order_comments' => new JsonResource($this->whenLoaded('orderComments')),
             'order_products_totals' => new OrderProductsTotalsResource($this->whenLoaded('orderProductsTotals')),
             'tags' => TagResource::collection($this->whenLoaded('tags')),
+            'payments' => OrderPaymentResource::collection($this->whenLoaded('payments')),
         ];
     }
 }

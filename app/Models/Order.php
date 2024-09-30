@@ -450,6 +450,11 @@ class Order extends BaseModel
         return $this->hasMany(OrderComment::class)->orderByDesc('id');
     }
 
+    public function payments(): HasMany
+    {
+        return $this->hasMany(OrderPayment::class);
+    }
+
     public static function getSpatieQueryBuilder(): QueryBuilder
     {
         return QueryBuilder::for(Order::class)

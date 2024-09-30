@@ -93,6 +93,7 @@ Route::apiResource('order/addresses', Api\OrderAddressController::class)->only([
 Route::apiResource('orders/products/shipments', Api\OrderProductShipmentController::class)->only(['store']);
 Route::apiResource('order/shipments', Api\OrderShipmentController::class)->only(['index', 'store']);
 Route::apiResource('order/comments', Api\OrderCommentController::class)->only(['index', 'store']);
+Route::apiResource('order/payments', Api\OrderPaymentController::class)->only(['index']);
 Route::apiResource('picklist/picks', Api\Picklist\PicklistPickController::class)->only(['store', 'destroy']);
 Route::apiResource('admin/user/roles', Api\UserRoleController::class, ['as' => 'admin.users'])->only(['index']);
 Route::apiResource('admin/users', Api\UserController::class);

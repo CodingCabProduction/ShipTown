@@ -19,7 +19,7 @@ class ProcessImportedRecordJobTest extends TestCase
         ProcessImportedOrdersJob::dispatch();
 
         $api2cartOrderImport->refresh();
-        $order = Order::query()->with(['shippingAddress', 'billingAddress'])->first();
+        $order = Order::query()->with(['shippingAddress', 'billingAddress', 'payments'])->first();
 
         ray($api2cartOrderImport->raw_import, $order);
 
@@ -39,5 +39,12 @@ class ProcessImportedRecordJobTest extends TestCase
         $this->assertEquals($order->billingAddress->last_name, $api2cartOrderImport->raw_import['billing_address']['last_name']);
         $this->assertEquals($order->billingAddress->address1, $api2cartOrderImport->raw_import['billing_address']['address1']);
         $this->assertEquals($order->billingAddress->address2, $api2cartOrderImport->raw_import['billing_address']['address2']);
+
+        // payments
+        $payment = $api2cartOrderImport->extractPaymentAttributes()[0];
+        $orderPayment = $order->payments->first();
+        $this->assertEquals($orderPayment->amount, $payment['amount']);
+        $this->assertEquals($orderPayment->name, $payment['name']);
+        $this->assertEquals($orderPayment->additional_fields, $payment['additional_fields']);
     }
 }

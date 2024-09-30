@@ -175,6 +175,25 @@ class Api2cartOrderImports extends BaseModel
         return $statuses;
     }
 
+    public function extractPaymentAttributes(): array
+    {
+        $jsonRevolutOrderData = $this->raw_import['payment_method']['additional_fields']['additional_payment_info']['revolutOrderData'] ?? '';
+        $arrRevolutOrderData = json_decode($jsonRevolutOrderData, true);
+        $payments = $arrRevolutOrderData['payments'] ?? [];
+
+        $result = [];
+        foreach ($payments as $payment) {
+            $result[] = [
+                'paid_at' => $payment['created_at'],
+                'name' => $payment['payment_method']['type'],
+                'amount' => $payment['amount']['value'],
+                'additional_fields' => $payment,
+            ];
+        }
+
+        return $result;
+    }
+
     public function ordersCreateAt(): Carbon
     {
         $create_at = $this->raw_import['create_at'];

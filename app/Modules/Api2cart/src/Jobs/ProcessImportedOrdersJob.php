@@ -47,6 +47,7 @@ class ProcessImportedOrdersJob extends UniqueJob
             'order_products' => $orderImport->extractOrderProducts(),
             'shipping_address' => $orderImport->extractShippingAddressAttributes(),
             'billing_address' => $orderImport->extractBillingAddressAttributes(),
+            'payments' => $orderImport->extractPaymentAttributes(),
             'raw_import' => $data,
         ];
 
