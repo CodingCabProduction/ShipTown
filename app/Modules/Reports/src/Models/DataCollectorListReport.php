@@ -3,6 +3,7 @@
 namespace App\Modules\Reports\src\Models;
 
 use App\Models\DataCollection;
+use App\Models\DataCollectionTransaction;
 use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\AllowedFilter;
 
@@ -75,6 +76,14 @@ class DataCollectorListReport extends Report
             AllowedFilter::callback('only_archived', function ($query, $value) {
                 if ($value === true) {
                     $query->onlyTrashed();
+                }
+            })
+        );
+        $this->addFilter(
+            AllowedFilter::callback('without_transactions', function ($query, $value) {
+                if ($value === true) {
+                    $query->where('data_collections.type', '!=', DataCollectionTransaction::class)
+                        ->orWhereNull('data_collections.type');
                 }
             })
         );

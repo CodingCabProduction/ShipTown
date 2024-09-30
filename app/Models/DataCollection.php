@@ -79,6 +79,14 @@ class DataCollection extends BaseModel
         ];
     }
 
+    public function save(array $options = []): bool
+    {
+        // Prevent null value
+        $this->name = $this->name ?? '';
+
+        return parent::save($options);
+    }
+
     public function records(): HasMany
     {
         return $this->hasMany(DataCollectionRecord::class);

@@ -12,6 +12,7 @@
                         <a class="dropdown-item text-white lightHover mt-1" id="inventory_link" href="{{ route('products') }}">{{ __('Inventory') }}</a>
                         <a class="dropdown-item text-white lightHover mt-1" id="transfers_in_link" href="{{ route('data-collector', ['filter[type]' => 'App\\Models\\DataCollectionTransferIn']) }}">{{ __('Transfers In') }}</a>
                         <a class="dropdown-item text-white lightHover mt-1" id="transfers_out_link" href="{{ route('data-collector', ['filter[type]' => 'App\\Models\\DataCollectionTransferOut']) }}">{{ __('Transfers Out') }}</a>
+                        <a class="dropdown-item text-white lightHover mt-1" id="transactions_link" href="{{ route('data-collector', ['filter[type]' => 'App\\Models\\DataCollectionTransaction']) }}">{{ __('Transactions') }}</a>
                         <a class="dropdown-item text-white lightHover mt-1" id="stocktaking_link" href="{{ route('stocktaking') }}">{{ __('Stocktaking') }}</a>
                     </div>
                 </div>
@@ -31,7 +32,7 @@
                             <a class="dropdown-item text-white lightHover mt-1 mb-1" id="packlist_link" href="/autopilot/packlist?step=select">{{ __('Packlist') }}</a>
                             <a class="dropdown-item text-white lightHover mt-1 mb-2" id="restocking_link" href="{{ route('reports.restocking.index' , ['sort' => '-quantity_required', 'cache_name' => 'restocking_page']) }}">{{ __('Restocking') }}</a>
 
-                            <a class="dropdown-item text-white lightHover mt-1 mb-0" id="data_collector_link" href="{{ route('data-collector') }}">{{ __('Data Collector') }}</a>
+                            <a class="dropdown-item text-white lightHover mt-1 mb-0" id="data_collector_link" href="{{ route('data-collector', ['filter[without_transactions]' => true]) }}">{{ __('Data Collector') }}</a>
                             <a class="dropdown-item text-white lightHover mt-1 mb-0" id="shelf_label_printing" href="/tools/printer">{{ __('Shelf Labels') }}</a>
                         </div>
                     </div>

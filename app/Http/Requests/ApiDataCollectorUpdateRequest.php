@@ -27,6 +27,7 @@ class ApiDataCollectorUpdateRequest extends FormRequest
                 'in:transfer_in_scanned,transfer_out_scanned,transfer_to_scanned,auto_scan_all_requested,transfer_between_warehouses,import_as_stocktake',
             ],
             'custom_uuid' => 'nullable|string',
+            'name' => 'sometimes|string|nullable',
         ];
     }
 }

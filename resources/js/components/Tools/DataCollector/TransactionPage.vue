@@ -225,14 +225,14 @@
                     <button :disabled="! buttonsEnabled" @click.prevent="transferToWarehouseClick" v-b-toggle
                             class="col btn mb-2 btn-primary">Transfer To...
                     </button>
-                    <button :disabled="! buttonsEnabled" @click.prevent="archiveCollection" v-b-toggle
-                            class="col btn mb-2 btn-primary">Archive Collection
+                    <button :disabled="! buttonsEnabled" @click.prevent="archiveTransaction" v-b-toggle
+                            class="col btn mb-2 btn-primary">Archive Transaction
+                    </button>
+                    <button :disabled="! buttonsEnabled" @click.prevent="saveTransaction" v-b-toggle
+                            class="col btn mb-2 btn-primary">Save Transaction
                     </button>
                     <br>
                     <br>
-<!--                    <button :disabled="! buttonsEnabled" @click.prevent="printReceipt(false)" v-b-toggle-->
-<!--                            class="col btn mb-2 btn-primary">Print Receipt (PDF)-->
-<!--                    </button>-->
                     <button :disabled="! buttonsEnabled" @click.prevent="printReceipt" v-b-toggle
                             class="col btn mb-2 btn-primary">Print Receipt
                     </button>
@@ -554,18 +554,33 @@ export default {
                 });
         },
 
-        archiveCollection() {
+        archiveTransaction() {
             this.apiUpdateDataCollection(this.data_collection_id, {
                 'custom_uuid': null,
                 'deleted_at': new Date().toISOString(),
             })
                 .then(response => {
-                    this.$snotify.success('Collection archived successfully');
+                    this.$snotify.success('Transaction archived successfully');
                     this.$emit('transactionFinished');
                     this.$bvModal.hide('configuration-modal');
                     setTimeout(() => {
                         this.reloadDataCollection();
                     }, 500);
+                })
+                .catch(error => {
+                    this.showException(error);
+                });
+        },
+
+        saveTransaction() {
+            this.apiUpdateDataCollection(this.data_collection_id, {
+                'name': ``,
+                'custom_uuid': ``,
+            })
+                .then(() => {
+                    this.$snotify.success('Transaction saved successfully');
+                    this.$emit('transactionFinished');
+                    this.$bvModal.hide('configuration-modal');
                 })
                 .catch(error => {
                     this.showException(error);

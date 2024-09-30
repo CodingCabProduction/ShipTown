@@ -1,6 +1,7 @@
 <template>
     <div>
-        <data-collector-transaction-page v-if="dataCollection" :data_collection_id="dataCollection.id" @transactionFinished="clearSelectedDataCollection"></data-collector-transaction-page>
+        <data-collector-transaction-page v-if="dataCollection" :data_collection_id="dataCollection.id"
+                                         @transactionFinished="clearSelectedDataCollection"/>
         <div v-else>
             <h1>Point of Sale</h1>
             <input type="text" placeholder="Username" class="form-control">
