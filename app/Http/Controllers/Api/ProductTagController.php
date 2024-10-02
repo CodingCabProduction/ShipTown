@@ -8,9 +8,6 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Spatie\QueryBuilder\QueryBuilder;
 
-/**
- * Class ProductTagController.
- */
 class ProductTagController extends Controller
 {
     public function index(): AnonymousResourceCollection

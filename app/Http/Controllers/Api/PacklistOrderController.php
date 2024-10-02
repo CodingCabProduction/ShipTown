@@ -9,9 +9,6 @@ use App\Modules\Reports\src\Models\PacklistReport;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 
-/**
- * Class PacklistOrderController.
- */
 class PacklistOrderController extends Controller
 {
     public function index(PacklistOrderIndexRequest $request): JsonResource

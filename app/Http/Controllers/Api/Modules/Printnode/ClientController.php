@@ -9,7 +9,6 @@ use App\Modules\PrintNode\src\Http\Requests\ClientStoreRequest;
 use App\Modules\PrintNode\src\Models\Client;
 use App\Modules\PrintNode\src\PrintNode;
 use App\Modules\PrintNode\src\Resources\PrintNodeClientResource;
-use Exception;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ClientController extends Controller
@@ -33,9 +32,6 @@ class ClientController extends Controller
         return PrintNodeClientResource::make($printNodeClient);
     }
 
-    /**
-     * @throws Exception
-     */
     public function destroy(ClientDestroyRequest $request, Client $client)
     {
         $client->delete();

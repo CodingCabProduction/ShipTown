@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Csv;
 use App\Http\Controllers\Controller;
 use App\Models\OrderProduct;
 use App\Traits\CsvFileResponse;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use League\Csv\CannotInsertRecord;
 
@@ -16,7 +19,7 @@ class ProductsShippedFromWarehouseController extends Controller
     /**
      * @throws CannotInsertRecord
      */
-    public function index(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function index(Request $request): Response|Application|ResponseFactory
     {
         $query = OrderProduct::getSpatieQueryBuilder()
             ->select([

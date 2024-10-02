@@ -11,9 +11,6 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class MailTemplateController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(MailTemplateIndexRequest $request): AnonymousResourceCollection
     {
         $mailTemplates = MailTemplate::all();
@@ -21,9 +18,6 @@ class MailTemplateController extends Controller
         return MailTemplateResource::collection($mailTemplates);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateRequest $request, MailTemplate $mailTemplate): MailTemplateResource
     {
         $data = $request->validated();

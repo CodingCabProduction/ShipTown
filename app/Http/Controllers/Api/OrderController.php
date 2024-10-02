@@ -14,9 +14,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/**
- * Class OrdersController.
- */
 class OrderController extends Controller
 {
     public function index(Request $request): AnonymousResourceCollection

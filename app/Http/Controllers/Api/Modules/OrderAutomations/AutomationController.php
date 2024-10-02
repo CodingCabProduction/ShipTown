@@ -16,9 +16,6 @@ use Throwable;
 
 class AutomationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(AutomationIndexRequest $request): AnonymousResourceCollection
     {
         $automations = Automation::query()
@@ -28,11 +25,6 @@ class AutomationController extends Controller
         return AutomationResource::collection($automations);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @throws Throwable
-     */
     public function store(AutomationStoreRequest $request): AutomationResource
     {
         $automation = new Automation;

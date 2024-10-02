@@ -9,14 +9,8 @@ use App\Models\Inventory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
-/**
- * Class ProductInventoryController.
- */
 class InventoryController extends Controller
 {
-    /**
-     * @return mixed
-     */
     public function index(Request $request)
     {
         $query = Inventory::getSpatieQueryBuilder();

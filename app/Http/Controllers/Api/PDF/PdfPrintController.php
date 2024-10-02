@@ -8,9 +8,6 @@ use App\Modules\PrintNode\src\Models\PrintJob;
 use App\Modules\PrintNode\src\Resources\PrintJobResource;
 use App\Services\PdfService;
 
-/**
- * Class PrintOrderController.
- */
 class PdfPrintController extends Controller
 {
     public function update(StorePdfPrintRequest $request)

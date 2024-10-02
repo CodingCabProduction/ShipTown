@@ -9,9 +9,6 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ShippingServiceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(): AnonymousResourceCollection
     {
         $query = ShippingService::getSpatieQueryBuilder();

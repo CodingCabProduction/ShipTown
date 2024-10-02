@@ -9,14 +9,10 @@ use App\Http\Requests\NavigationMenuDestroyRequest;
 use App\Http\Requests\NavigationMenuIndexRequest;
 use App\Http\Resources\NavigationMenuResource;
 use App\Models\NavigationMenu;
-use Exception;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class NavigationMenuController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(NavigationMenuIndexRequest $request): AnonymousResourceCollection
     {
         $navigationMenu = NavigationMenu::getSpatieQueryBuilder();
@@ -24,9 +20,6 @@ class NavigationMenuController extends Controller
         return NavigationMenuResource::collection($this->getPaginatedResult($navigationMenu));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreRequest $request): NavigationMenuResource
     {
         $navigationMenu = NavigationMenu::query()->create($request->validated());
@@ -34,9 +27,6 @@ class NavigationMenuController extends Controller
         return new NavigationMenuResource($navigationMenu);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateRequest $request, NavigationMenu $navigationMenu): NavigationMenuResource
     {
         $navigationMenu->update($request->validated());
@@ -44,11 +34,6 @@ class NavigationMenuController extends Controller
         return new NavigationMenuResource($navigationMenu);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @throws Exception
-     */
     public function destroy(NavigationMenuDestroyRequest $request, NavigationMenu $navigationMenu): NavigationMenuResource
     {
         $navigationMenu->delete();

@@ -26,9 +26,6 @@ class OrderAddressController extends Controller
         return OrderAddressResource::make($address);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateOrderAddressRequest $request, OrderAddress $address): OrderAddressResource
     {
         $address->update($request->validated());

@@ -9,16 +9,8 @@ use App\Models\DataCollectionComment;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
-/**
- * Class DataCollectionCommentController.
- *
- * @group DataCollection
- */
 class DataCollectionCommentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(): LengthAwarePaginator
     {
         $query = DataCollectionComment::getSpatieQueryBuilder();

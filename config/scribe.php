@@ -171,6 +171,10 @@ return [
          * Middleware to attach to the docs endpoint (if `add_routes` is true).
          */
         'middleware' => [],
+        // Directory within `public` in which to store CSS and JS assets.
+        // By default, assets are stored in `public/vendor/scribe`.
+        // If set, assets will be stored in `public/{{assets_directory}}`
+        'assets_directory' => null,
     ],
 
     'try_it_out' => [
@@ -302,11 +306,6 @@ INTRO
     ],
 
     /*
-     * Endpoints which don't have a @group will be placed in this default group.
-     */
-    'default_group' => 'Endpoints',
-
-    /*
      * Custom logo path. This will be used as the value of the src attribute for the <img> tag,
      * so make sure it points to an accessible URL or path. Set to false to not use a logo.
      *
@@ -316,12 +315,6 @@ INTRO
      *
      */
     'logo' => false,
-
-    /*
-     * If you would like the package to generate the same example values for parameters on each run,
-     * set this to any number (eg. 1234)
-     */
-    'faker_seed' => null,
 
     /**
      * The strategies Scribe will use to extract information about your routes at each stage.
@@ -382,4 +375,120 @@ INTRO
      * If you only use one db connection, you can leave this as is.
      */
     'database_connections_to_transact' => [config('database.default')],
+    'external' => ['html_attributes' => []],
+    'groups' => [
+        // Endpoints which don't have a @group will be placed in this default group.
+        'default' => 'Endpoints',
+        // By default, Scribe will sort groups alphabetically, and endpoints in the order their routes are defined.
+        // You can override this by listing the groups, subgroups and endpoints here in the order you want them.
+        // See https://scribe.knuckles.wtf/blog/laravel-v4#easier-sorting and https://scribe.knuckles.wtf/laravel/reference/config#order for details
+        'order' => [
+            'Order' => [
+                'Display a listing of the resource.',
+                'Update the specified resource in storage.',
+                'Update the specified resource in storage.',
+                'Display a listing of the resource.',
+                'Store a newly created resource in storage.',
+                'Display a listing of the resource.',
+                'POST /api/order/comments',
+            ],
+            'Endpoints' => [
+                'PUT /api/print/order/{order_number}/dpd_label',
+                'PUT /api/print/order/{order_number}/an_post',
+                'PUT /api/print/order/{order_number}/{view}',
+                'POST /api/shipments',
+                'POST /api/settings/modules/automations/run',
+                'GET /api/run/sync',
+                'GET /api/run/sync/api2cart',
+                'GET /api/run/hourly/jobs',
+                'GET /api/run/daily/jobs',
+                'Display a listing of the resource.',
+                'Display a listing of the resource.',
+                'GET /api/product/inventory',
+                'POST /api/product/inventory',
+                'GET /api/product/tags',
+                'POST /api/order-check-request',
+                'GET /api/orders',
+                'POST /api/orders',
+                'GET /api/orders/{id}',
+                'PUT /api/orders/{id}',
+                'Display a listing of the resource.',
+                'GET /api/picklist',
+                'POST /api/picklist/picks',
+                'GET /api/packlist/order',
+                'GET /api/settings/user/me',
+                'POST /api/settings/user/me',
+                'POST /api/settings/widgets',
+                'PUT /api/settings/widgets/{id}',
+                'Display a listing of the resource.',
+                'GET /api/heartbeats',
+                'POST /api/modules/printnode/printjobs',
+                'GET /api/modules/printnode/printers',
+                'GET /api/admin/user/roles',
+                'GET api/admin/users.',
+                'PUT api/admin/users.',
+                'SHOW api/admin/users.',
+                'DELETE api/admin/users.',
+                'GET /api/modules/autostatus/picking/configuration',
+                'POST /api/modules/autostatus/picking/configuration',
+                'Display a listing of the resource.',
+                'Update the specified resource in storage.',
+                'Display a listing of the resource.',
+                'Store a newly created resource in storage.',
+                'Update the specified resource in storage.',
+                'Remove the specified resource from storage.',
+                'Display a listing of the resource.',
+                'Update the specified resource in storage.',
+                'Display a listing of the resource.',
+                'Store a newly created resource in storage.',
+                'Update the specified resource in storage.',
+                'Remove the specified resource from storage.',
+                'Display a listing of the resource.',
+                'Store a newly created resource in storage.',
+                'Remove the specified resource from storage.',
+                'Display a listing of the resource.',
+                'Update resource in storage.',
+                'GET /api/settings/modules/api2cart/connections',
+                'POST /api/settings/modules/api2cart/connections',
+                'DELETE /api/settings/modules/api2cart/connections/{id}',
+                'GET /api/settings/modules/api2cart/products',
+                'GET /api/settings/modules/dpd-ireland/connections',
+                'POST /api/settings/modules/dpd-ireland/connections',
+                'DELETE /api/settings/modules/dpd-ireland/connections/{id}',
+                'POST /api/settings/modules/printnode/printjobs',
+                'GET /api/settings/modules/printnode/clients',
+                'POST /api/settings/modules/printnode/clients',
+                'DELETE /api/settings/modules/printnode/clients/{id}',
+                'GET /api/settings/modules/rms_api/connections',
+                'POST /api/settings/modules/rms_api/connections',
+                'DELETE /api/settings/modules/rms_api/connections/{id}',
+                'Display a listing of avaliable config automation.',
+                'Display a listing of the resource.',
+                'Store a newly created resource in storage.',
+                'Display the specified resource.',
+                'Update the specified resource in storage.',
+                'Remove the specified resource from storage.',
+            ],
+            'Products' => [
+                'Get Product List.',
+                'Update or Create Product.',
+            ],
+        ],
+    ],
+    // Customize the "Last updated" value displayed in the docs by specifying tokens and formats.
+    // Examples:
+    // - {date:F j Y} => March 28, 2022
+    // - {git:short} => Short hash of the last Git commit
+    // Available tokens are `{date:<format>}` and `{git:<format>}`.
+    // The format you pass to `date` will be passed to PHP's `date()` function.
+    // The format you pass to `git` can be either "short" or "long".
+    'last_updated' => 'Last updated: {date:F j, Y}',
+    'examples' => [
+        // Set this to any number (eg. 1234) to generate the same example values for parameters on each run,
+        'faker_seed' => null,
+        // With API resources and transformers, Scribe tries to generate example models to use in your API responses.
+        // By default, Scribe will try the model's factory, and if that fails, try fetching the first from the database.
+        // You can reorder or remove strategies here.
+        'models_source' => ['factoryCreate', 'factoryMake', 'databaseFirst'],
+    ],
 ];

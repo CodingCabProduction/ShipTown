@@ -9,16 +9,8 @@ use App\Models\OrderComment;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
-/**
- * Class OrderCommentController.
- *
- * @group Order
- */
 class OrderCommentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(): LengthAwarePaginator
     {
         $query = OrderComment::getSpatieQueryBuilder();

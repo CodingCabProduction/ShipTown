@@ -7,9 +7,6 @@ use App\Http\Requests\UserMeStoreRequest;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 
-/**
- * Class UserMeController.
- */
 class UserMeController extends Controller
 {
     public function index(Request $request): UserResource

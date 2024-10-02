@@ -7,9 +7,6 @@ use App\Http\Requests\UserRoleIndexRequest;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\Permission\Models\Role;
 
-/**
- * Class UserRoleController.
- */
 class UserRoleController extends Controller
 {
     public function index(UserRoleIndexRequest $request): ResourceCollection

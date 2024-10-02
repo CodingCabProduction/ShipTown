@@ -90,6 +90,7 @@
 
                         <a class="dropdown-item text-white lightHover" href="https://ship.town/academy" target="_blank">{{ __('Academy') }}</a>
                         <a class="dropdown-item text-white lightHover" href="https://www.youtube.com/channel/UCl04S5dRXop1ZdZsOqY3OnA" target="_blank">{{ __('YouTube') }}</a>
+                        <a class="dropdown-item text-white lightHover" href="/docs/index.html" target="_blank">{{ __('API Docs') }}</a>
 
                         <!-- Logout -->
                         <a class="dropdown-item text-white lightHover" href="{{ route('logout') }}"

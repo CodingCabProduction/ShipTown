@@ -15,9 +15,6 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 
-/**
- * Class UsersController.
- */
 class UserController extends Controller
 {
     public function index(UserIndexRequest $request): AnonymousResourceCollection
@@ -27,9 +24,6 @@ class UserController extends Controller
         return UserResource::collection($this->getPaginatedResult($query));
     }
 
-    /**
-     * PUT api/admin/users.
-     */
     public function store(UserStoreRequest $request): UserResource
     {
         $user = User::query()->where('email', $request->validated()['email'])->onlyTrashed()->first();

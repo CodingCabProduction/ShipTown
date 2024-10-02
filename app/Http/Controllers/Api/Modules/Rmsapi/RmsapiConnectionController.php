@@ -14,9 +14,6 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
-/**
- * Class RmsapiConnectionController.
- */
 class RmsapiConnectionController extends Controller
 {
     public function index(RmsapiConnectionIndexRequest $request): AnonymousResourceCollection
@@ -32,11 +29,6 @@ class RmsapiConnectionController extends Controller
         return new RmsapiConnectionResource($rmsapiConnection);
     }
 
-    /**
-     * @return Application|ResponseFactory|Response
-     *
-     * @throws Exception
-     */
     public function destroy(RmsapiConnectionDestroyRequest $request, RmsapiConnection $connection): Response
     {
         $connection->delete();

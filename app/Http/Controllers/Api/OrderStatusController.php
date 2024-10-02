@@ -14,9 +14,6 @@ use Illuminate\Validation\ValidationException;
 
 class OrderStatusController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(OrderStatusIndexRequest $request): AnonymousResourceCollection
     {
         $query = OrderStatus::getSpatieQueryBuilder();
@@ -24,9 +21,6 @@ class OrderStatusController extends Controller
         return OrderStatusResource::collection($this->getPaginatedResult($query));
     }
 
-    /**
-     * @throws ValidationException
-     */
     public function store(StoreRequest $request): OrderStatusResource
     {
         $orderStatus = OrderStatus::where(['code' => $request->validated()['code']])->onlyTrashed()->first();

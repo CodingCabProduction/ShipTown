@@ -7,9 +7,6 @@ use App\Services\PdfService;
 use Exception;
 use Illuminate\Http\Request;
 
-/**
- * Class PrintOrderController.
- */
 class PdfPreviewController extends Controller
 {
     /**

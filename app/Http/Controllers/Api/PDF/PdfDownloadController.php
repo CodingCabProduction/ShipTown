@@ -8,9 +8,6 @@ use Exception;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-/**
- * Class PrintOrderController.
- */
 class PdfDownloadController extends Controller
 {
     /**

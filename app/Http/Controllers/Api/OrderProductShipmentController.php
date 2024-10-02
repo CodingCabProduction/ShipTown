@@ -8,16 +8,8 @@ use App\Http\Resources\OrderProductShipmentResource;
 use App\Models\OrderProduct;
 use App\Models\OrderProductShipment;
 
-/**
- * Class OrderProductController.
- *
- * @group Order
- */
 class OrderProductShipmentController extends Controller
 {
-    /**
-     * Update the specified resource in storage.
-     */
     public function store(StoreRequest $request): ?OrderProductShipmentResource
     {
         try {

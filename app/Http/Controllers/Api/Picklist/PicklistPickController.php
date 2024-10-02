@@ -10,9 +10,6 @@ use App\Models\Pick;
 use App\Modules\Picklist\src\Jobs\UnDistributeDeletedPicksJob;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/**
- * Class PicklistPickController.
- */
 class PicklistPickController extends Controller
 {
     public function store(StorePickRequest $request): JsonResource

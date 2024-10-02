@@ -9,10 +9,6 @@ use App\Models\OrderShipment;
 
 class ShipmentController extends Controller
 {
-    /**ø
-     * @param ShipmentStoreRequestNew $request
-     * @return ShipmentResource
-     */
     public function store(ShipmentStoreRequestNew $request): ShipmentResource
     {
         $shipment = new OrderShipment($request->validated());

@@ -8,9 +8,6 @@ use App\Http\Resources\ProductAliasResource;
 use App\Models\ProductAlias;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
-/**
- * Class ProductAliasController.
- */
 class ProductAliasController extends Controller
 {
     public function index(): AnonymousResourceCollection

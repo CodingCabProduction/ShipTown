@@ -8,6 +8,7 @@ use App\Traits\CsvFileResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use League\Csv\CannotInsertRecord;
+use League\Csv\Exception;
 use League\Csv\Writer;
 
 class BoxTopStockController extends Controller
@@ -15,7 +16,7 @@ class BoxTopStockController extends Controller
     use CsvFileResponse;
 
     /**
-     * @throws CannotInsertRecord
+     * @throws CannotInsertRecord|Exception
      */
     public function index(Request $request)
     {

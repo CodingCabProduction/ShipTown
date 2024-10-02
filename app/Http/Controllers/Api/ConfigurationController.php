@@ -10,9 +10,6 @@ use App\Models\Configuration;
 
 class ConfigurationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(ConfigurationIndexRequest $request): ConfigurationResource
     {
         $configuration = Configuration::first();
@@ -20,11 +17,6 @@ class ConfigurationController extends Controller
         return new ConfigurationResource($configuration);
     }
 
-    /**
-     * Update resource in storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreRequest $request)
     {
         $configuration = Configuration::first();
