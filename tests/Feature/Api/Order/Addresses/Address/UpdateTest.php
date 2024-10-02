@@ -14,7 +14,7 @@ class UpdateTest extends TestCase
         $user = User::factory()->create();
         $orderAddress = OrderAddress::factory()->create();
 
-        $response = $this->actingAs($user, 'api')->putJson(route('addresses.update', [$orderAddress]), [
+        $response = $this->actingAs($user, 'api')->putJson(route('orders.addresses.update', [$orderAddress]), [
             'address1' => $orderAddress->address1,
             'email' => $orderAddress->email,
             'phone' => $orderAddress->phone,

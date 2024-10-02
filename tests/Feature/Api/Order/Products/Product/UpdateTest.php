@@ -14,7 +14,7 @@ class UpdateTest extends TestCase
         $user = User::factory()->create();
         $orderProduct = OrderProduct::factory()->create();
 
-        $response = $this->actingAs($user, 'api')->putJson(route('order.products.update', [$orderProduct]), [
+        $response = $this->actingAs($user, 'api')->putJson(route('orders.products.update', [$orderProduct]), [
             'quantity_shipped' => $orderProduct->quantity_to_ship,
         ]);
 
