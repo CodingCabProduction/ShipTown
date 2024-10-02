@@ -43,7 +43,7 @@ class UserUpdateRequest extends FormRequest
                 'max:255',
             ],
 
-            'role_id' => Rule::when($updatedUserId !== $this->user()->id, [
+            'role_id' => Rule::when($updatedUserId !== data_get($this->user(), 'id', 0), [
                 'sometimes',
                 'integer',
                 Rule::exists('roles', 'id'),
