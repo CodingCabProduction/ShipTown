@@ -124,6 +124,7 @@ class DataCollectorService
                 $destinationDataCollection = $sourceDataCollection->replicate([
                     'destination_warehouse_id',
                     'currently_running_task',
+                    'total_outstanding',
                     'deleted_at',
                 ]);
                 $destinationDataCollection->type = DataCollectionTransferIn::class;

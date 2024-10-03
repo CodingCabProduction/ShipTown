@@ -2,6 +2,7 @@
 
 namespace App\Modules\DataCollector\src;
 
+use App\Events\DataCollectionPayment\DataCollectionPaymentCreatedEvent;
 use App\Events\DataCollectionRecord\DataCollectionRecordCreatedEvent;
 use App\Events\DataCollectionRecord\DataCollectionRecordDeletedEvent;
 use App\Events\DataCollectionRecord\DataCollectionRecordUpdatedEvent;
@@ -39,6 +40,10 @@ class DataCollectorServiceProvider extends BaseModuleServiceProvider
 
         DataCollectionRecordDeletedEvent::class => [
             Listeners\DataCollectionRecordDeletedEventListener::class,
+        ],
+
+        DataCollectionPaymentCreatedEvent::class => [
+            \App\Modules\DataCollectorPayments\src\Listeners\DataCollectionPaymentCreatedEventListener::class,
         ],
 
         EveryMinuteEvent::class => [

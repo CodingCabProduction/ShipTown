@@ -66,6 +66,10 @@
                                      :number="dataCollection && dataCollection['total_quantity_scanned']"></number-card>
                         <number-card :label="'total to pay'"
                                      :number="dataCollection && dataCollection['total_sold_price']"></number-card>
+                        <number-card :label="'total paid'"
+                                     :number="dataCollection && dataCollection['total_paid']"></number-card>
+                        <number-card :label="'total outstanding'"
+                                     :number="dataCollection && dataCollection['total_outstanding']"></number-card>
                     </div>
                 </div>
             </template>
@@ -214,6 +218,9 @@
                     <button :disabled="! buttonsEnabled" @click.prevent="selectCustomer" v-b-toggle
                             class="col btn mb-2 btn-primary">Select Customer
                     </button>
+                    <button :disabled="! buttonsEnabled" @click.prevent="selectPayment" v-b-toggle
+                            class="col btn mb-2 btn-primary">Payment
+                    </button>
                     <button :disabled="! buttonsEnabled" @click.prevent="autoScanAll" v-b-toggle
                             class="col btn mb-2 btn-primary">AutoScan ALL Records
                     </button>
@@ -309,6 +316,8 @@
         <set-transaction-printer-modal/>
         <find-address-modal :transaction-details="dataCollection"/>
         <new-address-modal/>
+        <data-collection-choose-payment-type-modal/>
+        <data-collection-data-collection-add-payment-modal/>
     </div>
 </template>
 
@@ -364,8 +373,11 @@ export default {
                 'App\\Models\\DataCollectionStocktake': 'Stocktake',
             },
             selectedPrinter: null,
+            selectedPaymentType: null,
             selectedBillingAddress: null,
             selectedShippingAddress: null,
+            paymentTypeAlreadySelected: false,
+            paymentAmount: 0,
         };
     },
 
@@ -381,6 +393,28 @@ export default {
 
         Modals.EventBus.$on('hide::modal::set-transaction-printer-modal', (printer) => {
             this.selectedPrinter = printer;
+        });
+
+        Modals.EventBus.$on('hide::modal::data-collection-choose-payment-type-modal', (data) => {
+            if (data.paymentType) {
+                this.selectedPaymentType = data.paymentType;
+            }
+
+            if ((typeof data.saveChanges !== 'undefined' && data.saveChanges) && this.selectedPaymentType) {
+                this.$modal.showAddPaymentModal({maxAmount: this.dataCollection['total_outstanding']});
+            }
+        });
+
+        Modals.EventBus.$on('show::modal::data-collection-data-collection-add-payment-modal', this.onAddPaymentModalShown);
+
+        Modals.EventBus.$on('hide::modal::data-collection-data-collection-add-payment-modal', (data) => {
+            if (data.amount) {
+                this.paymentAmount = data.amount;
+            }
+
+            if ((typeof data.saveChanges !== 'undefined' && data.saveChanges) && this.paymentAmount) {
+                this.setTransactionPayment();
+            }
         });
 
         Modals.EventBus.$on('hide::modal::find-address-modal', (data) => {
@@ -491,7 +525,7 @@ export default {
             let params = {
                 'filter[id]': this.data_collection_id,
                 'filter[with_archived]': true,
-                'include': 'comments,comments.user,shippingAddress,billingAddress'
+                'include': 'comments,comments.user,shippingAddress,billingAddress,payments'
             }
 
             this.apiGetDataCollector(params)
@@ -592,7 +626,11 @@ export default {
         },
 
         selectCustomer() {
-            this.$modal.showFindAddressModal(this.setTransactionCustomer);
+            this.$modal.showFindAddressModal();
+        },
+
+        selectPayment() {
+            this.$modal.showSetPaymentTypeModal(this.selectedPaymentType);
         },
 
         autoScanAll() {
@@ -792,6 +830,40 @@ export default {
                     this.displayApiCallError(error);
                 });
         },
+
+        setTransactionPayment() {
+            // if (this.paymentTypeAlreadySelected) {
+            //     const payment = this.dataCollection.payments[this.dataCollection.payments.length - 1];
+            //     this.apiPutTransactionPayment(payment.id, {
+            //         payment_type_id: this.selectedPaymentType.id,
+            //         amount: this.paymentAmount
+            //     })
+            //         .then(() => {
+            //             this.notifySuccess('Payment type updated.');
+            //             this.reloadDataCollection();
+            //         })
+            //         .catch(error => {
+            //             this.displayApiCallError(error);
+            //         });
+            // } else {
+            // }
+            this.apiPostTransactionPayment({
+                transaction_id: this.dataCollection.id,
+                payment_type_id: this.selectedPaymentType.id,
+                amount: this.paymentAmount
+            })
+                .then(() => {
+                    this.notifySuccess('Payment type selected.');
+                    this.reloadDataCollection();
+                })
+                .catch(error => {
+                    this.displayApiCallError(error);
+                });
+        },
+
+        onAddPaymentModalShown() {
+            this.setFocusElementById('transaction_payment_amount', true);
+        }
     },
 
     computed: {

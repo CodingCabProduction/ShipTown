@@ -11,9 +11,15 @@ class TransactionInProcessSeeder extends Seeder
 {
     public function run(): void
     {
+        $uuid = 'TRANSACTION_IN_PROGRESS_FOR_USER_1_Artur Hanusek';
+
+        DataCollection::query()
+            ->where('custom_uuid', $uuid)
+            ->update(['name' => null, 'custom_uuid' => null]);
+
         $dataCollection = DataCollection::factory()->create([
             'type' => DataCollectionTransaction::class,
-            'custom_uuid' => 'TRANSACTION_IN_PROGRESS_FOR_USER_1_Artur Hanusek',
+            'custom_uuid' => $uuid,
         ]);
 
         DataCollectionRecord::factory()

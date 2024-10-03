@@ -1,6 +1,5 @@
 <template>
-    <b-modal body-class="ml-0 mr-0 pl-1 pr-1" :id="modalId" size="xl" scrollable no-fade
-             hide-header>
+    <b-modal body-class="ml-0 mr-0 pl-1 pr-1" :id="modalId" size="xl" scrollable no-fade hide-header>
         <search-and-option-bar>
             <barcode-input-field
                 :input_id="'customer_search_input'"

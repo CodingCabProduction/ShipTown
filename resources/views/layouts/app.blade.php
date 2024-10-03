@@ -37,5 +37,6 @@
         <new-product-modal></new-product-modal>
         <find-product-modal></find-product-modal>
         <new-quantity-discount-modal></new-quantity-discount-modal>
+        <module-data-collector-payments-new-payment-type-modal></module-data-collector-payments-new-payment-type-modal>
     @endauth
 @endsection

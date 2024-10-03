@@ -37,6 +37,8 @@ class DataCollectionResource extends JsonResource
             'total_full_price' => $this->total_full_price,
             'total_discount' => $this->total_discount,
             'total_sold_price' => $this->total_sold_price,
+            'total_paid' => $this->total_paid,
+            'total_outstanding' => $this->total_outstanding,
             'total_profit' => $this->total_profit,
 
             'deleted_at' => $this->deleted_at,

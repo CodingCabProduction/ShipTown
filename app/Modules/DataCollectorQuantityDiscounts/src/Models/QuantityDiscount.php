@@ -86,7 +86,7 @@ class QuantityDiscount extends Model
     public function scopeWhereHasText(mixed $query, string $text): mixed
     {
         return $query->where('name', $text)
-            ->orWhere('type', $text)
+            ->orWhere('job_class', $text)
             ->orWhere('name', 'like', '%'.$text.'%')
             ->orWhere('job_class', 'like', '%'.$text.'%');
     }

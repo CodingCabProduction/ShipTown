@@ -32,6 +32,8 @@ use Illuminate\Support\Carbon;
  * @property float $total_full_price
  * @property float $total_discount
  * @property float $total_sold_price
+ * @property float $total_paid
+ * @property float $total_outstanding
  * @property float $total_profit
  * @property string $custom_uuid
  * @property Carbon $deleted_at
@@ -65,6 +67,7 @@ class DataCollection extends BaseModel
         'name',
         'custom_uuid',
         'currently_running_task',
+        'total_paid',
     ];
 
     protected function casts(): array
@@ -76,6 +79,8 @@ class DataCollection extends BaseModel
             'total_discount' => 'double',
             'total_sold_price' => 'double',
             'total_profit' => 'double',
+            'total_paid' => 'double',
+            'total_outstanding' => 'double',
         ];
     }
 
@@ -112,6 +117,15 @@ class DataCollection extends BaseModel
         return $this->belongsTo(OrderAddress::class);
     }
 
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(DataCollectionPayment::class, 'transaction_id');
+    }
+
+    /**
+     * @return HasMany|DataCollectionComment
+     */
     public function comments(): HasMany|DataCollectionComment
     {
         return $this->hasMany(DataCollectionComment::class)->orderByDesc('id');

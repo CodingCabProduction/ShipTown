@@ -49,7 +49,19 @@ const Modals = {
 
             showAddNewAddressModal(address = null) {
                 this.show('new-address-modal', {'address': address});
-            }
+            },
+
+            showSetPaymentTypeModal(paymentType = null) {
+                this.show('data-collection-choose-payment-type-modal', {'paymentType': paymentType});
+            },
+
+            showAddPaymentModal(paymentDetails = null) {
+                this.show('data-collection-data-collection-add-payment-modal', {'paymentDetails': paymentDetails});
+            },
+
+            showNewPaymentTypeModal(paymentType = null) {
+                this.show('module-data-collector-payments-new-payment-type-modal', {'paymentType': paymentType});
+            },
         }
     }
 }

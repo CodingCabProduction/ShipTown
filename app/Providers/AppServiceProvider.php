@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\DataCollection;
+use App\Models\DataCollectionPayment;
 use App\Models\DataCollectionRecord;
 use App\Models\Inventory;
 use App\Models\InventoryMovement;
@@ -20,6 +21,7 @@ use App\Models\ShippingLabel;
 use App\Models\Warehouse;
 use App\Modules\PrintNode\src\Models\PrintJob;
 use App\Observers\DataCollectionObserver;
+use App\Observers\DataCollectionPaymentObserver;
 use App\Observers\DataCollectionRecordObserver;
 use App\Observers\InventoryMovementObserver;
 use App\Observers\InventoryObserver;
@@ -74,6 +76,7 @@ class AppServiceProvider extends ServiceProvider
         ShippingLabel::observe(ShippingLabelObserver::class);
         DataCollection::observe(DataCollectionObserver::class);
         DataCollectionRecord::observe(DataCollectionRecordObserver::class);
+        DataCollectionPayment::observe(DataCollectionPaymentObserver::class);
         Pick::observe(PickObserver::class);
         PrintJob::observe(PrintJobObserver::class);
     }

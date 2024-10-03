@@ -189,6 +189,9 @@ Vue.component('new-quantity-discount-modal', require('./modals/NewQuantityDiscou
 Vue.component('set-transaction-printer-modal', require('./modals/SetTransactionPrinterModal.vue').default);
 Vue.component('find-address-modal', require('./modals/FindAddressModal.vue').default);
 Vue.component('new-address-modal', require('./modals/NewAddressModal.vue').default);
+Vue.component('data-collection-choose-payment-type-modal', require('./modals/DataCollectionChoosePaymentTypeModal.vue').default);
+Vue.component('data-collection-add-payment-modal', require('./modals/DataCollectionAddPaymentModal.vue').default);
+Vue.component('module-data-collector-payments-new-payment-type-modal', require('./modals/ModuleDataCollectorPaymentsNewPaymentModal.vue').default);
 
 Vue.component('stocktake-suggestions-page', require('./components/Settings/Modules/StocktakeSuggestionsPage.vue').default);
 Vue.component('activity-log-page', require('./components/ActivityLogPage.vue').default);
@@ -260,6 +263,7 @@ Vue.component('top-nav-button', require('./components/UI/TopNavButton.vue').defa
 Vue.component('quantity-discounts-configuration-page', require('./components/Settings/QuantityDiscountsConfigurationPage.vue').default);
 Vue.component('quantity-discounts-edit-page', require('./components/Settings/QuantityDiscountEditPage.vue').default);
 Vue.component('report-order', require('./components/Reports/ReportOrder.vue').default);
+Vue.component('data-collector-payments-configuration-page', require('./components/Settings/DataCollectorPaymentsConfigurationPage.vue').default);
 
 Vue.prototype.$eventBus = new Vue();
 

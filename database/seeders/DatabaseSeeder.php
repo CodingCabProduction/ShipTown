@@ -28,12 +28,12 @@ class DatabaseSeeder extends Seeder
             Demo\OrderStatusesSeeder::class,
             Demo\UsersSeeder::class,
 
-            \Database\Seeders\WarehousesSeeder::class,
+            WarehousesSeeder::class,
 
             Demo\ProductsSeeder::class,
             Demo\ProductsTagsSeeder::class,
             Demo\ProductsPricesSeeder::class,
-            \Database\Seeders\InventorySeeder::class,
+            InventorySeeder::class,
             Demo\QuantityDiscountSeeder::class,
 
             // Orders Seeders
@@ -60,6 +60,8 @@ class DatabaseSeeder extends Seeder
             Modules\Magento2API\ConnectionSeeder::class,
 
             RestockingReportSeeder::class,
+
+            PaymentTypesSeeder::class,
             //            DataCollectionsSeeder::class,
             //            RmsapiConnectionSeeder::class,
             //            AutomationsSeeder::class,

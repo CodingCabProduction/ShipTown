@@ -151,7 +151,7 @@ export default {
 
         loadMore() {
             if (this.isMoreThanPercentageScrolled(this.scroll_percentage) && this.hasMorePagesToLoad() && !this.isLoading) {
-                this.findProductsContainingSearchText(++this.pagesLoadedCount);
+                this.findDiscounts(++this.pagesLoadedCount);
             }
         },
 

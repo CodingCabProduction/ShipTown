@@ -18,7 +18,6 @@ class BarcodeGeneratorPageTest extends DuskTestCase
     {
         /** @var User $user */
         $user = User::factory()->create();
-        //        $user->assignRole('user');
 
         $this->browse(function (Browser $browser) use ($user) {
             $browser->disableFitOnFailure();

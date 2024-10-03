@@ -44,6 +44,8 @@ class DataCollectorListReport extends Report
             'total_discount' => 'data_collections.total_discount',
             'total_sold_price' => 'data_collections.total_sold_price',
             'total_profit' => 'data_collections.total_profit',
+            'total_paid' => 'data_collections.total_paid',
+            'total_outstanding' => 'data_collections.total_outstanding',
             'custom_uuid' => 'data_collections.custom_uuid',
             'differences_count' => $differences_count_subquery,
             'created_at' => 'data_collections.created_at',
@@ -92,5 +94,6 @@ class DataCollectorListReport extends Report
         $this->addAllowedInclude('comments.user');
         $this->addAllowedInclude('shippingAddress');
         $this->addAllowedInclude('billingAddress');
+        $this->addAllowedInclude('payments');
     }
 }

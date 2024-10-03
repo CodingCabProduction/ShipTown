@@ -112,5 +112,6 @@ Route::middleware('auth')->group(function () {
         Route::view('settings/modules/magento-api', 'settings/magento-api')->name('settings.modules.magento-api');
         Route::view('settings/modules/quantity-discounts', 'settings/modules/quantity-discounts/index')->name('settings.modules.quantity-discounts.index');
         Route::get('settings/modules/quantity-discounts/{id}', [QuantityDiscountsController::class, 'edit'])->name('settings.modules.quantity-discounts.edit');
+        Route::view('settings/modules/data-collector-payments', 'settings/modules/payments/index')->name('settings.modules.payments.index');
     });
 });
