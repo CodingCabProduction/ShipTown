@@ -24,7 +24,7 @@ class StoreTest extends TestCase
             'password' => 'secret123',
         ];
 
-        $response = $this->post(route('api.modules.rmsapi.connections.store'), $params);
+        $response = $this->post(route('api.modules.rms_api.connections.store'), $params);
 
         $response->assertStatus(201);
     }

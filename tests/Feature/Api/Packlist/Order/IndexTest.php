@@ -35,7 +35,7 @@ class IndexTest extends TestCase
         ]);
 
         $response = $this->actingAs($user, 'api')
-            ->getJson(route('packlist.order.index', [
+            ->getJson(route('api.packlist.order.index', [
                 'filter[inventory_source_warehouse_id]' => $user->location_id,
             ]));
 
@@ -63,7 +63,7 @@ class IndexTest extends TestCase
 
         Order::factory()->create(['status_code' => 'packing']);
 
-        $response = $this->actingAs($user, 'api')->getJson(route('packlist.order.index'));
+        $response = $this->actingAs($user, 'api')->getJson(route('api.packlist.order.index'));
 
         $response->assertStatus(422);
 

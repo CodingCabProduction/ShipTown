@@ -36,7 +36,7 @@ class UpdateTest extends TestCase
             'warehouse_id' => $warehouse->getKey(),
         ];
 
-        $response = $this->put(route('users.update', $user), $data);
+        $response = $this->put(route('api.admin.users.update', $user), $data);
 
         $response->assertStatus(200);
     }

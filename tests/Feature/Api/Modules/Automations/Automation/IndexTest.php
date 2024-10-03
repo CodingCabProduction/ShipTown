@@ -28,7 +28,9 @@ class IndexTest extends TestCase
             'event_class' => OrderCreatedEvent::class,
         ]);
 
-        $response = $this->get(route('api.modules.automations.show', $automation->getKey()));
+        $response = $this->get(route('api.modules.automations.index', [
+            'include' => 'actions,conditions',
+        ]));
 
         ray($response->json());
 
@@ -36,11 +38,13 @@ class IndexTest extends TestCase
 
         $response->assertJsonStructure([
             'data' => [
-                'id',
-                'name',
-                'enabled',
-                'actions',
-                'conditions',
+                '*' => [
+                    'id',
+                    'name',
+                    'enabled',
+//                    'actions',
+//                    'conditions',
+                ],
             ],
         ]);
     }

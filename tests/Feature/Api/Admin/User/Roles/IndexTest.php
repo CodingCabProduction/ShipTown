@@ -12,7 +12,7 @@ class IndexTest extends TestCase
     {
         $user = User::factory()->create()->assignRole('admin');
 
-        $response = $this->actingAs($user, 'api')->getJson(route('admin.users.roles.index'));
+        $response = $this->actingAs($user, 'api')->getJson(route('api.admin.user.roles.index'));
 
         $response->assertOk();
 

@@ -20,7 +20,7 @@ class StoreTest extends TestCase
     {
         $configuration = AutoStatusPickingConfiguration::factory()->make();
 
-        $response = $this->postJson(route('modules.autostatus.picking.configuration.store'), $configuration->toArray());
+        $response = $this->postJson(route('api.modules.autostatus.picking.configuration.store'), $configuration->toArray());
 
         $response->assertSuccessful();
     }

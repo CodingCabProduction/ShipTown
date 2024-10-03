@@ -29,7 +29,7 @@ class IndexTest extends TestCase
             'quantity_scanned' => rand(1, 10),
         ]);
 
-        $response = $this->actingAs($user, 'api')->getJson(route('data-collector-records.index'));
+        $response = $this->actingAs($user, 'api')->getJson(route('api.data-collector-records.index'));
 
         ray($response->json());
 

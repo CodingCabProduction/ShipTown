@@ -24,7 +24,7 @@ class StoreTest extends TestCase
             'name' => 'test',
         ]);
 
-        $response = $this->actingAs($user, 'api')->postJson(route('data-collector-records.store'), [
+        $response = $this->actingAs($user, 'api')->postJson(route('api.data-collector-records.store'), [
             'data_collection_id' => $dataCollection->getKey(),
             'inventory_id' => $inventory->getKey(),
             'warehouse_code' => $inventory->warehouse_code,

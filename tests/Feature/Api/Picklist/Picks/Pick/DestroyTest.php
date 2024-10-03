@@ -20,7 +20,7 @@ class DestroyTest extends TestCase
     {
         $pick = Pick::factory()->create();
 
-        $response = $this->delete(route('picks.destroy', $pick));
+        $response = $this->delete(route('api.picklist.picks.destroy', $pick));
 
         $response->assertOk();
     }

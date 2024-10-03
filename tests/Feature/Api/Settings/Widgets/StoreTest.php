@@ -17,7 +17,7 @@ class StoreTest extends TestCase
     /** @test */
     public function test_store_call_returns_ok(): void
     {
-        $response = $this->post(route('widgets.store'), [
+        $response = $this->post(route('api.settings.widgets.store'), [
             'name' => 'Tes widget',
             'config' => [],
         ]);

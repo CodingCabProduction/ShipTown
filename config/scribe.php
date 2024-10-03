@@ -9,12 +9,12 @@ return [
     /*
      * The HTML <title> for the generated documentation. If this is empty, Scribe will infer it from config('app.name').
      */
-    'title' => null,
+    'title' => 'ShipTown',
 
     /*
      * A short description of your API. Will be included in the docs webpage, Postman collection and OpenAPI spec.
      */
-    'description' => '',
+    'description' => 'API documentation for ShipTown',
 
     /*
      * The base URL displayed in the docs. If this is empty, Scribe will use the value of config('app.url').
@@ -208,7 +208,7 @@ return [
         /*
          * Set this to true if any endpoints in your API use authentication.
          */
-        'enabled' => false,
+        'enabled' => true,
 
         /*
          * Set this to true if your API should be authenticated by default. If so, you must also set `enabled` (above) to true.
@@ -374,7 +374,7 @@ INTRO
      * Tell Scribe which connections should be transacted here.
      * If you only use one db connection, you can leave this as is.
      */
-    'database_connections_to_transact' => [config('database.default')],
+    'database_connections_to_transact' => [],
     'external' => ['html_attributes' => []],
     'groups' => [
         // Endpoints which don't have a @group will be placed in this default group.

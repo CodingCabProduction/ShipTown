@@ -13,7 +13,7 @@ class IndexTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user, 'api')->getJson(route('orders.payments.index'));
+        $response = $this->actingAs($user, 'api')->getJson(route('api.order.payments.index'));
 
         OrderPayment::factory()->count(5)->create();
 

@@ -14,7 +14,7 @@ class IndexTest extends TestCase
         $user = User::factory()->create();
         $user->assignRole('admin');
 
-        $response = $this->actingAs($user, 'api')->getJson(route('api.modules.rmsapi.connections.index'));
+        $response = $this->actingAs($user, 'api')->getJson(route('api.modules.rms_api.connections.index'));
 
         $response->assertOk();
         $response->assertJsonStructure([

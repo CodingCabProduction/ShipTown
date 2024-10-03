@@ -20,7 +20,7 @@ class StoreTest extends TestCase
 
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user, 'api')->postJson(route('csv-import-data-collections.store'), [
+        $response = $this->actingAs($user, 'api')->postJson(route('api.csv-import.data-collections.store'), [
             'data_collection_name_prefix' => 'test',
             'data' => [
                 [

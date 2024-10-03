@@ -23,7 +23,7 @@ class StoreTest extends TestCase
             'ask_for_shipping_number' => false,
         ];
 
-        $response = $this->post(route('me.store', $params));
+        $response = $this->post(route('api.settings.user.me.store', $params));
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'data' => [

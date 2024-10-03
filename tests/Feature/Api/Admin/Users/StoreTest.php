@@ -26,7 +26,7 @@ class StoreTest extends TestCase
         $testData = User::factory()->make()->toArray();
         $testData['role_id'] = Role::findOrCreate('user', 'web')->id;
 
-        $response = $this->postJson(route('users.store'), $testData);
+        $response = $this->postJson(route('api.admin.users.store'), $testData);
 
         $response->assertStatus(201);
     }
@@ -37,7 +37,7 @@ class StoreTest extends TestCase
         $user = User::factory()->create();
         $user->delete();
 
-        $response = $this->post(route('users.store'), [
+        $response = $this->post(route('api.admin.users.store'), [
             'name' => $user->name,
             'email' => $user->email,
             'role_id' => Role::findOrCreate('user', 'web')->id,

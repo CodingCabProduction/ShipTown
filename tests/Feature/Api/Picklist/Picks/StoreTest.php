@@ -19,7 +19,7 @@ class StoreTest extends TestCase
         $order = Order::factory()->create();
         $orderProduct = OrderProduct::factory()->create(['order_id' => $order->id]);
 
-        $response = $this->actingAs($user, 'api')->postJson(route('picks.store'), [
+        $response = $this->actingAs($user, 'api')->postJson(route('api.picklist.picks.store'), [
             'product_id' => $orderProduct->product_id,
             'quantity_picked' => 1,
             'quantity_skipped_picking' => 0,

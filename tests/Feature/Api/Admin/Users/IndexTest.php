@@ -16,7 +16,7 @@ class IndexTest extends TestCase
         $user->assignRole(Role::findOrCreate('admin', 'api'));
 
         $response = $this->actingAs($user, 'api')
-            ->getJson(route('users.index', ['include' => 'roles']));
+            ->getJson(route('api.admin.users.index', ['include' => 'roles']));
 
         $response->assertOk();
 

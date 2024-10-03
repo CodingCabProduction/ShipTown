@@ -20,7 +20,7 @@ class UpdateTest extends TestCase
     {
         $widget = Widget::create(['name' => 'testing', 'config' => []]);
 
-        $response = $this->put(route('widgets.update', $widget), [
+        $response = $this->put(route('api.settings.widgets.update', $widget), [
             'name' => 'Tes widget',
             'config' => [],
         ]);

@@ -21,7 +21,7 @@ class StoreTest extends TestCase
     {
         $automation = Automation::factory()->create();
 
-        $response = $this->post(route('settings.modules.automations.run.store'), [
+        $response = $this->post(route('api.settings.modules.automations.run.store'), [
             'automation_id' => $automation->getKey(),
         ]);
 

@@ -73,11 +73,11 @@ class InventoryDatesUpdatesTest extends TestCase
 
         $this->inventory = $this->inventory->refresh();
 
-        $this->assertEquals($movement->quantity_after, $this->inventory->quantity, 'last_movement_id');
+        $this->assertEquals($movement->quantity_after, $this->inventory->quantity, 'quantity_after');
         $this->assertEquals($movement->getKey(), $this->inventory->last_movement_id, 'last_movement_id');
         $this->assertEquals($movement->occurred_at, $this->inventory->first_movement_at, 'first_movement_at');
         $this->assertEquals($movement->occurred_at, $this->inventory->last_movement_at, 'last_movement_at');
-        $this->assertEquals($movement->occurred_at, $this->inventory->last_counted_at, 'last_movement_at');
+        $this->assertEquals($movement->occurred_at, $this->inventory->last_counted_at, 'last_counted_at');
     }
 
     /** @test */

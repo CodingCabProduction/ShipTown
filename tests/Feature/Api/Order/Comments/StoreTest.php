@@ -18,7 +18,7 @@ class StoreTest extends TestCase
             'comment' => 'Test comment',
         ];
 
-        $response = $this->actingAs($user, 'api')->postJson(route('orders.comments.store'), $attributes);
+        $response = $this->actingAs($user, 'api')->postJson(route('api.order.comments.store'), $attributes);
 
         $response->assertOk();
 
