@@ -2,10 +2,12 @@
 
 namespace Tests\Unit\Modules\InventoryMovements;
 
+use App\Events\Inventory\RecalculateInventoryRequestEvent;
 use App\Models\Inventory;
 use App\Models\InventoryMovement;
 use App\Models\Product;
 use App\Models\Warehouse;
+use App\Modules\Inventory\src\Jobs\RecalculateInventoryRecordsJob;
 use App\Modules\InventoryMovements\src\InventoryMovementsServiceProvider;
 use Tests\TestCase;
 
@@ -99,13 +101,16 @@ class InventoryDatesUpdatesTest extends TestCase
             'description' => 'test',
         ]);
 
+
+        RecalculateInventoryRecordsJob::dispatch();
+
         $this->inventory = $this->inventory->refresh();
 
         $this->assertEquals($movement->quantity_after, $this->inventory->quantity, 'last_movement_id');
         $this->assertEquals($movement->getKey(), $this->inventory->last_movement_id, 'last_movement_id');
         $this->assertEquals($movement->occurred_at, $this->inventory->first_movement_at, 'first_movement_at');
         $this->assertEquals($movement->occurred_at, $this->inventory->last_movement_at, 'last_movement_at');
-        $this->assertEquals($movement->occurred_at, $this->inventory->first_sold_at, 'last_movement_at');
-        $this->assertEquals($movement->occurred_at, $this->inventory->last_sold_at, 'last_movement_at');
+        $this->assertEquals($movement->occurred_at, $this->inventory->first_sold_at, 'first_sold_at');
+        $this->assertEquals($movement->occurred_at, $this->inventory->last_sold_at, 'last_sold_at');
     }
 }

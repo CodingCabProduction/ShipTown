@@ -6,7 +6,7 @@ use App\Models\Inventory;
 use App\Models\InventoryMovement;
 use App\Models\Product;
 use App\Models\Warehouse;
-use App\Modules\Inventory\src\Jobs\DispatchRecalculateInventoryRecordsJob;
+use App\Modules\Inventory\src\Jobs\RecalculateInventoryRecordsJob;
 use App\Modules\InventoryMovements\src\Jobs\SequenceNumberJob;
 use App\Modules\InventoryMovementsStatistics\src\Jobs\RecalculateStatisticsTableJob;
 use Tests\TestCase;
@@ -33,7 +33,7 @@ class RepopulateStatisticsTableJobTest extends TestCase
 
         SequenceNumberJob::dispatchSync();
 
-        DispatchRecalculateInventoryRecordsJob::dispatchSync();
+        RecalculateInventoryRecordsJob::dispatchSync();
 
         RecalculateStatisticsTableJob::dispatch();
 

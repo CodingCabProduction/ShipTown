@@ -6,15 +6,16 @@ use App\Abstracts\UniqueJob;
 use App\Events\Inventory\InventoryUpdatedEvent;
 use App\Events\Inventory\RecalculateInventoryRequestEvent;
 use App\Models\Inventory;
-use DB;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class DispatchRecalculateInventoryRecordsJob extends UniqueJob
+class RecalculateInventoryRecordsJob extends UniqueJob
 {
     public function handle(): void
     {
-        Inventory::where(['recount_required' => true])
+        Inventory::query()
+            ->where(['recount_required' => true])
             ->chunkById(100, function (Collection $records) {
                 $recordsUpdated = Inventory::query()
                     ->whereIn('id', $records->pluck('id'))

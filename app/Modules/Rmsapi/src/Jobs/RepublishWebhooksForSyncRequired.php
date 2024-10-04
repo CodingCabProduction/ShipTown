@@ -6,7 +6,7 @@ use App\Abstracts\UniqueJob;
 use App\Models\Inventory;
 use Illuminate\Support\Facades\DB;
 
-class RepublishWebhooksForDiscrepencies extends UniqueJob
+class RepublishWebhooksForSyncRequired extends UniqueJob
 {
     public function handle(): void
     {
@@ -18,10 +18,9 @@ class RepublishWebhooksForDiscrepencies extends UniqueJob
                 now() as created_at,
                 now() as updated_at
             FROM modules_rmsapi_products_imports
-            LEFT JOIN inventory
-              ON inventory.id = modules_rmsapi_products_imports.inventory_id
-            WHERE inventory.quantity != modules_rmsapi_products_imports.quantity_on_hand
-            AND inventory.updated_at < DATE_SUB(now(), INTERVAL 1 DAY)
+
+            WHERE modules_rmsapi_products_imports.sync_required = 1
+
             LIMIT 10000
         ', [Inventory::class]);
     }

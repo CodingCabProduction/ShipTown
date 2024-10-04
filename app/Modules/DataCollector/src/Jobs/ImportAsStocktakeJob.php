@@ -9,7 +9,7 @@ use App\Models\DataCollectionStocktake;
 use App\Models\Inventory;
 use App\Models\InventoryMovement;
 use App\Models\StocktakeSuggestion;
-use App\Modules\Inventory\src\Jobs\DispatchRecalculateInventoryRecordsJob;
+use App\Modules\Inventory\src\Jobs\RecalculateInventoryRecordsJob;
 use App\Modules\InventoryMovements\src\Jobs\SequenceNumberJob;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Bus;
@@ -53,7 +53,7 @@ class ImportAsStocktakeJob extends UniqueJob
                 $dataCollection->update(['currently_running_task' => null]);
                 Bus::chain([
                     new SequenceNumberJob,
-                    new DispatchRecalculateInventoryRecordsJob,
+                    new RecalculateInventoryRecordsJob,
                 ])->dispatch();
 
                 return;
