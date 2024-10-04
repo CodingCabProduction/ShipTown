@@ -11,7 +11,7 @@
                 <div class="card-header">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <span>
-                            Personal Access Tokens
+                            API Tokens
                         </span>
 
                         <a class="action-link" tabindex="-1" @click="showCreateTokenForm">

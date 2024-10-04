@@ -4,7 +4,7 @@ use Knuckles\Scribe\Extracting\Strategies;
 
 return [
 
-    'theme' => 'default',
+    'theme' => 'elements',
 
     /*
      * The HTML <title> for the generated documentation. If this is empty, Scribe will infer it from config('app.name').
@@ -214,7 +214,7 @@ return [
          * Set this to true if your API should be authenticated by default. If so, you must also set `enabled` (above) to true.
          * You can then use @unauthenticated or @authenticated on individual endpoints to change their status from the default.
          */
-        'default' => false,
+        'default' => true,
 
         /*
          * Where is the auth value meant to be sent in a request?
@@ -225,7 +225,7 @@ return [
         /*
          * The name of the auth parameter (eg token, key, apiKey) or header (eg Authorization, Api-Key).
          */
-        'name' => 'key',
+        'name' => 'Authorization',
 
         /*
          * The value of the parameter to be used by Scribe to authenticate response calls.
@@ -244,7 +244,7 @@ return [
          * Any extra authentication-related info for your users. For instance, you can describe how to find or generate their auth credentials.
          * Markdown and HTML are supported.
          */
-        'extra_info' => 'You can retrieve your token by visiting your dashboard and clicking <b>Generate API token</b>.',
+        'extra_info' => 'You can retrieve your token by visiting your dashboard and clicking <a href="/settings/api" target="_blank"><strong>Generate API Token</strong></a>.',
     ],
 
     /*
@@ -265,8 +265,8 @@ INTRO
      *
      */
     'example_languages' => [
-        'bash',
         'php',
+        'bash',
         'javascript',
         'python',
     ],
