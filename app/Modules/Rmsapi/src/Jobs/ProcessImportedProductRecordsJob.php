@@ -91,6 +91,7 @@ class ProcessImportedProductRecordsJob extends UniqueJob
         $this->importPricing($importedProduct);
 
         $importedProduct->update([
+            'sync_required' => null,
             'processed_at' => now(),
         ]);
 

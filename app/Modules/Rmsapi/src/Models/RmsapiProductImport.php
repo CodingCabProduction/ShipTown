@@ -57,6 +57,7 @@ class RmsapiProductImport extends Model
         'connection_id',
         'warehouse_id',
         'warehouse_code',
+        'sync_required',
         'inventory_id',
         'product_id',
         'rms_product_id',
