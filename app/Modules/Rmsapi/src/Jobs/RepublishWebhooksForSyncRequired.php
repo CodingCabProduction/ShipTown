@@ -20,6 +20,7 @@ class RepublishWebhooksForSyncRequired extends UniqueJob
             FROM modules_rmsapi_products_imports
 
             WHERE modules_rmsapi_products_imports.sync_required = 1
+              AND modules_rmsapi_products_imports.processed_at IS NOT NULL
 
             LIMIT 10000
         ', [Inventory::class]);

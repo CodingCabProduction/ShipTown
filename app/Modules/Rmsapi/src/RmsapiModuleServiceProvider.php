@@ -5,6 +5,7 @@ namespace App\Modules\Rmsapi\src;
 use App\Events\EveryDayEvent;
 use App\Events\EveryFiveMinutesEvent;
 use App\Events\EveryMinuteEvent;
+use App\Events\EveryTenMinutesEvent;
 use App\Events\Inventory\InventoryUpdatedEvent;
 use App\Modules\BaseModuleServiceProvider;
 use App\Modules\Rmsapi\src\Jobs\CleanupImportTablesJob;
@@ -39,6 +40,10 @@ class RmsapiModuleServiceProvider extends BaseModuleServiceProvider
 
         EveryFiveMinutesEvent::class => [
             Listeners\EveryFiveMinutesEventListener::class,
+        ],
+
+        EveryTenMinutesEvent::class => [
+            Listeners\EveryTenMinutesEventListener::class,
         ],
 
         EveryDayEvent::class => [
