@@ -91,7 +91,7 @@ class DataCollectorListReport extends Report
             AllowedFilter::callback('without_transactions', function (Builder $query, $value) {
                 if ($value === true) {
                     $query->where(function (Builder $query) {
-                        $query->whereNotIn('data_collections.type', [
+                        $query->whereIn('data_collections.type', [
                                 DataCollectionTransferIn::class,
                                 DataCollectionTransferOut::class,
                                 DataCollectionStocktake::class,
