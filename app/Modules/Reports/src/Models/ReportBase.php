@@ -251,7 +251,7 @@ class ReportBase extends Model
                     }
 
                     if ($fieldQuery instanceof Expression) {
-                        $query->whereBetween(DB::raw('('.$fieldQuery.')'), [floatval($value[0]), floatval($value[1])]);
+                        $query->whereBetween(DB::raw('('.$fieldQuery->getValue($query->getGrammar()).')'), [floatval($value[0]), floatval($value[1])]);
 
                         return;
                     }
@@ -304,7 +304,7 @@ class ReportBase extends Model
 
                     if ($fieldQuery instanceof Expression) {
                         $query->whereBetween(
-                            DB::raw('('.$fieldQuery.')'),
+                            DB::raw('('.$fieldQuery->getValue($query->getGrammar()).')'),
                             [Carbon::parse($value[0]), Carbon::parse($value[1])]
                         );
 
@@ -428,7 +428,7 @@ class ReportBase extends Model
                     }
 
                     if ($fieldQuery instanceof Expression) {
-                        $query->whereBetween(DB::raw('('.$fieldQuery.')'), [floatval($value[0]), floatval($value[1])]);
+                        $query->whereBetween(DB::raw('('.$fieldQuery->getValue($query->getGrammar()).')'), [floatval($value[0]), floatval($value[1])]);
 
                         return;
                     }
