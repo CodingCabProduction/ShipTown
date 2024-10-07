@@ -12,7 +12,7 @@
                         <a class="dropdown-item text-white lightHover mt-1" id="inventory_link" href="{{ route('products') }}">{{ __('Inventory') }}</a>
                         <a class="dropdown-item text-white lightHover mt-1" id="transfers_in_link" href="{{ route('data-collector', ['filter[type]' => 'App\\Models\\DataCollectionTransferIn']) }}">{{ __('Transfers In') }}</a>
                         <a class="dropdown-item text-white lightHover mt-1" id="transfers_out_link" href="{{ route('data-collector', ['filter[type]' => 'App\\Models\\DataCollectionTransferOut']) }}">{{ __('Transfers Out') }}</a>
-                        <a class="dropdown-item text-white lightHover mt-1" id="transactions_link" href="{{ route('data-collector', ['filter[type]' => 'App\\Models\\DataCollectionTransaction']) }}">{{ __('Transactions') }}</a>
+{{--                        <a class="dropdown-item text-white lightHover mt-1" id="transactions_link" href="{{ route('data-collector', ['filter[type]' => 'App\\Models\\DataCollectionTransaction']) }}">{{ __('Transactions') }}</a>--}}
                         <a class="dropdown-item text-white lightHover mt-1" id="stocktaking_link" href="{{ route('stocktaking') }}">{{ __('Stocktaking') }}</a>
                     </div>
                 </div>

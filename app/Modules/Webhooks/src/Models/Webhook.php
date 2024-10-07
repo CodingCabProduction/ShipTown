@@ -12,20 +12,7 @@ class Webhook extends Model
         'model_class',
         'model_id',
         'reserved_at',
-        'available_at',
         'published_at',
-        'message',
         'sns_message_id',
     ];
-
-    protected $attributes = [
-        'message' => '{}',
-    ];
-
-    protected function casts(): array
-    {
-        return [
-            'message' => 'array',
-        ];
-    }
 }
