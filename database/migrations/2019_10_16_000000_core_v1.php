@@ -113,7 +113,7 @@ return new class extends Migration
                 $table->index(['causer_id', 'causer_type'], 'causer');
             });
 
-        Schema::create('password_reset_tokens', function (Blueprint $table) {
+        Schema::create('password_resets', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
