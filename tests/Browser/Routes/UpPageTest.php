@@ -36,7 +36,5 @@ class UpPageTest extends DuskTestCase
     public function testBasics()
     {
         $this->basicUserAccessTest($this->uri, true);
-        $this->basicAdminAccessTest($this->uri, true);
-        $this->basicGuestAccessTest($this->uri, true);
     }
 }

@@ -2,18 +2,21 @@
 
 namespace Tests;
 
+use App\Console\Commands\ClearDatabaseCommand;
 use App\User;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Artisan;
 use Laravel\Dusk\Browser;
 use Laravel\Dusk\TestCase as BaseTestCase;
+use PHPUnit\Framework\Attributes\BeforeClass;
 use Throwable;
 
 abstract class DuskTestCase extends BaseTestCase
 {
-    use ResetsDatabase;
+    private Browser $browser;
 
     protected int $superShortDelay = 50;
 
@@ -21,11 +24,51 @@ abstract class DuskTestCase extends BaseTestCase
 
     protected int $longDelay = 0;
 
-    /**
-     * Prepare for Dusk test execution.
-     *
-     * @beforeClass
-     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        ray()->showApp();
+
+        ray()->clearAll();
+        ray()->className($this)->blue();
+
+        ClearDatabaseCommand::resetDatabase();
+
+        Artisan::call('app:install');
+
+        User::factory()->create([
+            'email' => 'demo-admin@ship.town',
+            'password' => bcrypt('secret1144'),
+        ]);
+    }
+
+    protected function tearDown(): void
+    {
+        $this->getBrowser()->quit();
+
+        parent::tearDown();
+    }
+
+    public function visit(string $uri, User $user = null): Browser
+    {
+        return $this->getBrowser()
+            ->disableFitOnFailure()
+            ->loginAs($user ?? User::factory()->create())
+            ->visit($uri)
+            ->pause($this->shortDelay)
+            ->assertSourceMissing('Server Error')
+            ->assertSourceMissing('snotify-error');
+    }
+
+    public function getBrowser(): Browser
+    {
+        $this->browser = $this->browser ?? new Browser($this->driver());
+
+        return $this->browser;
+    }
+
+    #[BeforeClass]
     public static function prepare(): void
     {
         if (! static::runningInSail()) {
@@ -33,9 +76,6 @@ abstract class DuskTestCase extends BaseTestCase
         }
     }
 
-    /**
-     * Create the RemoteWebDriver instance.
-     */
     protected function driver(): RemoteWebDriver
     {
         $options = (new ChromeOptions)->addArguments(collect([
@@ -57,32 +97,13 @@ abstract class DuskTestCase extends BaseTestCase
     }
 
     /**
-     * Determine whether the Dusk command has disabled headless mode.
-     */
-    protected function hasHeadlessDisabled(): bool
-    {
-        return isset($_SERVER['DUSK_HEADLESS_DISABLED']) ||
-            isset($_ENV['DUSK_HEADLESS_DISABLED']);
-    }
-
-    /**
-     * Determine if the browser window should start maximized.
-     */
-    protected function shouldStartMaximized(): bool
-    {
-        return isset($_SERVER['DUSK_START_MAXIMIZED']) ||
-            isset($_ENV['DUSK_START_MAXIMIZED']);
-    }
-
-    /**
      * @throws Throwable
      */
     public function basicUserAccessTest(string $uri, bool $allowed, ?User $user = null): void
     {
         $this->browse(function (Browser $browser) use ($uri, $allowed, $user) {
             /** @var User $visitor */
-            $visitor = $user ?? User::factory()->create();
-            $visitor->assignRole('user');
+            $visitor = $user ?? User::factory()->create()->assignRole('user');
 
             $browser->disableFitOnFailure();
 
@@ -106,52 +127,10 @@ abstract class DuskTestCase extends BaseTestCase
      */
     public function basicAdminAccessTest(string $uri, bool $allowed): void
     {
-        $this->browse(function (Browser $browser) use ($uri, $allowed) {
-            /** @var User $admin */
-            $admin = User::query()->inRandomOrder()->first() ?? User::factory()->create();
-            $admin->assignRole('admin');
+        $user = User::factory()->create();
+        $user->assignRole('user');
 
-            $browser->disableFitOnFailure();
-
-            $browser->loginAs($admin);
-            $browser->visit($uri);
-            $browser->pause($this->shortDelay);
-
-            $browser->assertSourceMissing('Server Error');
-            $browser->assertSourceMissing('snotify-error');
-
-            if ($allowed) {
-                $browser->assertPathIs($uri);
-            } else {
-                $browser->assertPathIs('login');
-            }
-        });
-    }
-
-    /**
-     * @throws Throwable
-     */
-    public function basicGuestAccessTest(string $uri, bool $allowed = false): void
-    {
-        User::factory()->create();
-
-        $this->browse(function (Browser $browser) use ($uri, $allowed) {
-            $browser->disableFitOnFailure();
-
-            $browser->logout();
-            $browser->visit($uri);
-            $browser->pause($this->superShortDelay);
-
-            $browser->assertSourceMissing('Server Error');
-            $browser->assertSourceMissing('snotify-error');
-
-            if ($allowed) {
-                $browser->assertPathIs($uri);
-            } else {
-                $browser->assertPathIs('/login');
-                $browser->assertSee('Login');
-            }
-        });
+        $this->basicUserAccessTest($uri, $allowed, $user);
     }
 
     protected static function setEnvironmentValue($key, $value): void

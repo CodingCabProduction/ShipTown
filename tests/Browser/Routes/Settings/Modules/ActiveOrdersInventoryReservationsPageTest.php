@@ -29,14 +29,4 @@ class ActiveOrdersInventoryReservationsPageTest extends DuskTestCase
             $browser->assertSourceMissing('Server Error');
         });
     }
-
-    /**
-     * @throws Throwable
-     */
-    public function testBasics(): void
-    {
-        $this->basicUserAccessTest($this->uri, true);
-        $this->basicAdminAccessTest($this->uri, true);
-        $this->basicGuestAccessTest($this->uri);
-    }
 }

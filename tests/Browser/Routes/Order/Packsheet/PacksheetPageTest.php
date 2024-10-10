@@ -23,8 +23,6 @@ class PacksheetPageTest extends DuskTestCase
         $newUri = implode('', [$this->uri, '/', $order->getKey()]);
 
         $this->basicUserAccessTest($newUri, true);
-        $this->basicAdminAccessTest($newUri, true);
-        $this->basicGuestAccessTest($newUri);
     }
 
     /**

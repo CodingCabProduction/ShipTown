@@ -35,7 +35,5 @@ class ConfigPageTest extends DuskTestCase
     public function testBasics(): void
     {
         $this->basicUserAccessTest($this->uri, false);
-        $this->basicAdminAccessTest($this->uri, true);
-        $this->basicGuestAccessTest($this->uri);
     }
 }

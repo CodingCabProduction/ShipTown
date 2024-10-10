@@ -20,7 +20,7 @@
         "guzzlehttp/guzzle": "^7.9",
         "hulkur/laravel-hasmany-keyby": "^7.0",
         "laravel/forge-sdk": "^3.18",
-        "laravel/framework": "^11.27",
+        "laravel/framework": "11.26",
         "laravel/passport": "^12.3",
         "laravel/telescope": "^5.2",
         "laravel/tinker": "^2.9",

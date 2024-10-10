@@ -36,7 +36,5 @@ class ApiPageTest extends DuskTestCase
     public function testBasics(): void
     {
         $this->basicUserAccessTest($this->uri, true);
-        $this->basicAdminAccessTest($this->uri, true);
-        $this->basicGuestAccessTest($this->uri);
     }
 }

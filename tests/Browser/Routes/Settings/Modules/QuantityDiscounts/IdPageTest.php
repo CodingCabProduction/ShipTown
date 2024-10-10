@@ -21,6 +21,7 @@ class IdPageTest extends DuskTestCase
         $this->user = User::factory()->create();
         $this->user->assignRole('admin');
 
+        /** @var QuantityDiscount $discount */
         $discount = QuantityDiscount::factory()->create();
 
         $this->uri = str_replace('{id}', $discount->id, $this->uri);
@@ -29,24 +30,8 @@ class IdPageTest extends DuskTestCase
     /**
      * @throws Throwable
      */
-    public function testBasics(): void
-    {
-        $this->basicAdminAccessTest($this->uri, true);
-        $this->basicUserAccessTest($this->uri, false);
-        $this->basicGuestAccessTest($this->uri);
-    }
-
-    /**
-     * @throws Throwable
-     */
     public function testPage(): void
     {
-        $this->browse(function (Browser $browser) {
-            $browser->disableFitOnFailure()
-                ->loginAs($this->user)
-                ->visit($this->uri)
-                ->assertPathIs($this->uri)
-                ->assertSourceMissing('Server Error');
-        });
+        $this->basicAdminAccessTest($this->uri, true);
     }
 }

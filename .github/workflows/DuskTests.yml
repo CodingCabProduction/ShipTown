@@ -44,7 +44,7 @@ jobs:
       - run: git config --global user.email "you@example.com"
       - run: git config --global user.name "Your Name"
       - run: npm install
-      - run: npm run production --no-git-tag-version
+#      - run: npm run production --no-git-tag-version
       - name: Upgrade Chrome Driver
         run: php artisan dusk:chrome-driver --detect
       - name: Start Chrome Driver

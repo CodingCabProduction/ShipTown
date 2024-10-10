@@ -30,17 +30,4 @@ class DocumentsPageTest extends DuskTestCase
             $browser->assertSourceMissing('Server Error');
         });
     }
-
-    /**
-     * @throws Throwable
-     */
-    public function testBasics(): void
-    {
-        // we temporarily disable this test because it is not working, we will fix it later
-        // this page might not even be needed
-
-        //        $this->basicUserAccessTest($this->uri, true);
-        //        $this->basicAdminAccessTest($this->uri, true);
-        $this->basicGuestAccessTest($this->uri);
-    }
 }

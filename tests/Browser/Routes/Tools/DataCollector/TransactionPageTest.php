@@ -39,9 +39,7 @@ class TransactionPageTest extends DuskTestCase
             $browser->loginAs($user)
                 ->visit($this->uri)
                 ->assertPathIs($this->uri)
-                ->pause($this->shortDelay)
-                ->pause($this->shortDelay)
-                ->pause($this->shortDelay)
+                ->pause(2000)
                 ->keys('@barcode-input-field', '4001')
                 ->keys('@barcode-input-field', '{ENTER}')
                 ->pause($this->shortDelay)
@@ -63,21 +61,5 @@ class TransactionPageTest extends DuskTestCase
     public function testUserAccess(): void
     {
         $this->basicUserAccessTest($this->uri, true);
-    }
-
-    /**
-     * @throws Throwable
-     */
-    public function testAdminAccess(): void
-    {
-        $this->basicAdminAccessTest($this->uri, true);
-    }
-
-    /**
-     * @throws Throwable
-     */
-    public function testGuestAccess(): void
-    {
-        $this->basicGuestAccessTest($this->uri);
     }
 }

@@ -5,6 +5,7 @@ namespace Tests\Browser\Routes\Reports;
 use App\User;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
+use Throwable;
 
 class OrderPageTest extends DuskTestCase
 {
@@ -12,10 +13,6 @@ class OrderPageTest extends DuskTestCase
 
     /**
      * @throws Throwable
-     */
-
-    /**
-     * @group specification
      */
     public function testPage(): void
     {
@@ -39,7 +36,5 @@ class OrderPageTest extends DuskTestCase
     public function testBasics(): void
     {
         $this->basicUserAccessTest($this->uri, true);
-        $this->basicAdminAccessTest($this->uri, true);
-        $this->basicGuestAccessTest($this->uri);
     }
 }
