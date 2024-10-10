@@ -117,15 +117,11 @@ class DataCollection extends BaseModel
         return $this->belongsTo(OrderAddress::class);
     }
 
-
     public function payments(): HasMany
     {
         return $this->hasMany(DataCollectionPayment::class, 'transaction_id');
     }
 
-    /**
-     * @return HasMany|DataCollectionComment
-     */
     public function comments(): HasMany|DataCollectionComment
     {
         return $this->hasMany(DataCollectionComment::class)->orderByDesc('id');

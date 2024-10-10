@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Modules\InventoryMovements;
 
-use App\Events\Inventory\RecalculateInventoryRequestEvent;
 use App\Models\Inventory;
 use App\Models\InventoryMovement;
 use App\Models\Product;
@@ -100,7 +99,6 @@ class InventoryDatesUpdatesTest extends TestCase
             'unit_price' => $this->inventory->prices->price,
             'description' => 'test',
         ]);
-
 
         RecalculateInventoryRecordsJob::dispatch();
 

@@ -4,7 +4,6 @@ namespace App\Modules\Reports\src\Models;
 
 use App\Models\DataCollection;
 use App\Models\DataCollectionStocktake;
-use App\Models\DataCollectionTransaction;
 use App\Models\DataCollectionTransferIn;
 use App\Models\DataCollectionTransferOut;
 use Illuminate\Database\Eloquent\Builder;
@@ -92,10 +91,10 @@ class DataCollectorListReport extends Report
                 if ($value === true) {
                     $query->where(function (Builder $query) {
                         $query->whereIn('data_collections.type', [
-                                DataCollectionTransferIn::class,
-                                DataCollectionTransferOut::class,
-                                DataCollectionStocktake::class,
-                            ])
+                            DataCollectionTransferIn::class,
+                            DataCollectionTransferOut::class,
+                            DataCollectionStocktake::class,
+                        ])
                             ->orWhereNull('data_collections.type');
                     });
                 }

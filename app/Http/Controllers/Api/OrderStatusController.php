@@ -10,7 +10,6 @@ use App\Http\Requests\OrderStatusIndexRequest;
 use App\Http\Resources\OrderStatusResource;
 use App\Models\OrderStatus;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Validation\ValidationException;
 
 class OrderStatusController extends Controller
 {

@@ -2,7 +2,6 @@
 
 namespace App\Modules\DataCollectorPayments\src;
 
-use App\Events\DataCollection\DataCollectionRecalculateRequestEvent;
 use App\Events\DataCollectionPayment\DataCollectionPaymentCreatedEvent;
 use App\Modules\BaseModuleServiceProvider;
 

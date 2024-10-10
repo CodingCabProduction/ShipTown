@@ -3,9 +3,9 @@
 namespace Tests\Feature\Api\DataCollectorPaymentTypes;
 
 use App\User;
+use Faker\Factory as Faker;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
-use Faker\Factory as Faker;
 
 class StoreTest extends TestCase
 {
@@ -22,7 +22,7 @@ class StoreTest extends TestCase
 
         $response = $this->actingAs($user, 'api')->postJson($this->uri, [
             'name' => $faker->word,
-            'code' => strtoupper($faker->unique()->word)
+            'code' => strtoupper($faker->unique()->word),
         ]);
 
         ray($response->json());

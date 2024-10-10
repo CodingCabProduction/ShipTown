@@ -23,13 +23,13 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class DataCollectionPayment extends Model
 {
-    use SoftDeletes;
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'payment_type_id',
         'transaction_id',
-        'amount'
+        'amount',
     ];
 
     public function paymentType(): BelongsTo

@@ -22,8 +22,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class PaymentType extends Model
 {
-    use SoftDeletes;
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'code',

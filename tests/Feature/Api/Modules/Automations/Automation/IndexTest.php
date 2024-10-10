@@ -42,8 +42,8 @@ class IndexTest extends TestCase
                     'id',
                     'name',
                     'enabled',
-//                    'actions',
-//                    'conditions',
+                    //                    'actions',
+                    //                    'conditions',
                 ],
             ],
         ]);

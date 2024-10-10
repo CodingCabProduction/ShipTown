@@ -21,7 +21,7 @@ class UpdateTest extends TestCase
         /** @var DataCollectionPayment $paymentToUpdate */
         $paymentToUpdate = DataCollectionPayment::factory()->create();
 
-        $response = $this->actingAs($user, 'api')->putJson($this->uri . $paymentToUpdate->id, [
+        $response = $this->actingAs($user, 'api')->putJson($this->uri.$paymentToUpdate->id, [
             'amount' => 100.99,
         ]);
 

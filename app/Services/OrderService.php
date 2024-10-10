@@ -166,8 +166,8 @@ class OrderService
         foreach ($payments as $payment) {
             $orderPayment = $storedOrderPayments->where('additional_fields.id', $payment['additional_fields']['id'])->first();
 
-            if (!$orderPayment) {
-                $orderPayment = new OrderPayment();
+            if (! $orderPayment) {
+                $orderPayment = new OrderPayment;
             }
 
             $orderPayment->fill([

@@ -12,7 +12,6 @@ use App\Modules\Automations\src\Http\Requests\AutomationUpdateRequest;
 use App\Modules\Automations\src\Models\Automation;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
-use Throwable;
 
 class AutomationController extends Controller
 {
