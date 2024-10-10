@@ -16,7 +16,7 @@ class ModulesCoverageTest extends TestCase
         collect(File::directories('app/Modules'))
             ->map(function ($moduleDirectory) {
                 $testFileName = app()->basePath();
-                $testFileName .= Str::replaceArray('app/', ['/tests/Unit/'], $moduleDirectory);
+                $testFileName .= Str::replaceArray('app/', ['/tests/'], $moduleDirectory);
                 $testFileName .= '/BasicModuleTest.php';
 
                 return $testFileName;

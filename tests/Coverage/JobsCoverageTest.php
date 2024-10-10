@@ -14,8 +14,7 @@ class JobsCoverageTest extends TestCase
             $jobClass = app()->basePath().'/tests/'.$this->getTestFileName($jobFile);
 
             if (! file_exists($jobClass)) {
-                $this->markTestIncomplete($jobFile);
-                //                $this->assertFileExists($jobClass, 'Run "php artisan app:generate-jobs-tests"');
+                $this->assertFileExists($jobClass, 'Run "php artisan app:generate-jobs-tests"');
             }
         }
     }
@@ -37,7 +36,7 @@ class JobsCoverageTest extends TestCase
     private function getTestFileName($file): string
     {
         $directory = \File::dirname($file);
-        $directory = str_replace(app()->basePath().'/', '', $directory);
+        $directory = str_replace(app()->basePath().'/app/', '', $directory);
         $directory = \Str::ucfirst($directory);
 
         $fileName = $directory.'/'.basename($file, '.php').'Test.php';
