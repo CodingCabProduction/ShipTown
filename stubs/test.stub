@@ -7,7 +7,7 @@ use Tests\TestCase;
 class {{class}} extends TestCase
 {
     /** @test */
-    public function {{resourceLowercase}} ()
+    public function test_if_works ()
     {
         $this->markTestIncomplete('This test has not been implemented yet.');
     }
