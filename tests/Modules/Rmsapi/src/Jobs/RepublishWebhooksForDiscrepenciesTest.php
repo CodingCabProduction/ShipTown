@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\App\Modules\Rmsapi\src\Jobs;
+namespace Tests\Modules\Rmsapi\src\Jobs;
 
 use App\Modules\Rmsapi\src\Jobs\RepublishWebhooksForSyncRequired;
 use Tests\TestCase;

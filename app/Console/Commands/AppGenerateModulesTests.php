@@ -32,7 +32,7 @@ class AppGenerateModulesTests extends Command
         $modulesList = File::directories('app/modules');
 
         $expectedTestsList = collect($modulesList)->map(function ($moduleDirectory) {
-            $testPath = Str::replaceArray('app/modules/', ['Unit/Modules/'], $moduleDirectory);
+            $testPath = Str::replaceArray('app/modules/', ['Modules/'], $moduleDirectory);
 
             return $testPath.'/BasicModuleTest';
         });

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\App\Modules\Inventory\src\Jobs;
+namespace Tests\Modules\Inventory\src\Jobs;
 
 use App\Modules\Inventory\src\Jobs\RecalculateInventoryRecordsJob;
 use Tests\TestCase;

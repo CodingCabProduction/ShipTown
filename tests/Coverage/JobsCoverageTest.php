@@ -13,9 +13,7 @@ class JobsCoverageTest extends TestCase
         foreach ($jobFiles as $jobFile) {
             $jobClass = app()->basePath().'/tests/'.$this->getTestFileName($jobFile);
 
-            if (! file_exists($jobClass)) {
-                $this->assertFileExists($jobClass, 'Run "php artisan app:generate-jobs-tests"');
-            }
+            $this->assertFileExists($jobClass, 'Run "php artisan app:generate-jobs-tests"');
         }
     }
 
