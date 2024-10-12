@@ -4,6 +4,7 @@ namespace App\Modules\DataCollector\src\Services;
 
 use App\Events\DataCollection\DataCollectionRecalculateRequestEvent;
 use App\Models\DataCollection;
+use App\Models\DataCollectionComment;
 use App\Models\DataCollectionRecord;
 use App\Models\DataCollectionStocktake;
 use App\Models\DataCollectionTransferIn;
@@ -134,6 +135,15 @@ class DataCollectorService
                 $destinationDataCollection->save();
 
                 $sourceDataCollection->update(['destination_collection_id' => $destinationDataCollection->id]);
+
+                // Replicate comments
+                $sourceDataCollection->comments()->get()->each(function (DataCollectionComment $comment) use ($destinationDataCollection) {
+                    $newComment = $comment->replicate();
+                    $newComment->data_collection_id = $destinationDataCollection->id;
+                    $newComment->created_at = $comment->created_at;
+                    $newComment->updated_at = $comment->updated_at;
+                    $newComment->save();
+                });
             }
 
             $sourceDataCollection->update([
