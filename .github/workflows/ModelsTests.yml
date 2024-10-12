@@ -1,0 +1,39 @@
+name: PHP 8.3 - Models Tests
+on: [push, pull_request]
+
+env:
+  APP_URL: "http://127.0.0.1:8000"
+  APP_ENV: local
+  DB_DATABASE: products_management_phpunit
+  DB_USERNAME: root
+  DB_PASSWORD: root
+
+jobs:
+  phpunit:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+      - name: Prepare The Environment
+        run: cp .env.example .env
+      - name: Create Database
+        run: |
+          sudo systemctl start mysql
+          mysql --user="root" --password="root" -e "CREATE DATABASE products_management_phpunit character set UTF8mb4 collate utf8mb4_bin;"
+      - name: Show mysql version 1
+        run: mysql --user="root" --password="root" -e "SELECT @@VERSION"
+      - name: Install Composer Dependencies
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
+      - name: Migrate database
+        run: php artisan migrate:fresh --force
+      - name: Run PHPUnit Tests
+        run: vendor/bin/phpunit --stop-on-failure --stop-on-error --filter='Tests\\Models'
+      - name: Upload Console Logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: console
+          path: tests/Browser/console
