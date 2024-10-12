@@ -24,7 +24,11 @@
             </div>
         </div>
 
-        <barcode-scanner @modalHidden="setFocusOnBarcodeInput"/>
+        <barcode-scanner
+            :showOnScreenScannerButton="showOnScreenScannerButton"
+            @modalHidden="setFocusOnBarcodeInput"
+            @toggleButton="toggleShowOnScreenScannerButton"
+        />
 
         <div style="position: fixed; left: 0; bottom: 0; height: 30px;" class="w-100 text-center" v-if="showOnScreenScannerButton">
             <div @click="scanBarcode(barcodeScanned)" class="btn btn-outline-primary rounded-circle bg-warning shadow" style="opacity: 85%; border: solid 2px black; height: 60px; width: 60px; position: relative; top: -40px; font-size: 24pt; color: black;">
@@ -127,7 +131,7 @@ export default {
                 barcode: '',
                 command: ['',''],
 
-                showOnScreenScannerButton: true,
+                showOnScreenScannerButton: false,
 
                 shelfLocationModalCommandScanCount: 0,
                 shelfLocationModalShowing: false,
@@ -136,7 +140,8 @@ export default {
         },
 
         mounted() {
-            this.showOnScreenScannerButton = localStorage.showOnScreenScannerButton === 'true' || localStorage.showOnScreenScannerButton === undefined;
+          console.log(window.localStorage.getItem('showOnScreenScannerButton'))
+            this.toggleShowOnScreenScannerButton(window.localStorage.getItem('showOnScreenScannerButton') === 'true');
 
             const isIos = () => !!window.navigator.userAgent.match(/iPad|iPhone/i);
 
@@ -334,9 +339,13 @@ export default {
             },
 
             setFocusOnBarcodeInput(showKeyboard = false, autoSelectAll = true, delay = 100) {
-                this.showOnScreenScannerButton = (localStorage.showOnScreenScannerButton === 'true') || (localStorage.showOnScreenScannerButton === undefined);
                 this.setFocusElementById(this.getInputId, showKeyboard, autoSelectAll, delay)
             },
+
+            toggleShowOnScreenScannerButton(showing) {
+                this.showOnScreenScannerButton = showing;
+                window.localStorage.setItem('showOnScreenScannerButton', showing);
+            }
         }
     }
 </script>

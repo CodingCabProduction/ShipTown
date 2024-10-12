@@ -8,7 +8,7 @@
               <div class="setting-desc">Shows camera barcode scanner helper button</div>
           </div>
           <div class="custom-control custom-switch m-auto text-right align-content-center float-right w-auto">
-              <input type="checkbox" @change="toggleOnScreenScannerButton" class="custom-control-input" id="toggleOnScreenScannerButton" v-model="showOnScreenScannerButton">
+              <input type="checkbox" @change="toggleOnScreenScannerButton" class="custom-control-input" id="toggleOnScreenScannerButton" :checked="showOnScreenScannerButton">
               <label class="custom-control-label" for="toggleOnScreenScannerButton"></label>
           </div>
       </div>
@@ -35,7 +35,13 @@ export default {
             getScannerModalID: 'barcode-scanner-modal',
             onScanSuccess: null,
             selectedCamera: null,
-            showOnScreenScannerButton: true,
+        }
+    },
+
+    props: {
+        showOnScreenScannerButton: {
+            type: Boolean,
+            default: false
         }
     },
 
@@ -47,9 +53,9 @@ export default {
     },
 
     methods: {
-        toggleOnScreenScannerButton(newValue) {
+        toggleOnScreenScannerButton() {
+            this.$emit('toggleButton', !this.showOnScreenScannerButton);
             this.stopScanner();
-            localStorage.showOnScreenScannerButton = this.showOnScreenScannerButton;
             setTimeout(() => {
                 this.$bvModal.hide(this.getScannerModalID);
             }, 10);
@@ -61,8 +67,6 @@ export default {
         },
 
         modalShown() {
-            this.showOnScreenScannerButton = localStorage.showOnScreenScannerButton === 'true' || localStorage.showOnScreenScannerButton === undefined;
-
             if (this.availableCameras.length === 0) {
                 Html5Qrcode.getCameras()
                     .then((cameras) => {
