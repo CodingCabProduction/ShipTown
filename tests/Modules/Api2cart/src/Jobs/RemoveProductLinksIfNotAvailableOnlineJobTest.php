@@ -1,14 +1,29 @@
 <?php
 
-namespace Tests\Modules\Api2cart\src\Jobs;
+namespace Modules\Api2cart\src\Jobs;
 
+use App\Models\Product;
+use App\Modules\Api2cart\src\Jobs\RemoveProductLinksIfNotAvailableOnlineJob;
+use App\Modules\Api2cart\src\Models\Api2cartProductLink;
 use Tests\TestCase;
 
 class RemoveProductLinksIfNotAvailableOnlineJobTest extends TestCase
 {
-    /** @test */
-    public function test_job()
+    /**
+     * A basic feature test example.
+     */
+    public function testExample(): void
     {
-        $this->markTestIncomplete('This test has not been implemented yet');
+        $product1 = Product::factory()->create();
+        $product2 = Product::factory()->create();
+
+        Api2cartProductLink::factory()->create(['product_id' => $product1->getKey()]);
+        Api2cartProductLink::factory()->create(['product_id' => $product2->getKey()]);
+
+        $product2->attachTag('Available Online');
+
+        RemoveProductLinksIfNotAvailableOnlineJob::dispatch();
+
+        $this->assertEquals(1, Api2cartProductLink::query()->count('id'));
     }
 }

@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class AppGenerateJobsTests extends Command
 {
@@ -22,10 +23,6 @@ class AppGenerateJobsTests extends Command
      */
     protected $description = 'Generates tests for all jobs';
 
-    /**
-     * Command will not override existing files
-     * It will only add new if do not exists.
-     */
     public function handle(): void
     {
         $jobFiles = $this->getJobFiles();
@@ -34,14 +31,27 @@ class AppGenerateJobsTests extends Command
             ->each(function ($jobFile) {
                 $testFileName = $this->getTestFileName($jobFile);
 
-                if (File::exists($testFileName)) {
+                $jobFileName = $testFileName;
+                $jobFileName = str_replace('/app', '', $jobFileName);
+                $jobFileName = str_replace('/', '\\\\', $jobFileName);
+                $jobFileName = Str::ucfirst($jobFileName);
+                $jobFileName = Str::chopEnd($jobFileName, 'Test');
+
+                $diskTestFileName = str_replace('/app', '', $testFileName);
+                $diskTestFileName = app()->basePath().'/tests'.$diskTestFileName.'.php';
+
+                if (File::exists($diskTestFileName)) {
                     return;
                 }
 
-                $command = 'app:make-test '.$testFileName.' --stub=test.job';
+                $command = 'app:make-test '.$jobFileName.'Test --stub=test.job --testedClass=App\\'.$jobFileName;
 
                 Artisan::call($command);
-                $this->info(Artisan::output());
+
+                $output = Artisan::output();
+
+                $this->info($command);
+                $this->info($output);
             });
     }
 
@@ -62,7 +72,7 @@ class AppGenerateJobsTests extends Command
     private function getTestFileName($file): string
     {
         $directory = \File::dirname($file);
-        $directory = str_replace(app()->basePath().'/app/', '', $directory);
+        $directory = str_replace(app()->basePath(), '', $directory);
         $directory = \Str::ucfirst($directory);
 
         $fileName = $directory.'/'.basename($file, '.php').'Test';

@@ -1,4 +1,5 @@
 #!/bin/sh
+#echo "Running pre-commit hooks"
 
 PROJECT=`php -r "echo dirname(dirname(dirname(realpath('$0'))));"`
 STAGED_FILES_CMD=`git diff --cached --name-only --diff-filter=ACMR HEAD | grep \\\\.php`
@@ -14,46 +15,80 @@ then
 fi
 SFILES=${SFILES:-$STAGED_FILES_CMD}
 
+#echo "Auto Generating Jobs tests..."
+#php artisan app:generate-jobs-tests >&1
+#if [ $? -ne 0 ]
+#then
+#    echo "Error generating Jobs tests. Please fix the issue before commit."
+#    exit 1
+#fi
+#
+#echo "Auto Generating Modules Jobs tests..."
+#php artisan app:generate-modules-tests >&1
+#if [ $? -ne 0 ]
+#then
+#    echo "Error generating Modules Jobs tests. Please fix the issue before commit."
+#    exit 1
+#fi
+#
+#echo "Auto Generating Web Routes Jobs tests..."
+#php artisan app:generate-routes-tests >&1
+#if [ $? -ne 0 ]
+#then
+#    echo "Error generating Web Routes Jobs tests. Please fix the issue before commit."
+#    exit 1
+#fi
+
+echo "Running Coverage tests..."
+vendor/bin/phpunit --stop-on-failure --filter 'Coverage' >&1
+if [ $? -ne 0 ]
+then
+    echo "Coverage tests failed. Please fix the issue before commit."
+    exit 1
+fi
+
+# Run the tests on the changed files
 echo "Running PHPUnit tests..."
 for FILE in $SFILES
 do
     FILE_NAME=$(basename "$FILE" .php)
-    echo "Executing: vendor/bin/phpunit --stop-on-failure --filter \"$FILE_NAME\""
-    vendor/bin/phpunit --stop-on-failure --filter "$FILE_NAME"
-    if [ $? != 0 ]
+
+    # Run PHPUnit tests
+    vendor/bin/phpunit --stop-on-failure --filter "$FILE_NAME" >&1
+    if [ $? -ne 0 ]
+    then
+        echo "PHPUnit tests failed. Please fix the issue before commit."
+        exit 1
+    fi
+
+    # Run Dusk tests
+    php artisan dusk --stop-on-failure --stop-on-error --filter "$FILE_NAME" >&1
+    if [ $? -ne 0 ]
+    then
+        echo "Dusk tests failed. Please fix the issue before commit."
+        exit 1
+    fi
+
+    # Run PHP Lint
+    echo "Checking PHP Lint..."
+    php -l -d display_errors=0 $FILE >&1
+    if [ $? -ne 0 ]
     then
         echo "Fix the error before commit."
         exit 1
     fi
-    echo "Executing: php artisan dusk --stop-on-failure --stop-on-error --filter \"$FILE_NAME\""
-    php artisan dusk --stop-on-failure --stop-on-error --filter "$FILE_NAME"
-    if [ $? != 0 ]
-    then
-        echo "Fix the error before commit."
-        exit 1
-    fi
+
     FILES="$FILES $PROJECT/$FILE"
 done
 
-echo "Checking PHP Lint..."
-for FILE in $SFILES
-do
-    php -l -d display_errors=0 $FILE
-    if [ $? != 0 ]
-    then
-        echo "Fix the error before commit."
-        exit 1
-    fi
-    FILES="$FILES $PROJECT/$FILE"
-done
-
+echo "Running Code Sniffer. Code standard PSR2."
 if [ "$FILES" != "" ]
 then
-    echo "Running Code Sniffer. Code standard PSR2."
-    ./vendor/bin/phpcs --encoding=utf-8 -n -p $FILES
-    if [ $? != 0 ]
+    # Run PHP Code Sniffer
+    ./vendor/bin/phpcs --encoding=utf-8 -n -p $FILES >&1
+    if [ $? -ne 0 ]
     then
-        echo "Please fix the following errors before commit!"
+        echo "Fix the error before commit."
         exit 1
     fi
 fi

@@ -2,13 +2,12 @@
 
 namespace Tests\Modules\Api2cart\src\Jobs;
 
-use Tests\TestCase;
+use App\Abstracts\JobTestAbstract;
 
-class SyncProductTest extends TestCase
+class SyncProductTest extends JobTestAbstract
 {
-    /** @test */
     public function test_job()
     {
-        $this->markTestIncomplete('This test has not been implemented yet');
+        $this->markTestIncomplete('This test has not been implemented yet.');
     }
 }

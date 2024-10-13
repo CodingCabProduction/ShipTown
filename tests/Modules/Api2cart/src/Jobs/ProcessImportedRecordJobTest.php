@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Modules\Api2cart\Jobs;
+namespace Modules\Api2cart\src\Jobs;
 
 use App\Models\Order;
 use App\Modules\Api2cart\src\Jobs\ProcessImportedOrdersJob;

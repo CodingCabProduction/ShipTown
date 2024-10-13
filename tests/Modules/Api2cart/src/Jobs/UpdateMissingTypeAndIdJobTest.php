@@ -2,13 +2,13 @@
 
 namespace Tests\Modules\Api2cart\src\Jobs;
 
-use Tests\TestCase;
+use App;
+use App\Abstracts\JobTestAbstract;
 
-class UpdateMissingTypeAndIdJobTest extends TestCase
+class UpdateMissingTypeAndIdJobTest extends JobTestAbstract
 {
-    /** @test */
     public function test_job()
     {
-        $this->markTestIncomplete('This test has not been implemented yet');
+        App\Modules\Api2cart\src\Jobs\UpdateMissingTypeAndIdJob::dispatchSync();
     }
 }

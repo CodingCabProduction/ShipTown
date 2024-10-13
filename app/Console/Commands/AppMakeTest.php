@@ -12,7 +12,7 @@ class AppMakeTest extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'app:make-test {name : The name of the class} {--stub=test: The stub file to load}';
+    protected $signature = 'app:make-test {name : The name of the class} {--stub=test: The stub file to load} {--testedClass= : The class being tested} {--uri= : The uri being tested}';
 
     /**
      * The console command description.
@@ -68,6 +68,10 @@ class AppMakeTest extends GeneratorCommand
 
         if ($this->hasOption('uri')) {
             $buildClass = str_replace('{{uri}}', $this->option('uri'), $buildClass);
+        }
+
+        if ($this->hasOption('testedClass')) {
+            $buildClass = str_replace('{{testedClass}}', $this->option('testedClass'), $buildClass);
         }
 
         return $buildClass;

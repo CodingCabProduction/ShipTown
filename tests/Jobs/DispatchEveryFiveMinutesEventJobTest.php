@@ -2,13 +2,15 @@
 
 namespace Tests\Jobs;
 
-use Tests\TestCase;
+use App;
+use App\Abstracts\JobTestAbstract;
 
-class DispatchEveryFiveMinutesEventJobTest extends TestCase
+class DispatchEveryFiveMinutesEventJobTest extends JobTestAbstract
 {
-    /** @test */
     public function test_job()
     {
-        $this->markTestIncomplete('This test has not been implemented yet');
+        App\Jobs\DispatchEveryFiveMinutesEventJob::dispatchSync();
+
+        $this->assertTrue(true, 'Job test passed');
     }
 }
