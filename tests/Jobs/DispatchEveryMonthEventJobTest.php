@@ -2,14 +2,15 @@
 
 namespace Tests\Jobs;
 
+use App;
 use App\Abstracts\JobTestAbstract;
 
 class DispatchEveryMonthEventJobTest extends JobTestAbstract
 {
     public function test_job()
-    {
-        $job = self::createJob();
+   {
+        App\Jobs\DispatchEveryMonthEventJob::dispatchSync();
 
-        $job::dispatch();
+        $this->assertTrue(true, 'Job did not throw any exceptions');
     }
 }

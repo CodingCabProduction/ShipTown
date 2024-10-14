@@ -48,7 +48,7 @@ then
 fi
 
 # Run the tests on the changed files
-echo "Running PHPUnit tests..."
+echo "Running PHPUnit, Dusk & Lint tests for each modified file..."
 for FILE in $SFILES
 do
     FILE_NAME=$(basename "$FILE" .php)
@@ -70,7 +70,6 @@ do
     fi
 
     # Run PHP Lint
-    echo "Checking PHP Lint..."
     php -l -d display_errors=0 $FILE >&1
     if [ $? -ne 0 ]
     then

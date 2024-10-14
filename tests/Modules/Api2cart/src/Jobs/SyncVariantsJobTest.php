@@ -8,7 +8,9 @@ use App\Abstracts\JobTestAbstract;
 class SyncVariantsJobTest extends JobTestAbstract
 {
     public function test_job()
-    {
+   {
         App\Modules\Api2cart\src\Jobs\SyncVariantsJob::dispatchSync();
+
+        $this->assertTrue(true, 'Job did not throw any exceptions');
     }
 }

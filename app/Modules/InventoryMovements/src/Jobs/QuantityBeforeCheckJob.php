@@ -10,30 +10,32 @@ use Illuminate\Support\Facades\Log;
 class QuantityBeforeCheckJob extends UniqueJob
 {
     private Carbon $date;
+    private int $batchSize = 1000;
 
     public function __construct($date = null)
     {
         $this->date = $date ?? Carbon::now();
     }
 
-    public function handle()
+    public function handle(): void
     {
         do {
-            $recordsUpdated = DB::update('
-                UPDATE inventory_movements
+            $idsToUpdate = DB::table('inventory_movements')
+                ->join('inventory_movements as previous_movement', function ($join) {
+                    $join->on('inventory_movements.inventory_id', '=', 'previous_movement.inventory_id')
+                        ->whereRaw('inventory_movements.sequence_number - 1 = previous_movement.sequence_number')
+                        ->where(function ($query) {
+                            $query->where('inventory_movements.quantity_before', '!=', 'previous_movement.quantity_after')
+                                ->orWhere('inventory_movements.occurred_at', '<', 'previous_movement.occurred_at');
+                        });
+                })
+                ->whereBetween('inventory_movements.occurred_at', [$this->date->toDateTimeLocalString(), $this->date->addDay()->toDateTimeLocalString()])
+                ->limit($this->batchSize)
+                ->pluck('inventory_movements.id');
 
-                INNER JOIN inventory_movements as previous_movement
-                    ON inventory_movements.inventory_id = previous_movement.inventory_id
-                    AND inventory_movements.sequence_number - 1 = previous_movement.sequence_number
-                    AND (
-                        inventory_movements.quantity_before != previous_movement.quantity_after
-                        OR inventory_movements.occurred_at < previous_movement.occurred_at
-                    )
-
-                SET inventory_movements.sequence_number = null
-
-                WHERE inventory_movements.occurred_at BETWEEN ? AND ?;
-            ', [$this->date->toDateTimeLocalString(), $this->date->addDay()->toDateTimeLocalString()]);
+            $recordsUpdated = DB::table('inventory_movements')
+                ->whereIn('id', $idsToUpdate)
+                ->update(['sequence_number' => null]);
 
             Log::info('Job processing', [
                 'job' => self::class,

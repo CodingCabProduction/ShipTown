@@ -47,11 +47,14 @@ class InventoryDatesUpdatesTest extends TestCase
             'description' => 'test',
         ]);
 
+        RecalculateInventoryRecordsJob::dispatch();
+
         $this->inventory = $this->inventory->refresh();
 
-        $this->assertEquals($movement->getKey(), $this->inventory->last_movement_id, 'last_movement_id');
-        $this->assertEquals($movement->occurred_at, $this->inventory->first_movement_at, 'first_movement_at');
-        $this->assertEquals($movement->occurred_at, $this->inventory->last_movement_at, 'last_movement_at');
+        $this->assertEquals($this->inventory->recount_required, false, 'last_movement_id');
+        $this->assertEquals($this->inventory->last_movement_id, $movement->getKey(), 'last_movement_id');
+        $this->assertEquals($this->inventory->first_movement_at, $movement->occurred_at, 'first_movement_at');
+        $this->assertEquals($this->inventory->last_movement_at, $movement->occurred_at, 'last_movement_at');
     }
 
     /** @test */
@@ -72,6 +75,8 @@ class InventoryDatesUpdatesTest extends TestCase
             'unit_price' => $this->inventory->prices->price,
             'description' => 'test',
         ]);
+
+        RecalculateInventoryRecordsJob::dispatch();
 
         $this->inventory = $this->inventory->refresh();
 
@@ -100,7 +105,6 @@ class InventoryDatesUpdatesTest extends TestCase
             'unit_price' => $this->inventory->prices->price,
             'description' => 'test',
         ]);
-
 
         RecalculateInventoryRecordsJob::dispatch();
 
