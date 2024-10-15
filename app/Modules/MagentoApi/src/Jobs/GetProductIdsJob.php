@@ -3,11 +3,13 @@
 namespace App\Modules\MagentoApi\src\Jobs;
 
 use App\Abstracts\UniqueJob;
+use App\Helpers\TemporaryTable;
 use App\Modules\Magento2MSI\src\Api\MagentoApi;
 use App\Modules\MagentoApi\src\Models\MagentoConnection;
 use App\Modules\MagentoApi\src\Models\MagentoProduct;
 use Exception;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class GetProductIdsJob extends UniqueJob
@@ -56,7 +58,6 @@ class GetProductIdsJob extends UniqueJob
                 return [
                     'connection_id' => $connection->getKey(),
                     'sku' => $item['sku'],
-                    'product_id' => 0,
                     'exists_in_magento' => true,
                     'magento_product_id' => $item['id'],
                     'magento_product_type' => $item['type_id'],
@@ -65,13 +66,26 @@ class GetProductIdsJob extends UniqueJob
                 ];
             });
 
-        MagentoProduct::query()->upsert($map->toArray(), ['connection_id', 'sku'], [
-            'magento_product_id',
-            'magento_product_type',
-            'product_id',
-            'exists_in_magento',
-            'updated_at',
-        ]);
+        TemporaryTable::fromArray('tempTable_MagentoProductIds', $map->toArray(), function ($table) {
+            $table->temporary();
+            $table->unsignedBigInteger('connection_id')->index();
+            $table->string('sku')->index();
+            $table->boolean('exists_in_magento');
+            $table->unsignedBigInteger('magento_product_id');
+            $table->string('magento_product_type');
+            $table->timestamps();
+        });
+
+        DB::statement('
+            UPDATE modules_magento2api_products
+            INNER JOIN tempTable_MagentoProductIds
+                ON tempTable_MagentoProductIds.sku = modules_magento2api_products.sku
+                AND tempTable_MagentoProductIds.connection_id = modules_magento2api_products.connection_id
+            SET modules_magento2api_products.exists_in_magento = tempTable_MagentoProductIds.exists_in_magento,
+                modules_magento2api_products.magento_product_id = tempTable_MagentoProductIds.magento_product_id,
+                modules_magento2api_products.magento_product_type = tempTable_MagentoProductIds.magento_product_type,
+                modules_magento2api_products.updated_at = tempTable_MagentoProductIds.updated_at
+        ');
 
         MagentoProduct::query()
             ->whereIn('id', $products->pluck('id'))
