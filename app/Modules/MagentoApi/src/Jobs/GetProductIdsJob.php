@@ -56,6 +56,7 @@ class GetProductIdsJob extends UniqueJob
                 return [
                     'connection_id' => $connection->getKey(),
                     'sku' => $item['sku'],
+                    'product_id' => 0,
                     'exists_in_magento' => true,
                     'magento_product_id' => $item['id'],
                     'magento_product_type' => $item['type_id'],
@@ -67,6 +68,7 @@ class GetProductIdsJob extends UniqueJob
         MagentoProduct::query()->upsert($map->toArray(), ['connection_id', 'sku'], [
             'magento_product_id',
             'magento_product_type',
+            'product_id',
             'exists_in_magento',
             'updated_at',
         ]);
