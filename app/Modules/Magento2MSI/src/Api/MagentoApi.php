@@ -120,11 +120,11 @@ class MagentoApi
         return Client::get($token, '/rest/all/V1/stockItems/'.$sku);
     }
 
-    public static function getProducts(Magento2msiConnection $connection, $skuList): ?Response
+    public static function getProducts(string $baseUrl, string $token, array $skuList): ?Response
     {
         $skus = collect($skuList)->implode(',');
 
-        return Client::get($connection->api_access_token, $connection->base_url.'/rest/all/V1/products', [
+        return Client::get($token, $baseUrl.'/rest/all/V1/products', [
             'searchCriteria' => [
                 'filterGroups' => [
                     [

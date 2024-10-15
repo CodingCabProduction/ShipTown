@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Modules\Magento2MSI\src\Jobs;
+namespace App\Modules\MagentoApi\src\Jobs;
 
 use App\Abstracts\UniqueJob;
 use App\Modules\Magento2MSI\src\Api\MagentoApi;
-use App\Modules\Magento2MSI\src\Models\Magento2msiConnection;
-use App\Modules\Magento2MSI\src\Models\Magento2msiProduct;
+use App\Modules\MagentoApi\src\Models\MagentoConnection;
+use App\Modules\MagentoApi\src\Models\MagentoProduct;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
@@ -14,11 +14,10 @@ class GetProductIdsJob extends UniqueJob
 {
     public function handle(): void
     {
-        Magento2msiConnection::query()
-            ->where('enabled', true)
+        MagentoConnection::query()
             ->get()
-            ->each(function (Magento2msiConnection $connection) {
-                Magento2msiProduct::query()
+            ->each(function (MagentoConnection $connection) {
+                MagentoProduct::query()
                     ->where('connection_id', $connection->getKey())
                     ->whereNull('exists_in_magento')
                     ->with('product')
@@ -35,7 +34,7 @@ class GetProductIdsJob extends UniqueJob
             });
     }
 
-    protected function getProductIds(Magento2msiConnection $connection, Collection $products): bool
+    protected function getProductIds(MagentoConnection $connection, Collection $products): bool
     {
         $response = MagentoApi::getProducts(
             $connection->base_url,
@@ -44,7 +43,7 @@ class GetProductIdsJob extends UniqueJob
         );
 
         if ($response->failed()) {
-            Log::error('Magento2msi - Failed to fetch product IDs', [
+            Log::error('Magento2 Price Sync - Failed to fetch product IDs', [
                 'connection_id' => $connection->getKey(),
                 'response' => $response->json(),
             ]);
@@ -60,30 +59,27 @@ class GetProductIdsJob extends UniqueJob
                     'exists_in_magento' => true,
                     'magento_product_id' => $item['id'],
                     'magento_product_type' => $item['type_id'],
-                    'sync_required' => null,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
             });
 
-        Magento2msiProduct::query()->upsert($map->toArray(), ['connection_id', 'sku'], [
+        MagentoProduct::query()->upsert($map->toArray(), ['connection_id', 'sku'], [
             'magento_product_id',
             'magento_product_type',
             'exists_in_magento',
-            'sync_required',
             'updated_at',
         ]);
 
-        Magento2msiProduct::query()
+        MagentoProduct::query()
             ->whereIn('id', $products->pluck('id'))
             ->whereNull('exists_in_magento')
             ->update([
                 'exists_in_magento' => false,
-                'magento_product_type' => null,
-                'sync_required' => null,
+                'updated_at' => now(),
             ]);
 
-        Log::info('Magento2msi - Fetched ProductIDs', [
+        Log::info('Magento2 Price - Fetched ProductIDs', [
             'connection' => $connection->getKey(),
             'count' => $map->count(),
         ]);

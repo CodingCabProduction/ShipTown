@@ -10,7 +10,8 @@ use App\Modules\MagentoApi\src\Models\MagentoProduct;
 use Exception;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Collection;
-use Log;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class SyncCheckFailedProductsJob.
@@ -26,7 +27,7 @@ class FetchBasePricesJob extends UniqueJob
                     MagentoProduct::query()
                         ->with(['product'])
                         ->where('connection_id', $magentoConnection->getKey())
-                        ->whereRaw('IFNULL(exists_in_magento, 1) = 1')
+                        ->where('exists_in_magento', true)
                         ->whereNull('base_prices_fetched_at')
                         ->orWhereNull('base_prices_raw_import')
                         ->chunkById(100, function (Collection $chunk) use ($magentoConnection) {
@@ -66,16 +67,17 @@ class FetchBasePricesJob extends UniqueJob
 
                             Log::debug('Updating '.$chunk->count().' records in main table', ['job' => self::class]);
 
-                            \DB::statement('
+                            DB::statement('
                                 UPDATE modules_magento2api_products
                                 INNER JOIN tempTable_MagentoBasePriceFetch
                                     ON modules_magento2api_products.sku = tempTable_MagentoBasePriceFetch.sku
                                     AND modules_magento2api_products.connection_id = tempTable_MagentoBasePriceFetch.connection_id
-                                SET modules_magento2api_products.exists_in_magento = 1,
-                                    modules_magento2api_products.base_price_sync_required = null,
+                                SET modules_magento2api_products.base_price_sync_required = null,
                                     modules_magento2api_products.magento_price = tempTable_MagentoBasePriceFetch.price,
                                     modules_magento2api_products.base_prices_fetched_at = tempTable_MagentoBasePriceFetch.base_prices_fetched_at,
                                     modules_magento2api_products.base_prices_raw_import = tempTable_MagentoBasePriceFetch.base_prices_raw_import
+
+                                WHERE tempTable_MagentoBasePriceFetch.sku IS NOT NULL
                             ');
 
                             Log::debug('Updating '.$chunk->count().' missing records', ['job' => self::class]);
@@ -85,7 +87,7 @@ class FetchBasePricesJob extends UniqueJob
                                 ->whereIn('id', $chunk->pluck('id'))
                                 ->whereNotIn('sku', $responseRecords->pluck('sku'))
                                 ->update([
-                                    'exists_in_magento' => false,
+                                    'base_price_sync_required' => true,
                                     'base_prices_fetched_at' => now(),
                                     'base_prices_raw_import' => null,
                                 ]);
