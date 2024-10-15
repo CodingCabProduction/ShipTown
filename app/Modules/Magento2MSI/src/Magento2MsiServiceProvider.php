@@ -23,20 +23,16 @@ class Magento2MsiServiceProvider extends BaseModuleServiceProvider
     public static bool $autoEnable = false;
 
     protected $listen = [
-        InventoryTotalsByWarehouseTagUpdatedEvent::class => [
-            Listeners\InventoryTotalsByWarehouseTagUpdatedEventListener::class,
-        ],
-
-        RecalculateInventoryRequestEvent::class => [
-            Listeners\RecalculateInventoryRequestEventListener::class,
-        ],
-
         EveryFiveMinutesEvent::class => [
             Listeners\EveryFiveMinutesEventListener::class,
         ],
 
         EveryHourEvent::class => [
             Listeners\EveryHourEventListener::class,
+        ],
+
+        EveryDayEvent::class => [
+            Listeners\EveryDayEventListener::class,
         ],
 
         ProductTagAttachedEvent::class => [
@@ -47,8 +43,12 @@ class Magento2MsiServiceProvider extends BaseModuleServiceProvider
             Listeners\ProductTagDetachedEventListener::class,
         ],
 
-        EveryDayEvent::class => [
-            Listeners\EveryDayEventListener::class,
+        InventoryTotalsByWarehouseTagUpdatedEvent::class => [
+            Listeners\InventoryTotalsByWarehouseTagUpdatedEventListener::class,
+        ],
+
+        RecalculateInventoryRequestEvent::class => [
+            Listeners\RecalculateInventoryRequestEventListener::class,
         ],
     ];
 

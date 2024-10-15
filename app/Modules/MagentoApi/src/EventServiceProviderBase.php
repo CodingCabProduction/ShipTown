@@ -2,6 +2,7 @@
 
 namespace App\Modules\MagentoApi\src;
 
+use App\Events\EveryDayEvent;
 use App\Events\EveryHourEvent;
 use App\Events\EveryMinuteEvent;
 use App\Events\EveryTenMinutesEvent;
@@ -40,6 +41,10 @@ class EventServiceProviderBase extends BaseModuleServiceProvider
 
         EveryHourEvent::class => [
             Listeners\EveryHourEventListener::class,
+        ],
+
+        EveryDayEvent::class => [
+            Listeners\EveryDayEventListener::class,
         ],
 
         ProductTagAttachedEvent::class => [
